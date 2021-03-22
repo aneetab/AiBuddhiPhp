@@ -1,0 +1,581 @@
+:root{
+    --Libre: 'Libre Franklin', sans-serif;
+    --Kaushan: 'Kaushan Script';
+    --Roboto: 'Roboto';
+    --transition: all 0.4s ease;
+
+}
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+    font-family: var(--Libre);
+}
+html
+{
+    scroll-behavior: smooth;
+}
+.logo img
+{
+    width:130px;
+    height:70px;
+}
+
+body{
+    line-height: 1.5;
+    font-size: 1.05rem;
+    font-weight: 200;
+    text-rendering: optimizeLegibility;
+    background:rgb(243, 240, 240); 
+}
+
+/*----------------------*-------- RESUABLE STYLING STARTS-----------------*-----------*/
+a{
+    color: #000;
+    text-decoration: none;
+}
+img{
+    width: 100%;
+    display: block;
+}
+li{
+    list-style-type: none;
+}
+button{
+    outline: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.container{
+    width: 94%;
+    margin: 0 auto;
+}
+h1, h2, h3, h4, h5, h6{
+    padding: 0.3rem 0;
+}
+/*----------------------*-------- RESUABLE STYLING ENDS-----------------*-----------*/
+
+/*----------------------*-------- NAVBAR STARTS------------------*-----------*/
+nav{
+    box-shadow: 0 4px 6px -6px #222;
+}
+.navbar-brand img{
+    width:100px;
+    height:60px;
+}
+nav a:hover
+{
+    color:rgb(110, 16, 16)!important;
+}
+nav a
+{
+    text-transform:capitalize;
+    letter-spacing: 1px;
+ opacity: 0.9;
+ font-size: 0.9rem;
+ font-weight:bold;
+ line-height:1.5;
+ font-family:"Poppins",sans-serif;
+ 
+}
+/*----------------------*-------- NAVBAR ENDS------------------*-------------------*/
+
+/*----------------------*-------- BANNER SECTION STARTS------------------*-----------*/
+.banner-item{
+    height: 100vh;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    display: none;
+    animation: fadeIn 2s;
+}
+@keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+.banner-item:nth-child(1){
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner1.jpg) center/cover no-repeat fixed;
+}
+.banner-item:nth-child(2){
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner5.jpg) center/cover no-repeat fixed;
+}
+.banner-item:nth-child(3){
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner6.jpg) center/cover no-repeat fixed;
+}
+.banner-item h1{
+    font-size: 2.5rem;
+    font-family: var(--Kaushan);
+}
+.banner-item .text{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+}
+.banner-item button{
+    text-transform: uppercase;
+    background: transparent;
+    color: #fff;
+    letter-spacing: 2px;
+    border: 3px solid #fff;
+    padding: 0.85rem 1.85rem;
+    margin-top: 1.75rem;
+    transition: var(--transition);
+}
+.banner-item button:hover{
+    background: #fff;
+    color: var(--dimGray);
+}
+.active-banner{
+    display: grid;
+}
+.header
+{
+    width:100%;
+    height: 100vh;
+}
+/*----------------------*-------- BANNER SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- DOMAINS SECTION STARTS------------------*-----------*/
+.domains
+{
+    width:100%;height:auto;
+    margin:100px 0;
+    text-align: center;
+         
+}
+.extra-domains
+{
+background:rgb(252, 248, 248);
+border:medium none;
+padding:40px !important;
+border-radius:3px;
+transition:0.3s ;
+text-align:center;
+}
+
+.extra-domains:hover{
+    box-shadow:0 0 20px 0 rgba(0,0,0,0.3);
+    transform:translateY(-20px);
+}
+
+.domains h1
+{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+    font-size: 1.5rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.4;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+}
+.domains h2
+{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+}
+.domains span
+{
+    font-size: 2rem;
+    line-height: 1.6;
+    font-weight:bold;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+}
+.domains img
+{
+    height:150px;
+    width:170px;
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 40px;
+}
+/*----------------------*-------- DOMAINS SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- SERVICES SECTION STARTS------------------*-----------*/
+.services
+{
+    width:100%;height:auto;
+    margin:100px 0;
+    text-align: center;
+         
+}
+.services h1,.benefits h1,.subject_experts h1,.reviews h1
+{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+    font-size: 1.5rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.4;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+    text-align: center;
+}
+
+  .services__img{
+    width: 100px;
+    height: 100px;
+    fill: var(--first-color);
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .services h2,.reviews h2
+{
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.9;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+}
+.services p
+{
+    text-align:center;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 0.7rem;
+    font-weight:medium;
+    line-height:1.9;
+    word-spacing:3px;
+    font-family:"Poppins",sans-serif;
+}
+.service-divs
+{
+background:rgb(252, 248, 248);
+border:medium none;
+padding:35px !important;
+border-radius:3px;
+transition:0.3s ;
+text-align:center;
+margin:2px 0;
+}
+/*----------------------*-------- SERVICES SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- BENEFITS SECTION STARTS------------------*-----------*/
+.benefits{
+    width: 100vw;
+    text-align: center;
+  }
+  
+  .benefits .row{
+    margin:0.5rem 0;
+    padding:0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .benefits .row .image img{
+    width:50vw;
+    height:50vh;
+  }
+  
+  .benefits .row .content{
+    text-align: left;
+    padding:0 3rem;
+  }
+  
+  .benefits .row .content h3{
+    text-transform: uppercase;
+    text-align:center;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 1rem;
+    font-weight:bold;
+    line-height:1.9;
+    word-spacing:3px;
+    font-family:"Poppins",sans-serif;
+  }
+  
+  .benefits .row .content p{
+    text-align:center;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 0.7rem;
+    font-weight:medium;
+    line-height:1.9;
+    word-spacing:3px;
+    font-family:"Poppins",sans-serif;
+  }
+/*----------------------*-------- BENEFITS SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- SME SECTION STARTS------------------*-----------*/
+.subject_experts .row
+{
+    margin:0.5rem 0;
+    padding:0 2rem; 
+}
+.subject_experts .expert{
+    background:rgb(252, 248, 248);
+    margin: 3rem 0rem;
+}
+.subject_experts .expert:hover{
+    box-shadow:0 0 20px 0 rgba(0,0,0,0.3);
+    transform:translateY(-20px);
+}
+
+.subject_experts .expert .expert-img{
+    padding: 2rem;
+}
+
+.subject_experts .expert .about-expert{
+    padding-top: 2rem;
+    height:200px;
+}
+
+.subject_experts .expert .about-expert h4
+{
+    text-transform: uppercase;
+    text-align:center;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 1rem;
+    font-weight:bold;
+    line-height:1.9;
+    word-spacing:3px;
+    font-family:"Poppins",sans-serif;
+}
+.subject_experts .expert .about-expert p{
+    text-align:center;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 0.7rem;
+    font-weight:medium;
+    line-height:1.9;
+    word-spacing:3px;
+    font-family:"Poppins",sans-serif;
+}
+
+.subject_experts .owl-carousel .owl-item{
+    display: flex;
+    justify-content: center;
+    padding: 0 1.5rem;
+}
+.subject_experts .owl-carousel .owl-dots .owl-dot.active span{
+    background: red;
+    width: 12px;
+    height: 12px;
+}
+/*----------------------*-------- SME SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- CUSTOMER REVIEW STARTS------------------*-----------*/
+.reviews{
+    min-height:90vh;
+    width: 100%;
+    background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("../assets/images/laptop.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+   
+  }
+  .reviews h1,h2
+  {
+      color:rgba(26, 27, 24, 0.835);
+  }
+  
+  .reviews .card-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .reviews .card-container .card{
+    width:20rem;
+    margin:1rem;
+    background: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+    overflow: hidden;
+    position: relative;
+    height:300px;
+  }
+  
+  .reviews .card-container .card img{
+    height:100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 90%;
+    margin:auto;
+    margin-top:2px;
+  }
+  
+  .reviews .card-container .content{
+    padding-bottom: 2rem;
+    text-align: center;
+  }
+  
+  
+  .reviews .card-container .content p{
+    color:#333;
+    font-size: 1.3rem;
+    padding:1rem;
+  }
+  
+  .fa-star,.fa-star-half-alt{
+    padding:0 .2rem !important;
+    font-size: 1.5rem!important;
+    color: gold !important;;
+  }
+  /*----------------------*-------- CUSTOMER REVIEW ENDS------------------*-----------*/
+
+  /*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
+ footer
+ {
+     background:rgba(252, 251, 251, 0.322);
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:70px 0 20px 0;
+     position:relative;
+ }
+ .footersection a, .credits a
+ {
+  text-transform:capitalize;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  font-size: 0.7rem;
+  font-weight:bold;
+  line-height:1.5;
+  font-family:"Poppins",sans-serif;
+  color:#000;
+ }
+ .footersection h3
+ {
+     text-transform:uppercase;
+     color:#000;
+     margin-bottom:25px;
+     font-size:1.2rem !important;
+     font-weight:600;
+     text-shadow: 0 2px 5px rgb(0,0,0,0.4);
+ }
+ .credits h3
+ {
+    text-transform:uppercase;
+    color:#000;
+    margin-bottom:25px;
+    font-size:0.6rem !important;
+    font-weight:600;
+    text-shadow: 0 2px 5px rgb(0,0,0,0.4);
+
+ }
+ .credits
+ {
+     background:rgba(252, 251, 251, 0.322);
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:20px 0 10px 0;
+     position:relative;
+     display:flex;
+     align-items: center;
+     justify-content: space-evenly;
+ }
+ 
+ .credits li{
+     list-style: none;
+     display:inline-block;
+     padding-right:0.2rem;
+ }
+ .credits a:hover,.footersection a:hover{
+     text-decoration: none;
+     color:rgb(99, 16, 16)
+ }
+ /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
+ 
+/*----------------------*-------- AUTOSCROLL TOP STARTS------------------*-----------*/
+.scrolltop
+ {
+    background:lightcoral!important;
+    border-radius: 5px;
+    padding:10px;
+    position:fixed;
+    bottom:20px;
+    right:40px;
+    display:none;
+ }
+ .scrolltop:hover
+ {
+     background:rgba(160, 115, 115, 0.609)!important;
+ }
+ #myBtn
+ {
+     position:fixed;
+     bottom:20px;
+     right:42px;
+     z-index:99 !important;
+     color:#fff!important;
+ }
+ /*----------------------*-------- AUTOSCROLL TOP ENDS------------------*-----------*/
+ 
+/*----------------------*-------- MEDIA QUERIES START------------------*-----------*/
+@media screen and (max-width:1024px){
+
+    .benefits .row{
+        flex-flow: column-reverse;
+      }
+    
+      .benefits .row:nth-child(even){
+        flex-flow: column;
+      }
+    
+      .benefits .row .image img{
+        width: 100vw;
+      }
+    
+      .benefits .row .content{
+        padding:0;
+      }
+      .footer-div
+      {
+          width:100%;
+          padding:25px 200px;
+      }
+}
+@media screen and (max-width:768px){
+    body{
+        overflow-x:hidden;
+    }
+    .benefits .row{
+        flex-flow: column-reverse;
+      }
+    
+      .benefits .row:nth-child(even){
+        flex-flow: column;
+      }
+    
+      .benefits .row .image img{
+        width: 100vw;
+      }
+    
+      .benefits .row .content{
+        padding:0;
+      }
+      .footer-div
+      {
+          padding:25px 200px;
+          text-align:center;
+      }
+    .footer-div
+    {
+        align-items: center;
+    }
+}
+/*----------------------*-------- MEDIA QUERIES END------------------*-----------*/

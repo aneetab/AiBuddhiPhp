@@ -1,0 +1,381 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+
+html
+{
+    scroll-behavior: smooth;
+}
+/*----------------------*-------- REUSABLE STYLING STARTS------------------*-----------*/
+li{
+    text-decoration: none;
+    outline:none;
+    list-style: none;
+}
+body{
+    line-height: 1.5;
+    font-size: 1.05rem;
+    font-weight: 200;
+    text-rendering: optimizeLegibility;
+    background:rgb(243, 240, 240)!important;
+}
+img{
+    width: 100%;
+    display: block;
+}
+button{
+    outline: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.container{
+    width: 94%;
+    margin: 0 auto;
+}
+/*----------------------*-------- REUSABLE STYLING ENDS------------------*-----------*/
+.profile
+{
+    text-align:center
+
+}
+/*----------------------*-------- NAVBAR SECTION STARTS------------------*-----------*/
+nav{
+    box-shadow: 0 4px 6px -6px #222;
+}
+.navbar-brand img{
+    width:100px;
+    height:60px;
+}
+.navbar-nav{
+    
+    margin-bottom:0px !important;
+    text-align:center;
+}
+
+.second-nav{
+    margin-top:32px!important;
+}
+   
+.nav-link:hover{
+        color:rgb(110, 16, 16)!important;
+    }
+.nav-link img{
+    height:60px;
+    width:60px;
+    border-radius: 100%;
+    margin-top: -10px!important;
+    
+}
+/*----------------------*-------- NAVBAR SECTION ENDS------------------*-----------*/
+
+.form-container{
+    background:#fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow:0px 0px 10px 0px #000;
+    width: 100%;
+    margin:12px 0px!important;
+}
+.video_intro h2{
+
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+}
+.video_intro h3{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+    color: rgb(34, 23, 15);
+}
+
+.video_intro h4{
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:2px;
+    opacity:0.8;
+    color: rgb(34, 23, 15);
+    font-family:"Poppins",sans-serif;
+}
+/*----------------------*-------- INTRODUCTION SECTION STARTS------------------*-----------*/
+.intro{
+    margin-left:30px;
+}
+.intro h1
+{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.4;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+}
+
+.intro h2
+{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+}
+.intro h4
+{
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-size: 0.9rem;
+    font-weight:medium;
+    line-height:1.9;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;
+}
+.intro small
+{
+    letter-spacing: 1px;
+    font-size: 0.7rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;  
+}
+/*----------------------*-------- INTRODUCTION SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- COMMON STYLING FOR MULTIPLE SECTIONS ENDS------------------*-----------*/
+.profile-info h3,.resume-container h3,.photo-id h3,.languages h3,.video-container h3,.biography-container h3{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+    color: rgb(34, 23, 15); 
+}
+.photo-id small,.resume-container small,.biography-container small{
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:2px;
+    opacity:0.8;
+    color: rgb(34, 23, 15);
+    font-family:"Poppins",sans-serif;  
+}
+.profile-info h4,.resume-container h4,.photo-id h4,.languages h4,.video-container h4,.biography-container h4{
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:medium;
+    line-height:1.1;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;
+}
+.profile-info form label{
+    color:rgb(39, 20, 27)!important;
+    
+}
+.profile-info button,.photo-id button,.resume-container button,.profile button,.video_intro button
+{
+    height:50px;
+    outline:none;
+    border:none;
+    background:rgb(82, 5, 5)!important;
+    color:#fff!important;
+    border-radius:4px;
+    font-weight: bold;
+    margin:auto;
+    border-radius: 10px;
+}
+.profile .active 
+{
+    background:#000;
+    color:#fff;
+}
+.profile .active:hover{
+    background:#fff;
+    color:#000;
+
+}
+button:hover
+{
+    border:1px solid #000;
+    background:#fff;
+    color:#000;
+}
+.user-photo
+{
+    border-radius:3px;
+    height:100px;
+    width:100px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom:20px;
+    background: rgb(139, 122, 128);
+}
+
+.intro,.profile-info,.languages,.video-container,.biography-container,.resume-container,.photo-id
+{
+    width:100%;height:auto;
+    margin:100px 0;
+         
+}
+.profile-info input
+{
+    border-radius:3px!important;
+}
+.resume-container,.biography-container,.photo-id,.languages,.profile-info,.video-container
+{
+    
+    border-radius:20px;
+    padding:20px;
+}
+.video_intro img{
+    height:300px;
+    width:300px;
+    margin:auto;
+}
+button
+{
+    display:inline-block;
+    margin:2rem 0rem!important;
+    display:inline-block;
+    text-transform: uppercase;
+    background:#771f04e5;
+    color: #fff;
+    letter-spacing: 2px;
+    padding: 0.85rem 1.85rem;
+    margin-top: 1.75rem;
+    transition: var(--transition);
+    border-radius: 30px;
+}
+button:hover
+{
+    border:1px solid #000;
+    background:#fff;
+    color:#000;
+}
+/*----------------------*-------- COMMON STYLING FOR MULTIPLE SECTIONS ENDS------------------*-----------*/
+
+/*----------------------*-------- SME INFO SECTION STARTS------------------*-----------*/
+.info p
+{
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;
+}
+.info{
+    background:#fff!important;
+    border-radius:2px;
+    margin:20px 10px;
+    padding:20px;
+    width:100%;
+}
+.info h3{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin:20px 0 15px 0;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif;
+    color:rgb(49, 31, 17)
+}
+/*----------------------*-------- SME INFO SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- SUBMIT_FORM SECTION STARTS------------------*-----------*/
+.submission button{
+    height:50px;
+    outline:none;
+    border:none;
+    background:rgb(82, 5, 5)!important;
+    color:#fff!important;
+    border-radius:4px;
+    font-weight: bold;
+    margin:auto;
+    border-radius:10px;
+
+}
+/*----------------------*-------- SUBMIT_FORM SECTION ENDS------------------*-----------*/
+
+/*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
+.footersection a
+ {
+  text-transform:capitalize;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  font-size: 0.7rem;
+  font-weight:bold;
+  line-height:1.5;
+  font-family:"Poppins",sans-serif;
+  color:#000;
+ }
+ .footersection li{
+     list-style: none;
+     display:inline-block;
+     padding-right:0.2rem;
+ }
+ .footersection a:hover{
+     text-decoration: none;
+      color:rgb(110, 16, 16)!important;
+}
+ .footersection h3
+ {
+     text-transform:uppercase;
+     color:#000;
+     margin-bottom:25px;
+     font-size:0.7rem !important;
+     font-weight:600;
+     text-shadow: 0 2px 5px rgb(0,0,0,0.4);
+ }
+ footer
+ {
+     background:rgb(243, 240, 240);
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:20px 0 10px 0;
+     position:relative;
+     display:flex;
+     align-items: center;
+     justify-content: space-evenly;
+ }
+ /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
+
+ nav a{
+    text-transform:capitalize;
+    letter-spacing: 1px;
+ opacity: 0.9;
+ font-size: 0.9rem;
+ font-weight:bold;
+ line-height:1.5;
+ font-family:"Poppins",sans-serif;
+ }
