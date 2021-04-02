@@ -31,7 +31,7 @@ function topFunction(){
     document.body.scrollTop=0;
     document.documentElement.scrollTop=0;
 }
- 
+
 $(document).ready(function(){
     // banner image change
     let bannerCount = 0;
