@@ -8,12 +8,27 @@ html
 {
     scroll-behavior: smooth;
 }
+.btn-success{
+    font-size:12px !important;
+    padding:12px 16px !important;
+    border-radius: 2px !important;
+
+}
+
 /*----------------------*-------- REUSABLE STYLING STARTS------------------*-----------*/
 li{
     text-decoration: none;
     outline:none;
     list-style: none;
 }
+.logo img
+{
+    width:130px;
+    height:80px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 body{
     line-height: 1.5;
     font-size: 1.05rem;
@@ -55,20 +70,42 @@ nav{
     text-align:center;
 }
 
-.second-nav{
-    margin-top:32px!important;
+nav .dropdown-toggle::after,nav .dropdown-toggle::before {
+    content: none!important;
+}
+nav .dropleft::before,nav .dropright::after{
+content: none!important;
+}
+.nav-icons{
+font-size:25px !important;
+padding-left:5px!important;
+}
+.dropdown-divider i{
+    padding-right: 2px!important;
+}
+
+nav .dropdown img{
+height:60px!important;
+width:60px !important;
+border-radius:30px !important;
+}
+
+nav ul li{
+padding-right:5px !important;
+}
+.nav-link{
+    text-align: left!important;
 }
    
 .nav-link:hover{
         color:rgb(110, 16, 16)!important;
     }
-.nav-link img{
-    height:60px;
-    width:60px;
-    border-radius: 100%;
-    margin-top: -10px!important;
-    
-}
+ .red-icons
+    {
+        color:#64161d !important;
+    }
+
+
 /*----------------------*-------- NAVBAR SECTION ENDS------------------*-----------*/
 
 .form-container{
@@ -241,7 +278,7 @@ button:hover
 .intro,.profile-info,.languages,.video-container,.biography-container,.resume-container,.photo-id
 {
     width:100%;height:auto;
-    margin:100px 0;
+    margin:20px 0;
          
 }
 .profile-info input
@@ -252,12 +289,16 @@ button:hover
 {
     
     border-radius:20px;
-    padding:20px;
+    padding:10px 20px;
 }
-.video_intro img{
-    height:300px;
-    width:300px;
+.video_intro img,#sidebar img{
+    height:100px;
+    width:100px;
     margin:auto;
+    border-radius:20px;
+}
+.video_intro video{
+    margin-top:-8px!important;
 }
 button
 {
@@ -294,7 +335,7 @@ button:hover
 .info{
     background:#fff!important;
     border-radius:2px;
-    margin:20px 10px;
+    margin:10px 10px;
     padding:20px;
     width:100%;
 }
@@ -327,10 +368,18 @@ button:hover
 /*----------------------*-------- SUBMIT_FORM SECTION ENDS------------------*-----------*/
 
 /*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
-.footersection a
+footer
+ {
+     background:rgba(252, 251, 251, 0.911);
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:70px 0 20px 0;
+     position:relative;
+ }
+ .footersection a, .credits a
  {
   text-transform:capitalize;
-  letter-spacing: 1px;
   opacity: 0.9;
   font-size: 0.7rem;
   font-weight:bold;
@@ -338,35 +387,52 @@ button:hover
   font-family:"Poppins",sans-serif;
   color:#000;
  }
- .footersection li{
-     list-style: none;
-     display:inline-block;
-     padding-right:0.2rem;
- }
- .footersection a:hover{
-     text-decoration: none;
-      color:rgb(110, 16, 16)!important;
-}
  .footersection h3
  {
      text-transform:uppercase;
      color:#000;
      margin-bottom:25px;
-     font-size:0.7rem !important;
+     font-size:1.2rem !important;
      font-weight:600;
      text-shadow: 0 2px 5px rgb(0,0,0,0.4);
  }
- footer
+ .credits h4
  {
-     background:rgb(243, 240, 240);
+    text-transform:uppercase;
+    color:#000;
+    margin-bottom:25px;
+    font-size:0.7rem !important;
+    font-weight:600;
+    float:right;
+
+ }
+ 
+ .credits
+ {
      font-weight:bolder;
      width:100%;
      height:auto;
-     padding:20px 0 10px 0;
+     padding:10px 0 0 0;
      position:relative;
      display:flex;
-     align-items: center;
-     justify-content: space-evenly;
+     justify-content:space-between;
+ }
+ .social-icons li{
+    display:inline;
+    float:left;
+    padding-right:0.3rem;
+ }
+ 
+ .credits li{
+     list-style: none;
+     display:inline;
+     float:left;
+     padding-right:0.6rem;
+ }
+
+ .credits a:hover,.footersection a:hover{
+     text-decoration: none;
+     color:rgb(99, 16, 16)
  }
  /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
 
@@ -378,4 +444,13 @@ button:hover
  font-weight:bold;
  line-height:1.5;
  font-family:"Poppins",sans-serif;
+ }
+ section .details{
+     background:#fff;
+ }
+ .badge{
+     border-radius: 50%;
+     position:relative;
+     top:-10px;
+     left:-5px;
  }

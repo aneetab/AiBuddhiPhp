@@ -3,6 +3,17 @@
     padding:0px;
     box-sizing:border-box;
 }
+a{
+    color: #000;
+    text-decoration: none;
+}
+img{
+    width: 100%;
+    display: block;
+}
+li{
+    list-style-type: none;
+}
 body
 {
     font-family: 'Poppins',sans-serif;
@@ -10,6 +21,17 @@ body
     align-items:center;
     justify-content: center;
     background-color:rgb(243, 240, 240)!important;
+    line-height: 1.5;
+    font-size: 1.05rem;
+    font-weight: 200;
+    text-rendering: optimizeLegibility;
+}
+.logo img
+{
+    width:130px;
+    height:80px;
+    margin-left:auto;
+    margin-right:auto;
 }
 /*----------------------*-------- NAVBAR STARTS------------------*-----------*/
 nav{
@@ -19,35 +41,49 @@ nav{
     width:100px;
     height:60px;
 }
-nav a{
- text-transform:capitalize;
- letter-spacing: 1px;
- opacity: 0.9;
- font-size: 0.9rem;
- font-weight:bold;
- line-height:1.5;
- font-family:"Poppins",sans-serif;
-}
-nav a:hover{
-    color:rgb(110, 16, 16)!important;
-}
 .navbar-nav{
+    
     margin-bottom:0px !important;
     text-align:center;
 }
 
-.second-nav{
-    margin-top:32px!important;
+nav .dropdown-toggle::after,nav .dropdown-toggle::before {
+    content: none!important;
 }
+nav .dropleft::before,nav .dropright::after{
+content: none!important;
+}
+.nav-icons{
+font-size:25px !important;
+padding-left:5px!important;
+}
+.dropdown-divider i{
+    padding-right: 2px!important;
+}
+
+nav .dropdown img{
+height:60px!important;
+width:60px !important;
+border-radius:30px !important;
+}
+small{
+    color:rgb(109, 18, 18) !important;
+    font-weight: bold!important;
+  }
+nav ul li{
+padding-right:5px !important;
+}
+.nav-link{
+    text-align: left!important;
+}
+   
 .nav-link:hover{
-    color: rgb(112, 19, 31) !important;
-}
-.nav-link img{
-    height:60px;
-    width:60px;
-    border-radius: 100%;
-    margin-top: -10px!important;   
-}
+        color:rgb(110, 16, 16)!important;
+    }
+ .red-icons
+    {
+        color:#64161d !important;
+    }
 /*----------------------*-------- NAVBAR ENDS------------------*-----------*/
 
 /*----------------------*-------- SME SECTION STARTS------------------*-----------*/
@@ -98,7 +134,7 @@ section{
     margin:50px 10px;
 }
 .sme{
-    background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("../assets/images/laptop.jpg");
+    background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("assets/images/laptop.jpg");
 }
 .btn{
     height:50px;
@@ -114,50 +150,86 @@ section{
 /*----------------------*-------- SME SECTION ENDS------------------*-----------*/
 
 /*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
-
 footer
  {
-     background:rgba(252, 251, 251, 0.322);
+     background:rgb(247, 244, 244);
      font-weight:bolder;
      width:100%;
      height:auto;
-     padding:20px 0 10px 0;
+     padding:70px 0 20px 0;
      position:relative;
-     display:flex;
-     align-items: center;
-     justify-content: space-evenly;
  }
- 
- .footersection a
+ .footersection a, .credits a
  {
   text-transform:capitalize;
-  letter-spacing: 1px;
   opacity: 0.9;
   font-size: 0.7rem;
   font-weight:bold;
-  line-height:1.5;
+  line-height:1.5!important;
   font-family:"Poppins",sans-serif;
   color:#000;
+  list-style:none;
+  padding-bottom:5px!important;
  }
  .footersection li{
-     list-style: none;
-     display:inline-block;
-     padding-right:0.2rem;
- }
- .footersection a:hover{
-     text-decoration: none;
-     color:rgb(99, 16, 16)
+  padding-bottom:7px!important;
+  font-size: 0.7rem;
+  font-weight:bold;
+  font-family:"Poppins",sans-serif;
  }
  .footersection h3
  {
      text-transform:uppercase;
      color:#000;
      margin-bottom:25px;
-     font-size:0.7rem !important;
+     font-size:1.2rem !important;
      font-weight:600;
      text-shadow: 0 2px 5px rgb(0,0,0,0.4);
+ }
+ .credits h4
+ {
+    text-transform:uppercase;
+    color:#000;
+    margin-bottom:25px;
+    font-size:0.7rem !important;
+    font-weight:bold;
+    float:right;
 
  }
+ 
+ .credits
+ {
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:10px 0 0 0;
+     position:relative;
+     display:flex;
+     justify-content:space-between;
+ }
+ .social-icons li{
+    display:inline;
+    float:left;
+    padding-right:0.3rem;
+ }
+ 
+ .credits li{
+     list-style: none;
+     display:inline;
+     float:left;
+     padding-right:0.6rem;
+ }
+
+ .credits a:hover,.footersection a:hover{
+     text-decoration: none;
+     color:rgb(99, 16, 16)
+ }
+
  /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
  
-
+ .badge{
+    border-radius: 50%;
+    position:relative;
+    top:-10px;
+    left:-5px;
+}

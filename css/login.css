@@ -7,16 +7,51 @@
 body
 {
     background-color:rgba(228, 217, 217, 0.945)!important;
+    line-height: 1.5;
+    font-size: 1.05rem;
+    font-weight: 200;
+    text-rendering: optimizeLegibility;
+}
+.logo img
+{
+    width:130px;
+    height:80px;
+    margin-left:auto;
+    margin-right:auto;
+}
+li{
+  text-decoration: none;
+  outline:none;
+  list-style: none;
 }
 
+
 /*----------------------*-------- NAVBAR STARTS------------------*-----------*/
-.navbar-brand img{
-    width:100px;
-    height:60px;
-}
+/*----------------------*-------- NAVBAR STARTS------------------*-----------*/
 nav{
-    box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
 }
+.navbar-brand img{
+  width:100px;
+  height:60px;
+}
+nav a:hover
+{
+  color:rgb(110, 16, 16)!important;
+}
+nav a
+{
+
+letter-spacing: 0.3px;
+padding-right:14px!important;
+opacity: 0.9;
+font-size: 0.9rem;
+font-weight:bold;
+line-height:1.5;
+font-family:"Poppins",sans-serif;
+
+}
+/*----------------------*-------- NAVBAR ENDS------------------*-------------------*/
 /*----------------------*-------- NAVBAR ENDS------------------*-----------*/
 
 /*----------------------*-------- FORM SECTION STARTS------------------*-----------*/
@@ -93,45 +128,80 @@ nav{
 /*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
 footer
  {
-     background:rgba(252, 251, 251, 0.322);
+     background:rgb(247, 244, 244);
      font-weight:bolder;
      width:100%;
      height:auto;
-     padding:20px 0 10px 0;
+     padding:70px 0 20px 0;
      position:relative;
-     display:flex;
-     align-items: center;
-     justify-content: space-evenly;
  }
-.footersection a
+ .footersection a, .credits a
  {
   text-transform:capitalize;
-  letter-spacing: 1px;
   opacity: 0.9;
   font-size: 0.7rem;
   font-weight:bold;
-  line-height:1.5;
+  line-height:1.5!important;
   font-family:"Poppins",sans-serif;
   color:#000;
+  list-style:none;
+  padding-bottom:5px!important;
  }
  .footersection li{
-     list-style: none;
-     display:inline-block;
-     padding-right:0.2rem;
- }
- .footersection a:hover{
-     text-decoration: none;
-     color:rgb(99, 16, 16)
+  padding-bottom:7px!important;
+  font-size: 0.7rem;
+  font-weight:bold;
+  font-family:"Poppins",sans-serif;
  }
  .footersection h3
  {
      text-transform:uppercase;
      color:#000;
      margin-bottom:25px;
-     font-size:0.7rem !important;
+     font-size:1.2rem !important;
      font-weight:600;
      text-shadow: 0 2px 5px rgb(0,0,0,0.4);
  }
+ .credits h4
+ {
+    text-transform:uppercase;
+    color:#000;
+    margin-bottom:25px;
+    font-size:0.7rem !important;
+    font-weight:bold;
+    float:right;
 
+ }
+ 
+ .credits
+ {
+     font-weight:bolder;
+     width:100%;
+     height:auto;
+     padding:10px 0 0 0;
+     position:relative;
+     display:flex;
+     justify-content:space-between;
+ }
+ .social-icons li{
+    display:inline;
+    float:left;
+    padding-right:0.3rem;
+ }
+ 
+ .credits li{
+     list-style: none;
+     display:inline;
+     float:left;
+     padding-right:0.6rem;
+ }
+ small{
+  color:rgb(109, 18, 18) !important;
+  font-weight: bold!important;
+}
+ .credits a:hover,.footersection a:hover{
+     text-decoration: none;
+     color:rgb(99, 16, 16)
+ }
  /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
  

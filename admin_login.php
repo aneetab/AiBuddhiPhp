@@ -45,7 +45,7 @@ if(isset($_POST['submit'])){
                 </div>
                 <div class="container-login100-form-btn m-t-17">
                     <div class="w-full beforeNone text-center">
-                        <input type="submit" name="submit" class="nv-login-submit login100-form-btn" name="submit">
+                        <input type="submit" name="submit" class="nv-login-submit login100-form-btn">
                         <small><?php echo $msg?></small><br/>
                     </div>
                 </div>

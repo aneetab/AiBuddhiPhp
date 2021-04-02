@@ -1,3 +1,97 @@
+<?php
+require('connection.inc.php');
+require('functions.inc.php');
+$_SESSION['USER_ROLE']='sme';
+$email_id='';
+
+if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
+{
+  $email_id=$_SESSION['USER_EMAIL'];
+  $sql="select * from sme_apply where email='$email_id'";
+  $res=mysqli_query($con,$sql);
+  $count=mysqli_num_rows($res);
+  if($count>0)
+  {
+    header('location:sme_dashboard.php');
+    die();
+  }
+  $sql="select * from client_users where email_id='$email_id' and role='2'";
+  $res=mysqli_query($con,$sql);
+  $row=mysqli_fetch_assoc($res);
+  $id=$row['client_id'];
+}
+else{
+    header('location:client_login.php');
+    die();
+}
+
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+      $date_val=date("Y-m-d H:i:s");
+      $firstname=$_POST['firstname'];
+      $lastname=$_POST['lastname'];
+      $gender=$_POST['gender'];
+      $language=$_POST['language'];
+      $industry=$_POST['industry'];
+      $enterprise=$_POST['enterprise'];
+      $about_me=$_POST['about_me'];
+      /*PROFILE PIC STARTS*/
+      $profile_pic=$_FILES['profile-pic'];
+      $filename1=$profile_pic['name'];
+      $fileerror1=$profile_pic['error'];
+      $filetmp1=$profile_pic['tmp_name'];
+      $fileext=explode('.',$filename1);
+      $filecheck=strtolower(end($fileext));
+      $fileextstored=array('png','jpg','jpeg');
+      if(in_array($filecheck,$fileextstored)){
+          $destinationfile1='profilepics/'.$filename1;
+          move_uploaded_file($filetmp1,$destinationfile1);
+      }else{
+          $msg1="Extension must be png/jpg/jpeg";
+      }
+      /*PROFILE PIC ENDS*/
+      /*VIDEO STARTS*/
+      $video=$_FILES['video'];
+      $filename2=$video['name'];
+      $fileerror2=$video['error'];
+      $filetmp2=$video['tmp_name'];
+      $destinationfile2='intros/'.$filename2;
+      move_uploaded_file($filetmp2,$destinationfile2);
+      /*VIDEO ENDS*/
+      /*RESUME STARTS*/
+      $resume=$_FILES['resume'];
+      $filename3=$resume['name'];
+      $fileerror3=$resume['error'];
+      $filetmp3=$resume['tmp_name'];
+      $destinationfile3='resume/'.$filename3;
+      move_uploaded_file($filetmp3,$destinationfile3);
+      /*RESUME ENDS*/
+      /*PHOTO ID STARTS*/
+      $photo_id=$_FILES['photo-id'];
+      $filename4=$photo_id['name'];
+      $fileerror4=$photo_id['error'];
+      $filetmp4=$photo_id['tmp_name'];
+      $fileext=explode('.',$filename4);
+      $filecheck=strtolower(end($fileext));
+      if(in_array($filecheck,$fileextstored)){
+          $destinationfile4='photoID/'.$filename4;
+          move_uploaded_file($filetmp4,$destinationfile4);
+      }else{
+          $msg2="Extension must be png/jpg/jpeg.";
+      }
+      /*PROFILE PIC ENDS*/
+      if(isset($_GET['type']) && $_GET['type']=='delete' && isset($_GET['id'])){
+        $id=get_safe_value($con,$_GET['id']);
+        mysqli_query($con,"delete from sme_apply where id='$id'");
+      }
+      $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`profile-pic`,`language`,`industry`,`enterprise`,`video`,`about_me`,`resume`,`photo-id`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$destinationfile1','$language','$industry','$enterprise','$destinationfile2','$about_me','$destinationfile3','$destinationfile4','0','$date_val')";
+      $query=mysqli_query($con,$q);
+      header('location:sme_dashboard.php');
+      die();
+
+      
+     
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -17,39 +111,78 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!--Custom Css file-->
   <style>
-  <?php
-   include "css/sme.css";
-  ?>
+    <?php
+    include "css/sme.css";
+    ?>
   </style>
+  
 </head>
 <body>
   <!--BOOTSTRAP Responsive Navbar-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img src="assets/images/logo8.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Application Status<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Messages</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Notifications</a>
-        </li>
+  <a class="navbar-brand" href="#"><img src="assets/images/logo.png"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+      <ul class="navbar-nav mr-auto hide-nav">
+      <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="nav-icons fas fa-envelope mt-3"></i><span class="badge badge-danger" id="msg-count">0</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-check-circle"></i><h5>You're all caught up!</h5><br/>
+          <small>No new messages</small></a>
+      </li>
+      <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="nav-icons fas fa-bell mt-3"></i><span class="badge badge-danger" id="notif-count">0</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-check-circle"></i><h5>You're all caught up!</h5><br/>
+          <small>No new notifications</small></a>
+                      
+      </li>
       </ul>
-      <ul class="navbar-nav second-nav ml-auto mt-2 mt-lg-0">
-      
-          <li class="nav-item d-sm-none d-none d-md-none d-lg-block">
-            <a class="nav-link" href="#"><img src="assets/images/p7.jpg"></a>
-          </li>     
-      </ul>
-    </div>
-  </nav>
+      <ul class="navbar-nav ml-auto d-sm-none d-none d-md-none d-lg-block">
+      <li class="nav-item dropdown dropleft">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       <img src="assets/images/placeholder.jpg">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
+    <li class="nav-item">
+        <a class="nav-link" href="#"><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 
   <!--INTRODUCTION SECTION-->
  
@@ -116,13 +249,12 @@
     <section class="container-fluid">
       <section class="row justify-content-center">
           <section class="col-lg-10 col-md-8 col-sm-6 m-auto display-block">
-    <form class="form-container" action="photoupload.php" method="post" enctype="multipart/form-data">
+    <form class="form-container" action="" method="post" enctype="multipart/form-data">
     <section>
         <div class="container profile-info">
             <h3>Profile</h3>
                     <div>
                         <h4>General Information</h4>
-            
                               <div class="form-group">
                                 <label for="firstname">First Name:</label>
                                 <input type="text" class="form-control" name="firstname" id="firstname" required>
@@ -224,8 +356,7 @@
     <!--SUBMIT FORM SECTION-->
     <section>
         <div class="form-group container submission text-center">
-
-            <button type="submit">Submit</button>
+        <input type="submit" name="submit" value="SUBMIT">
         </div>
 </form>
     </section>
@@ -236,31 +367,72 @@
     <footer class="footersection">
       <div class="container">
           <div class="row">
-              <div class="col-lg-4 col-md-12 col-12 text-center">
+              <div class="col-lg-3 col-md-3 col-6 text-center">
+                  <div class="logo">
+                  <img src="assets/images/logo.png">
+                  </div>
                   <div>
-                      <li><a href="#">Privacy Policy</a></li>
-                      <li><a href="#">Terms and Conditions</a></li>
-                      <li><a href="#">Jobs</a></li>
-                      <li><a href="#">Contact</a></li>
+                      <h3>AiBuddhi</h3>
+                      <li><a href="file:///C:/Users/91982/OneDrive/Desktop/Website/sme_application.html#">Apply as an expert</a></li>
                   </div>
               </div>
-              <div class="col-lg-4 col-md-12 col-12 text-center">
-                  <div>  
-                      <li><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                      <li><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                      <li><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                      <li><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-                  </div>
-              </div>
-              <div class="col-lg-4 col-md-12 col-12 text-center">
+              <div class="col-lg-3 col-md-3 col-6">
                   <div>
-                      <h3>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h3>
+                      <h3>Industry</h3>
+                      <li><a href="#">Transport</a></li>
+                      <li><a href="#">Hospital</a></li>
+                      <li><a href="#">Computer</a></li>
+                      <li><a href="#">Pharmaceutical</a></li>
+                      <li><a href="#">Entertainment</a></li>
+                      <li><a href="#">Telecommunication</a></li>
+                      <li><a href="#">All industries</a></li>
                   </div>
-              </div>             
               </div>
-          </div>             
-      </div>
-  </footer>
+              <div class="col-lg-3 col-md-3 col-6">
+                  <div>
+                      <h3>Enterprise</h3>
+                      <li><a href="#">Manufacturing</a></li>
+                      <li><a href="#">Coordinating</a></li>
+                      <li><a href="#">Planning</a></li>
+                      <li><a href="#">All enterprises</a></li>
+                  </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-6">
+                  <div>
+                      <h3>Resources</h3>
+                      <li><a href="#">Blog</a></li>
+                  </div>
+                  <div class="mt-4">
+                      <h3>Contact & follow us</h3>
+                      <li class="mb-3"><a href="#">Contact</a></li>
+                      <ul class="social-icons">                            
+                          <li class="social-icons"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
+                          <li class="social-icons"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
+                          <li class="social-icons"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
+                          <li class="social-icons"><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
+                  </ul>
+                  </div>
+              </div>
+              </div>
+              <div class="credits row">
+                  <div class="col-lg-5 col-md-5 col-5">
+                      <div class="social-links">
+                          <li><a href="#">Privacy Policy</a></li>
+                          <li><a href="#">Terms and Conditions</a></li>
+                          
+                      </div>
+                  </div>
+                  
+                  <div class="col-lg-7 col-md-7 col-7 text-center float-right">
+                      <div>
+                          <h4>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h4>
+                      </div>
+                  </div>
+                  
+                  </div>
+              </div>  
+          </div>
+  </footer> 
 <!--JavaScript files-->
 <script src="assets/fontawesome-icons/all.js"></script>
 <script src="assets/jquery/jquery-3.5.1.js"></script>

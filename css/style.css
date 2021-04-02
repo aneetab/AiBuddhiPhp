@@ -17,9 +17,12 @@ html
 }
 .logo img
 {
-    width:130px;
-    height:70px;
+    width: 130px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 body{
     line-height: 1.5;
@@ -70,10 +73,11 @@ nav a:hover
 }
 nav a
 {
-    text-transform:capitalize;
-    letter-spacing: 1px;
+ 
+ letter-spacing: 0.3px;
+ padding-right:14px!important;
  opacity: 0.9;
- font-size: 0.9rem;
+ font-size: 0.8rem;
  font-weight:bold;
  line-height:1.5;
  font-family:"Poppins",sans-serif;
@@ -96,13 +100,13 @@ nav a
     to{opacity: 1;}
 }
 .banner-item:nth-child(1){
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner1.jpg) center/cover no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(assets/images/banner1.jpg) center/cover no-repeat fixed;
 }
 .banner-item:nth-child(2){
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner5.jpg) center/cover no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(assets/images/banner5.jpg) center/cover no-repeat fixed;
 }
 .banner-item:nth-child(3){
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/images/banner6.jpg) center/cover no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(assets/images/banner6.jpg) center/cover no-repeat fixed;
 }
 .banner-item h1{
     font-size: 2.5rem;
@@ -379,7 +383,7 @@ margin:2px 0;
 .reviews{
     min-height:90vh;
     width: 100%;
-    background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("../assets/images/laptop.jpg");
+    background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("assets/images/laptop.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
    
@@ -437,67 +441,72 @@ margin:2px 0;
   /*----------------------*-------- CUSTOMER REVIEW ENDS------------------*-----------*/
 
   /*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
- footer
- {
-     background:rgba(252, 251, 251, 0.322);
-     font-weight:bolder;
-     width:100%;
-     height:auto;
-     padding:70px 0 20px 0;
-     position:relative;
- }
- .footersection a, .credits a
- {
-  text-transform:capitalize;
-  letter-spacing: 1px;
-  opacity: 0.9;
-  font-size: 0.7rem;
-  font-weight:bold;
-  line-height:1.5;
-  font-family:"Poppins",sans-serif;
-  color:#000;
- }
- .footersection h3
- {
+  footer
+  {
+      background:rgba(252, 251, 251, 0.322);
+      font-weight:bolder;
+      width:100%;
+      height:auto;
+      padding:70px 0 20px 0;
+      position:relative;
+  }
+  .footersection a, .credits a
+  {
+   text-transform:capitalize;
+   opacity: 0.9;
+   font-size: 0.7rem;
+   font-weight:bold;
+   line-height:1.5;
+   font-family:"Poppins",sans-serif;
+   color:#000;
+  }
+  .footersection h3
+  {
+      text-transform:uppercase;
+      color:#000;
+      margin-bottom:25px;
+      font-size:1.2rem !important;
+      font-weight:600;
+      text-shadow: 0 2px 5px rgb(0,0,0,0.4);
+  }
+  .credits h4
+  {
      text-transform:uppercase;
      color:#000;
      margin-bottom:25px;
-     font-size:1.2rem !important;
+     font-size:0.7rem !important;
      font-weight:600;
-     text-shadow: 0 2px 5px rgb(0,0,0,0.4);
- }
- .credits h3
- {
-    text-transform:uppercase;
-    color:#000;
-    margin-bottom:25px;
-    font-size:0.6rem !important;
-    font-weight:600;
-    text-shadow: 0 2px 5px rgb(0,0,0,0.4);
-
- }
- .credits
- {
-     background:rgba(252, 251, 251, 0.322);
-     font-weight:bolder;
-     width:100%;
-     height:auto;
-     padding:20px 0 10px 0;
-     position:relative;
-     display:flex;
-     align-items: center;
-     justify-content: space-evenly;
- }
+     float:right;
  
- .credits li{
-     list-style: none;
-     display:inline-block;
-     padding-right:0.2rem;
- }
- .credits a:hover,.footersection a:hover{
-     text-decoration: none;
-     color:rgb(99, 16, 16)
- }
+  }
+  
+  .credits
+  {
+      font-weight:bolder;
+      width:100%;
+      height:auto;
+      padding:10px 0 0 0;
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+  }
+  .social-icons li{
+     display:inline;
+     float:left;
+     padding-right:0.3rem;
+  }
+  
+  .credits li{
+      list-style: none;
+      display:inline;
+      float:left;
+      padding-right:0.6rem;
+  }
+ 
+  .credits a:hover,.footersection a:hover{
+      text-decoration: none;
+      color:rgb(99, 16, 16)
+  }
  /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
  
 /*----------------------*-------- AUTOSCROLL TOP STARTS------------------*-----------*/
