@@ -83,7 +83,9 @@ padding-left:5px!important;
 .dropdown-divider i{
     padding-right: 2px!important;
 }
-
+select{
+    width:80% !important;
+}
 nav .dropdown img{
 height:60px!important;
 width:60px !important;
@@ -212,6 +214,10 @@ padding-right:5px !important;
     font-family:"Poppins",sans-serif; 
     color: rgb(34, 23, 15); 
 }
+small{
+    color:rgb(109, 18, 18) !important;
+    font-weight: bold!important;
+  }
 .photo-id small,.resume-container small,.biography-container small{
     letter-spacing: 1px;
     font-size: 0.9rem;
@@ -366,75 +372,6 @@ button:hover
 
 }
 /*----------------------*-------- SUBMIT_FORM SECTION ENDS------------------*-----------*/
-
-/*----------------------*-------- FOOTER SECTION STARTS------------------*-----------*/
-footer
- {
-     background:rgba(252, 251, 251, 0.911);
-     font-weight:bolder;
-     width:100%;
-     height:auto;
-     padding:70px 0 20px 0;
-     position:relative;
- }
- .footersection a, .credits a
- {
-  text-transform:capitalize;
-  opacity: 0.9;
-  font-size: 0.7rem;
-  font-weight:bold;
-  line-height:1.5;
-  font-family:"Poppins",sans-serif;
-  color:#000;
- }
- .footersection h3
- {
-     text-transform:uppercase;
-     color:#000;
-     margin-bottom:25px;
-     font-size:1.2rem !important;
-     font-weight:600;
-     text-shadow: 0 2px 5px rgb(0,0,0,0.4);
- }
- .credits h4
- {
-    text-transform:uppercase;
-    color:#000;
-    margin-bottom:25px;
-    font-size:0.7rem !important;
-    font-weight:600;
-    float:right;
-
- }
- 
- .credits
- {
-     font-weight:bolder;
-     width:100%;
-     height:auto;
-     padding:10px 0 0 0;
-     position:relative;
-     display:flex;
-     justify-content:space-between;
- }
- .social-icons li{
-    display:inline;
-    float:left;
-    padding-right:0.3rem;
- }
- 
- .credits li{
-     list-style: none;
-     display:inline;
-     float:left;
-     padding-right:0.6rem;
- }
-
- .credits a:hover,.footersection a:hover{
-     text-decoration: none;
-     color:rgb(99, 16, 16)
- }
- /*----------------------*-------- FOOTER SECTION ENDS------------------*-----------*/
 
  nav a{
     text-transform:capitalize;

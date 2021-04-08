@@ -1,11 +1,11 @@
 <?php
 require('connection.inc.php');
 require('functions.inc.php');
+$firstname='';
+$lastname='';
 $firstname_error='';
 $lastname_error='';
 $is_error='';
-$firstname='';
-$lastname='';
 $email_id=$_SESSION['USER_EMAIL'];
 if(isset($_POST['submit']))
 {
@@ -24,10 +24,11 @@ if($lastname=='')
 
 if($is_error=='')
 {
-$_SESSION['USER_NAME']=$firstname;
 $sql="update client_users set firstname='$firstname',lastname='$lastname' where email_id='$email_id'";
 mysqli_query($con,$sql);
 $role=$_SESSION['USER_ROLE'];
+$_SESSION['USER_NAME']=$firstname;
+$_SESSION['USER_LNAME']=$lastname;
 if($role=='client')
 {
 header('location:clientpage.php');
@@ -61,7 +62,7 @@ if($role=='sme')
 
     <style>
     <?php
-    include "css/login.css";
+    include "css/style.css";
     ?>
     </style>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
@@ -96,80 +97,9 @@ if($role=='sme')
             </div>
         </div>
     </div>
-    <!--FOOTER SECTION-->
-    <footer class="footersection">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-6 text-center">
-                    <div class="logo">
-                    <img src="assets/images/logo.png">
-                    </div>
-                    <div>
-                        <h3>AiBuddhi</h3>
-                        <li><a href="file:///C:/Users/91982/OneDrive/Desktop/Website/sme_application.html#">Apply as an expert</a></li>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-6">
-                    <div>
-                        <h3>Industry</h3>
-                        <li><a href="#">Transport</a></li>
-                        <li><a href="#">Hospital</a></li>
-                        <li><a href="#">Computer</a></li>
-                        <li><a href="#">Pharmaceutical</a></li>
-                        <li><a href="#">Entertainment</a></li>
-                        <li><a href="#">Telecommunication</a></li>
-                        <li><a href="#">All industries</a></li>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-6">
-                    <div>
-                        <h3>Enterprise</h3>
-                        <li><a href="#">Manufacturing</a></li>
-                        <li><a href="#">Coordinating</a></li>
-                        <li><a href="#">Planning</a></li>
-                        <li><a href="#">All enterprises</a></li>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-6">
-                    <div>
-                        <h3>Resources</h3>
-                        <li><a href="#">Blog</a></li>
-                    </div>
-                    <div class="mt-4">
-                        <h3>Contact & follow us</h3>
-                        <li class="mb-3"><a href="#">Contact</a></li>
-                        <ul class="social-icons">                            
-                            <li class="social-icons"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                            <li class="social-icons"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                            <li class="social-icons"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                            <li class="social-icons"><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-                    </ul>
-                    </div>
-                </div>
-                </div>
-                <div class="credits row">
-                    <div class="col-lg-5 col-md-5 col-5">
-                        <div class="social-links">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms and Conditions</a></li>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-7 col-md-7 col-7 text-center float-right">
-                        <div>
-                            <h4>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h4>
-                        </div>
-                    </div>
-                    
-                    </div>
-                </div>  
-            </div>
-    </footer> 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-       
+<!--FOOTER SECTION-->
+<?php
+require('outerpagefooter.php');
+?>
 </body>
 </html>

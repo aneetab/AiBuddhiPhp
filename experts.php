@@ -64,7 +64,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $query=mysqli_query($con,$q);
        
    }
-    $sql="select * from sme_apply order by date_time desc";
+    $sql="select * from sme_apply where status='0' order by date_time desc";
     $res=mysqli_query($con,$sql);
 ?>
 
@@ -77,7 +77,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
   <!-- Demo content -->
  
   <h5 class="box-title">Experts Application</h5>
-  <h6 class="box-link"><a href="manage_expert.php">Add expert</a></h6>                      
+                      
   <div class="container my-5">
 <div class="table-responsive">
 <table class="table table-bordered table-striped table-hover">
@@ -132,6 +132,65 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 </table>
 </div>
 </div>
+
+<h5 class="box-title">Experts Approved</h5>
+                      
+                      <div class="container my-5">
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <th scope="col" width="5%">#</th>
+                            <th scope="col" width="23%">Name</th>
+                            <th scope="col" width="10%" >Gender </th>
+                            <th>Resume </th>
+                            <th>Industry </th>
+                            <th>Enterprise </th>
+                            <th scope="col" width="10%">Status</th>
+                    </thead>
+                    <tbody>
+                    <?php
+                          $i=1;
+                          $sql1="select * from sme_apply where status='1' order by date_time desc";
+                          $res1=mysqli_query($con,$sql1);
+                          while($row1=mysqli_fetch_assoc($res1)){?>
+                          <tr>
+                          <th scope="row"><?php echo $i?></th>
+                          <td><?php echo $row1['firstname'].' '.$row1['lastname']?></td>
+                          <td><?php echo $row1['gender']?></td>
+                          <td><a href="<?php echo $row1['resume']?>" target="_#"><?php echo $row1['resume']?></a></td>
+                          <td><?php echo $row1['industry']?></td>
+                          <td><?php echo $row1['enterprise']?></td>
+                          <td>
+                          <?php 
+                          if($row1['status']==0){
+                            echo "Applied";
+                          }
+                          if($row1['status']==1){
+                            echo "Approved";
+                          }
+                          if($row1['status']==2){
+                            echo "Rejected";
+                          }
+                          ?></td>
+                    
+                          <td>
+                          
+                          <?php
+                          $eye='fa-eye text-primary fa-fw'; 
+                          echo "<a href='viewapplication.php?id=".$row1['id']."'><i class='fas " .$eye ."'></i></a>"; ?>
+                          <?php
+                           $icon='fa-trash text-primary fa-fw mr-3';
+                           echo "<a onclick='javascript:confirmationDelete($(this));return false;' href='experts.php?id=".$row1['id']."&type=delete'><i class='fas " .$icon ."'></i></a>&nbsp;";
+                           ?>
+                        
+                        </td>
+                    
+                        </tr>
+                        <?php $i=$i+1;} ?>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>
    
 <?php
 require('footer.inc.php');

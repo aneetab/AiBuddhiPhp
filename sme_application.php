@@ -3,6 +3,8 @@ require('connection.inc.php');
 require('functions.inc.php');
 $_SESSION['USER_ROLE']='sme';
 $email_id='';
+$firstname=$_SESSION['USER_NAME'];
+$lastname=$_SESSION['USER_LNAME'];
 
 if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
 {
@@ -15,20 +17,20 @@ if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
     header('location:sme_dashboard.php');
     die();
   }
+
   $sql="select * from client_users where email_id='$email_id' and role='2'";
   $res=mysqli_query($con,$sql);
   $row=mysqli_fetch_assoc($res);
   $id=$row['client_id'];
 }
 else{
-    header('location:client_login.php');
+    header('location:client_signup.php');
     die();
 }
 
-  if($_SERVER['REQUEST_METHOD']=='POST'){
+  if(isset($_POST['submit'])){
+      print_r($_FILES);
       $date_val=date("Y-m-d H:i:s");
-      $firstname=$_POST['firstname'];
-      $lastname=$_POST['lastname'];
       $gender=$_POST['gender'];
       $language=$_POST['language'];
       $industry=$_POST['industry'];
@@ -83,10 +85,23 @@ else{
         $id=get_safe_value($con,$_GET['id']);
         mysqli_query($con,"delete from sme_apply where id='$id'");
       }
+      echo $gender;
+      echo $industry;
+      echo $enterprise;
+
       $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`profile-pic`,`language`,`industry`,`enterprise`,`video`,`about_me`,`resume`,`photo-id`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$destinationfile1','$language','$industry','$enterprise','$destinationfile2','$about_me','$destinationfile3','$destinationfile4','0','$date_val')";
       $query=mysqli_query($con,$q);
-      header('location:sme_dashboard.php');
+      if($query)
+      {
+      header('location:sme_experience.php');
       die();
+      }
+      else
+      {
+        $msg="Failed to upload.";
+        $css_class='alert-danger';
+
+      }
 
       
      
@@ -162,6 +177,7 @@ else{
           <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
+      <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item">
@@ -182,6 +198,12 @@ else{
     </ul>
   </div>
 </nav>
+
+<?php if(!empty($msg)):?>
+                        <div class="alert <?php echo $css_class;?>">
+                        <?php echo $msg;?>
+                        </div>
+ <?php endif; ?>
 
 
   <!--INTRODUCTION SECTION-->
@@ -257,11 +279,11 @@ else{
                         <h4>General Information</h4>
                               <div class="form-group">
                                 <label for="firstname">First Name:</label>
-                                <input type="text" class="form-control" name="firstname" id="firstname" required>
+                                <input disabled value="<?php echo $firstname?>" type="text" class="form-control" name="firstname" id="firstname" required>
                               </div>
                               <div class="form-group">
                                 <label for="lastname">Last Name:</label>
-                                <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                <input disabled value="<?php echo $lastname?>" type="text" class="form-control" id="lastname" name="lastname" required>
                               </div>
                               <div class="form-group">
                                 <label for="gender">Gender:</label>
@@ -356,7 +378,7 @@ else{
     <!--SUBMIT FORM SECTION-->
     <section>
         <div class="form-group container submission text-center">
-        <input type="submit" name="submit" value="SUBMIT">
+        <input type="submit" name="submit" value="CONTINUE">
         </div>
 </form>
     </section>
@@ -364,81 +386,9 @@ else{
 </section>
 </section>
     <!--FOOTER SECTION-->
-    <footer class="footersection">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-3 col-md-3 col-6 text-center">
-                  <div class="logo">
-                  <img src="assets/images/logo.png">
-                  </div>
-                  <div>
-                      <h3>AiBuddhi</h3>
-                      <li><a href="file:///C:/Users/91982/OneDrive/Desktop/Website/sme_application.html#">Apply as an expert</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Industry</h3>
-                      <li><a href="#">Transport</a></li>
-                      <li><a href="#">Hospital</a></li>
-                      <li><a href="#">Computer</a></li>
-                      <li><a href="#">Pharmaceutical</a></li>
-                      <li><a href="#">Entertainment</a></li>
-                      <li><a href="#">Telecommunication</a></li>
-                      <li><a href="#">All industries</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Enterprise</h3>
-                      <li><a href="#">Manufacturing</a></li>
-                      <li><a href="#">Coordinating</a></li>
-                      <li><a href="#">Planning</a></li>
-                      <li><a href="#">All enterprises</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Resources</h3>
-                      <li><a href="#">Blog</a></li>
-                  </div>
-                  <div class="mt-4">
-                      <h3>Contact & follow us</h3>
-                      <li class="mb-3"><a href="#">Contact</a></li>
-                      <ul class="social-icons">                            
-                          <li class="social-icons"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-                  </ul>
-                  </div>
-              </div>
-              </div>
-              <div class="credits row">
-                  <div class="col-lg-5 col-md-5 col-5">
-                      <div class="social-links">
-                          <li><a href="#">Privacy Policy</a></li>
-                          <li><a href="#">Terms and Conditions</a></li>
-                          
-                      </div>
-                  </div>
-                  
-                  <div class="col-lg-7 col-md-7 col-7 text-center float-right">
-                      <div>
-                          <h4>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h4>
-                      </div>
-                  </div>
-                  
-                  </div>
-              </div>  
-          </div>
-  </footer> 
-<!--JavaScript files-->
-<script src="assets/fontawesome-icons/all.js"></script>
-<script src="assets/jquery/jquery-3.5.1.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<?php
+require('outerpagefooter.php');
+?>  
 </body>
 </html>
 

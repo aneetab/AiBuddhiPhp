@@ -10,9 +10,10 @@ if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
   $row=mysqli_fetch_assoc($res);
   $id=$row['client_id'];
   $_SESSION['USER_ID']=$id;
+  $_SESSION['USER_PIC']='profilepics/'.$row['profile_photo'];
 }
 else{
-    header('location:client_login.php');
+    header('location:client_signup.php');
     die();
 }
 ?>
@@ -98,7 +99,7 @@ else{
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item active">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-user-tie"></i>&nbsp;&nbsp;Experts<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="clientpage.php"><i class="red-icons fas fa-user-tie"></i>&nbsp;&nbsp;Experts<span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#"><i class="red-icons fas fa-tasks"></i>&nbsp;&nbsp;Projects</a>
@@ -156,222 +157,31 @@ else{
     <section class="sme">
       <div class="container">
       <div class="row mx-auto">
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
+        <?php
+        $get_expert=get_experts($con);
+        foreach($get_expert as $list){
+        ?>
+      <div class="col-lg-4 col-md-6 col-12 d-flex">
       <div class="card py-3 py-sm-0">
-        <img src="assets/images/p8.jpg" class="card-img-top" alt="...">
+        <img src="<?php echo $list['profile-pic']?>" class="card-img-top" alt="...">
         <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="file:///C:/Users/91982/OneDrive/Desktop/Website/sme_profile.html#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p9.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-      <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p6-2.jfif" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
+          <h5 class="card-title"><?php echo $list['firstname'].' '.$list['lastname']?></h5>
+          <h6 class="card-title">Industry: <?php echo $list['industry']?></h6>
+          <h6 class="card-title">Enterprise: <?php echo $list['enterprise']?></h6>
+          <p class="card-text"><?php echo $list['about_me']?></p>
+          <a href="sme_profile.php?id=<?php echo $list['id']?>" class="btn btn-primary mb-2">View Profile</a>
         </div>
       </div>
       </div>
-      </div>
-      <div class="row mx-auto">
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p8.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p9.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-      <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p6-2.jfif" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-      </div>
-      </div>
-      <div class="row mx-auto">
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p8.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p9.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-      <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p6-2.jfif" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-      </div>
-      </div>
-      <div class="row mx-auto">
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p8.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p9.jpg" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-        </div>
-      <div class="col-lg-4 col-md-6 col-12 d-flex">
-      <div class="card py-3 py-sm-0 my-1">
-        <img src="assets/images/p6-2.jfif" class="card-img-top" alt="...">
-        <div class="card-body flex-fill">
-          <h5 class="card-title">John Doe</h5>
-          <h6 class="card-title">Mumbai, India</h6>
-          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <a href="#" class="btn btn-primary">View Profile</a>
-        </div>
-      </div>
-      </div>
-      </div>
+      <?php }?>
+     </div>
+     
       </div>       
     </section>
 
-    <!--Website Footer-->
-    <footer class="footersection">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-3 col-md-3 col-6 text-center">
-                  <div class="logo">
-                  <img src="assets/images/logo.png">
-                  </div>
-                  <div>
-                      <h3>AiBuddhi</h3>
-                      <li><a href="file:///C:/Users/91982/OneDrive/Desktop/Website/sme_application.html#">Apply as an expert</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Industry</h3>
-                      <li><a href="#">Transport</a></li>
-                      <li><a href="#">Hospital</a></li>
-                      <li><a href="#">Computer</a></li>
-                      <li><a href="#">Pharmaceutical</a></li>
-                      <li><a href="#">Entertainment</a></li>
-                      <li><a href="#">Telecommunication</a></li>
-                      <li><a href="#">All industries</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Enterprise</h3>
-                      <li><a href="#">Manufacturing</a></li>
-                      <li><a href="#">Coordinating</a></li>
-                      <li><a href="#">Planning</a></li>
-                      <li><a href="#">All enterprises</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Resources</h3>
-                      <li><a href="#">Blog</a></li>
-                  </div>
-                  <div class="mt-4">
-                      <h3>Contact & follow us</h3>
-                      <li class="mb-3"><a href="#">Contact</a></li>
-                      <ul class="social-icons">                            
-                          <li class="social-icons"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-                  </ul>
-                  </div>
-              </div>
-              </div>
-              <div class="credits row">
-                  <div class="col-lg-5 col-md-5 col-5">
-                      <div class="social-links">
-                          <li><a href="#">Privacy Policy</a></li>
-                          <li><a href="#">Terms and Conditions</a></li>
-                          
-                      </div>
-                  </div>
-                  
-                  <div class="col-lg-7 col-md-7 col-7 text-center float-right">
-                      <div>
-                          <h4>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h4>
-                      </div>
-                  </div>
-                  
-                  </div>
-              </div>  
-          </div>
-  </footer> 
-  
-   <!--JavaScript files-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--FOOTER SECTION-->
+<?php
+require('outerpagefooter.php');
+?>  
 </body>
 </html>

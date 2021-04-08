@@ -5,6 +5,7 @@ $email_id='';
 if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!='')
 {
   $email_id=$_SESSION['ADMIN_EMAIL'];
+  $fname=$_SESSION['ADMIN_FNAME'];
 }
 else{
     header('location:admin_login.php');
@@ -33,7 +34,7 @@ else{
     <div class="media d-flex align-items-center">
       <div class="media-body">
         <h4 class="m-0"></h4>
-        <p class="font-weight-normal text-muted mb-0">Welcome,<small><?php echo ' '.$email_id?>!</small> </p>
+        <p class="font-weight-normal text-muted mb-0">Welcome,<small><?php echo ' '.$fname?>!</small> </p>
       </div>
     </div>
   </div>
@@ -81,6 +82,13 @@ else{
   <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Settings</p>
 
 <ul class="nav flex-column bg-white mb-0">
+<li class="nav-item">
+    <a href="notify.php" class="nav-link text-dark">
+              <i class="fas fa-bell mr-3 text-primary fa-fw"></i>
+              notify
+          </a>
+  </li> 
+  
   <li class="nav-item">
     <a href="logout.php" class="nav-link text-dark">
               <i class="fas fa-sign-out-alt mr-3 text-primary fa-fw"></i>
@@ -88,5 +96,4 @@ else{
           </a>
   </li>  
 </ul>
-
 </div>

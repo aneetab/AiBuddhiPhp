@@ -1,6 +1,7 @@
 <?php
 require('connection.inc.php');
 require('functions.inc.php');
+$id='';
 if(isset($_GET['id']) && $_GET['id']!='') {
     $id=get_safe_value($con,$_GET['id']);
 }
@@ -8,6 +9,23 @@ if(isset($_GET['type']) && $_GET['type']=='update' && isset($_GET['id'])){
     $id=get_safe_value($con,$_GET['id']);
     $status=get_safe_value($con,$_GET['status']);
     mysqli_query($con,"update sme_apply set status='$status' where id='$id'");
+    if($status=='2')
+    {
+     $msg="We are extremely sorry to inform you that your application has been rejected. We truly appreciate you taking your time to apply to AiBuddhi, and we wish you the very best for your future endeavours.";
+      $sql="select * from sme_apply where id='$id'";
+      $res=mysqli_query($con,$sql);
+      $row=mysqli_fetch_assoc($res);
+      $email_id=$row['email'];
+      $from=$_SESSION['ADMIN_FNAME'].' '.$_SESSION['ADMIN_LNAME'];
+
+      $date_val=date("Y-m-d H:i:s");
+     
+      
+      $sql_insert="INSERT INTO `notifications`(`receiveid`,`fromname`,`notification`,`sent_date`) VALUES('$id','$from','$msg','$date_val')";
+      $res=mysqli_query($con,$sql_insert);
+      
+
+    }
 }
 $sql="select * from sme_apply where id='$id'";
 $res=mysqli_query($con,$sql);
@@ -75,12 +93,18 @@ include "css/admin.css";
       ?></td>
             </a>
     </li>
+    <li class="nav-item">
+<a href="fill_details.php?id=<?php echo $id ?>" class="nav-link text-dark">
+                <i class="fas fa-clipboard-list mr-3 text-primary fa-fw"></i>
+                Complete Profile
+            </a>
+  </li>
     
     
   </ul>
   <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Settings</p>
 
-<ul class="nav flex-column bg-white mb-0">
+<ul class="nav flex-column bg-white mb-0">  
   <li class="nav-item">
   <select class="form-control ml-3" onchange="update_application_status(<?php echo $row['id']?>,this.options[this.selectedIndex].value)">
   <option value="">Update Status</option>
@@ -137,12 +161,40 @@ include "css/admin.css";
     <td><p><?php echo $row['enterprise']?><p></td>
 </tr>
 <tr>
+    <td><h3>Profession<h3> </td>
+    <td><p><?php echo $row['profession']?><p></td>
+</tr>
+<tr>
+    <td><h3>Education<h3> </td>
+    <td><p><?php echo $row['education']?><p></td>
+</tr>
+<tr>
+    <td><h3>Experience<h3> </td>
+    <td><p><?php echo $row['experience']?><p></td>
+</tr>
+<tr>
+    <td><h3>Specialities<h3> </td>
+    <td><p><?php echo $row['specialities']?><p></td>
+</tr>
+<tr>
+    <td><h3>Interests<h3> </td>
+    <td><p><?php echo $row['interests']?><p></td>
+</tr>
+<tr>
     <td><h3>Resume<h3> </td>
     <td><p><a href="<?php echo $row['resume']?>"><?php echo $row['resume']?></a><p></td>
 </tr>
 <tr>
     <td><h3>Photo ID<h3> </td>
     <td><p><a href="<?php echo $row['photo-id']?>"><?php echo $row['photo-id']?></a><p></td>
+</tr>
+<tr>
+    <td><h3>Industry sort tag<h3> </td>
+    <td><p><a href="<?php echo $row['industry_tag']?>"><?php echo $row['industry_tag']?></a><p></td>
+</tr>
+<tr>
+    <td><h3>Enterprise sort tag<h3> </td>
+    <td><p><a href="<?php echo $row['enterprise_tag']?>"><?php echo $row['enterprise_tag']?></a><p></td>
 </tr>
 
 
