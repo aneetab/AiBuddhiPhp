@@ -27,44 +27,12 @@
   </style>
   </head>
 <body>
-    <div class="header" id="topheader">
-        <!--BOOTSTRAP Responsive Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#"><img src="assets/images/logo.png"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li class="nav-item active">
-                  <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="http://localhost:8888/AI/admin/clientpage.php">Find an Expert</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Contact Us</a>
-                </li>
-              </ul>
-              <ul class="navbar-nav second-nav ml-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="client_login.php">Login</a>
-                    
-                  </li>  
-                  <li class="nav-item">
-                    <a class="nav-link" href="client_signup.php">Sign Up</a>                    
-                  </li>     
-              </ul>
-            </div>
-          </nav>
+<div class="header" id="topheader">
 
+<!--BOOTSTRAP Responsive Navbar-->
+<?php
+require('outerpageheader.php');
+?> 
 <!--Banner Images Section-->
     <section class = "banner">
         <div class="center-div">
@@ -402,100 +370,74 @@ xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="500" viewBox="0 0
     </div>
     </section>
 
-    <!--Website Footer-->
-    <footer class="footersection">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-3 col-md-3 col-6 text-center">
-                  <div class="logo">
-                  <img src="assets/images/logo.png">
-                  </div>
-                  <div>
-                      <h3>AiBuddhi</h3>
-                      <li><a href="sme_application.php">Apply as an expert</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Industry</h3>
-                      <li><a href="#">Transport</a></li>
-                      <li><a href="#">Hospital</a></li>
-                      <li><a href="#">Computer</a></li>
-                      <li><a href="#">Pharmaceutical</a></li>
-                      <li><a href="#">Entertainment</a></li>
-                      <li><a href="#">Telecommunication</a></li>
-                      <li><a href="#">All industries</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Enterprise</h3>
-                      <li><a href="#">Manufacturing</a></li>
-                      <li><a href="#">Coordinating</a></li>
-                      <li><a href="#">Planning</a></li>
-                      <li><a href="#">All enterprises</a></li>
-                  </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-6">
-                  <div>
-                      <h3>Resources</h3>
-                      <li><a href="#">Blog</a></li>
-                  </div>
-                  <div class="mt-4">
-                      <h3>Contact & follow us</h3>
-                      <li class="mb-3"><a href="#">Contact</a></li>
-                      <ul class="social-icons">                            
-                          <li class="social-icons"><a href="#"><i class="fab fa-twitter fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-instagram fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                          <li class="social-icons"><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-                  </ul>
-                  </div>
-              </div>
-              </div>
-              <div class="credits row">
-                  <div class="col-lg-5 col-md-5 col-5">
-                      <div class="social-links">
-                          <li><a href="#">Privacy Policy</a></li>
-                          <li><a href="#">Terms and Conditions</a></li>
-                          
-                      </div>
-                  </div>
-                  
-                  <div class="col-lg-7 col-md-7 col-7 text-center float-right">
-                      <div>
-                          <h4>AiBuddhi © COPYRIGHT 2021. ALL RIGHTS RESERVED.</h4>
-                      </div>
-                  </div>
-                  
-                  </div>
-              </div>  
-      
-          <div class="scrolltop float-right text-center" id="scrolldiv">
-              <i class="fa fa-arrow-up" onclick="topFunction()" id="myBtn"></i>
-          </div>
-          </div>
-  </footer> 
-        
-          
+<?php
+require('outerpagefooter.php');
+?>          
     
-<!--JavaScript Files-->
-<script src="assets/fontawesome-icons/all.js"></script>
-<!--jQuery file-->
-<script src="assets/jquery/jquery-3.5.1.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!--Bootstrap file-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!--Custom JS-->
-<script src="js/script.js"></script>
+
 <!--Owl-Carousal-->
 <script src="js/owl.carousel.min.js"></script>
 <script>
+ 
     function find_expert()
  {
      window.location.href="http://localhost:8888/AI/admin/clientpage.php";
  }
+
+ $(document).ready(function(){
+    // banner image change
+    let bannerCount = 0;
+    setInterval(function(){
+        hideAllBanner();
+        changeBannerCount();
+        changeBanner();
+    }, 8000);
+
+  var pgurl = window.location.href.substr(window.location.href
+.lastIndexOf("/")+1);
+	$("#navbar ul li a").each(function(){
+		 if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
+		 $(this).addClass("active");
+    })
+    function changeBanner(){
+        $('.banner-item').each(function(idx){
+            if(bannerCount == idx){
+                $(this).addClass('active-banner');
+            }
+        });
+    }
+
+    function hideAllBanner(){
+        $('.banner-item').each(function(idx){
+            $(this).removeClass('active-banner');
+        });
+    }
+
+    function changeBannerCount(){
+        bannerCount++;
+        if(bannerCount >= $('.banner-item').length){
+            bannerCount = 0;
+        }
+    }
+
+
+    $('.subject_experts .owl-carousel').owlCarousel({
+        loop: true,
+        autoplay: true,
+        dots: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            560: {
+                items: 2
+            }
+        }
+    })
+
+     
+
+}); 
 </script>
 </body>
 </html>
