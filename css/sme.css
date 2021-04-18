@@ -141,7 +141,7 @@ padding-right:5px !important;
     color: rgb(34, 23, 15);
 }
 
-.video_intro h4{
+.video_intro h4,.interests_container h4{
     letter-spacing: 1px;
     font-size: 0.9rem;
     margin:20px 0 15px 0;
@@ -203,7 +203,7 @@ padding-right:5px !important;
 /*----------------------*-------- INTRODUCTION SECTION ENDS------------------*-----------*/
 
 /*----------------------*-------- COMMON STYLING FOR MULTIPLE SECTIONS ENDS------------------*-----------*/
-.profile-info h3,.resume-container h3,.photo-id h3,.languages h3,.video-container h3,.biography-container h3{
+.profile-info h3,.interests-container h3,.resume-container h3,.photo-id h3,.languages h3,.video-container h3,.biography-container h3{
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 1rem;
@@ -226,11 +226,11 @@ small{
     line-height:1.1;
     word-spacing:2px;
     opacity:0.8;
-    color: rgb(34, 23, 15);
+    color: #000 !important;
     font-family:"Poppins",sans-serif;  
 }
-.profile-info h4,.resume-container h4,.photo-id h4,.languages h4,.video-container h4,.biography-container h4{
-    letter-spacing: 2px;
+.profile-info h4,.interests-container h4,.resume-container h4,.photo-id h4,.languages h4,.video-container h4,.biography-container h4,.photo-id h4{
+    letter-spacing: 1px;
     font-size: 0.9rem;
     margin:20px 0 15px 0;
     font-weight:medium;
@@ -281,22 +281,19 @@ button:hover
     background: rgb(139, 122, 128);
 }
 
-.intro,.profile-info,.languages,.video-container,.biography-container,.resume-container,.photo-id
+.intro,.interests-container,.profile-info,.languages,.video-container,.biography-container,.resume-container,.photo-id
 {
     width:100%;height:auto;
     margin:20px 0;
+    border-radius:20px;
+    padding:10px 20px;
          
 }
 .profile-info input
 {
     border-radius:3px!important;
 }
-.resume-container,.biography-container,.photo-id,.languages,.profile-info,.video-container
-{
-    
-    border-radius:20px;
-    padding:10px 20px;
-}
+
 .video_intro img,#sidebar img{
     height:100px;
     width:100px;
@@ -338,12 +335,13 @@ button:hover
     word-spacing:2px;
     font-family:"Poppins",sans-serif;
 }
-.info{
+.info,.interests{
     background:#fff!important;
     border-radius:2px;
     margin:10px 10px;
     padding:20px;
     width:100%;
+    text-align: center;
 }
 .info h3{
     text-transform: uppercase;
@@ -356,20 +354,36 @@ button:hover
     font-family:"Poppins",sans-serif;
     color:rgb(49, 31, 17)
 }
+.label{
+    font-size:13px !important;
+    color: #000 !important;
+    font-family:"Poppins",sans-serif;
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    margin:15px 0px 5px 0px !important;
+
+}
 /*----------------------*-------- SME INFO SECTION ENDS------------------*-----------*/
 
 /*----------------------*-------- SUBMIT_FORM SECTION STARTS------------------*-----------*/
-.submission button{
+.submission input,.resume-container button{
     height:50px;
     outline:none;
     border:none;
     background:rgb(82, 5, 5)!important;
     color:#fff!important;
-    border-radius:4px;
     font-weight: bold;
     margin:auto;
     border-radius:10px;
+    width:100%;
 
+}
+.close,.modal-footer button{
+    background:rgb(82, 5, 5)!important;
+    color:#fff!important;
+    outline:none;
+    border:none;
+    margin:auto;
 }
 /*----------------------*-------- SUBMIT_FORM SECTION ENDS------------------*-----------*/
 

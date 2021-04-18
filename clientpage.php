@@ -54,7 +54,7 @@ else{
         <a class="nav-link" href="#">Experts <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
-        <a class="nav-link" href="#">Projects</a>
+        <a class="nav-link" href="project_team_create.php">Projects</a>
       </li>
  </ul>
     
@@ -102,7 +102,7 @@ else{
         <a class="nav-link" href="clientpage.php"><i class="red-icons fas fa-user-tie"></i>&nbsp;&nbsp;Experts<span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-tasks"></i>&nbsp;&nbsp;Projects</a>
+        <a class="nav-link" href="project_team_create.php"><i class="red-icons fas fa-tasks"></i>&nbsp;&nbsp;Projects</a>
     </li>
     <li class="nav-item">
     <?php 

@@ -7,6 +7,11 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     $sql="select * from sme_apply where id='$id'";
     $res=mysqli_query($con,$sql);
     $row=mysqli_fetch_assoc($res);
+    $email=$row['email'];
+    $sqlget="select * from client_users where email_id='$email'";
+    $res1=mysqli_query($con,$sqlget);
+    $row1=mysqli_fetch_assoc($res1);
+    $readid=$row1['client_id'];
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +31,64 @@ if(isset($_GET['id']) && $_GET['id']!='') {
   <!--Bootstrap-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!--Custom Css file-->
-  <link rel="stylesheet" href="css/sme.css">
+  
+  <style>
+    <?php
+    include "css/sme.css";
+    ?>
+    .resume-items{
+      
+    width:100%;height:auto;
+    margin:20px 0;
+    border-radius:20px;
+    padding:10px 20px;
+    background:#fff;
+         
+}
+  
+  .interest-badge{
+          color:#fff;
+          font-family:"Poppins",sans-seriff;
+          font-weight:bold;
+          text-transform:uppercase;
+          padding:10px!important;
+          margin:20px!important;
+          font-size:16px!important;
+      }
+      .interest-badge .badge{
+        border-radius:10% !important;
+      }
+      
+        .resume-icons
+    {
+        font-size:30px;
+        color:rgb(82, 5, 5)!important;
+        padding:3px;
+    }
+    .resume-items h4{
+      
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;
+    color:rgb(49, 31, 17)
+    }
+    .resume-items h3{
+      
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      
+      font-weight:bold;
+      line-height:1.1;
+      word-spacing:2px;
+      font-family:sans-serif;
+      color:#000;
+      text-transform:uppercase;
+      }
+  </style>
 </head>
 <body>
   <!--BOOTSTRAP Responsive Navbar-->
@@ -140,7 +202,12 @@ if(isset($_GET['id']) && $_GET['id']!='') {
                     <h3><?php echo $row['firstname'].' '.$row['lastname']?></h3>
                     <h4>Industry: <?php echo $row['industry']?></h4>
                     <h4>Enterprise: <?php echo $row['enterprise']?></h4>
-                    <button type="button">Message</button>
+
+                    <?php
+                    $email=$row['email'];
+                    ?>
+                  <button type='button' onclick="openchat('<?php echo $email?>')">Message</button>
+                  
                 </div>
                 <div class="col-lg-6 col-md-6 col-12 text-center">
                     <h2>Video Introduction</h2>
@@ -153,8 +220,73 @@ if(isset($_GET['id']) && $_GET['id']!='') {
           
   </div>
     </section>
+    <!--Specialities-->
+    <section class="resume_container">
+        <div class="container">
+        <div class="resume-items">
+
+       
+          <?php
+          $readSql="select * from resume where client_id='$readid' and exp_type='Experience'";
+          $readRes=mysqli_query($con,$readSql);
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            
+                $output = '<div class="row offset-2">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <h3>'."<i class='resume-icons fas fa-briefcase'></i>".$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div>'.'
+                            <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                            $readRow['start'].'-'.$readRow['end'].'</h4></div>
+                            </div><hr>';
+                echo $output;
+          }
+          $readSql="select * from resume where client_id='$readid' and exp_type='Education'";
+          $readRes=mysqli_query($con,$readSql);
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            
+                $output = '<div class="row offset-2">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                '."<h3><i class='resume-icons fas fa-university'></i>".$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div>'.'
+                            <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                            $readRow['start'].'-'.$readRow['end'].'</h4></div>
+                            </div><hr>';
+                echo $output;
+          }
+          $readSql="select * from resume where client_id='$readid' and exp_type='Certification'";
+          $readRes=mysqli_query($con,$readSql);
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            
+                $output = '<div class="row offset-2">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                '."<h3><i class='resume-icons fas fa-file-alt'></i>".$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div>'.'
+                            <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                            $readRow['start'].'-'.$readRow['end'].'</h4></div>
+                            </div><hr>';
+                echo $output;
+          }
+         
+               
+          /*
+          $interests=$row['interests'];
+          $interests=explode(',',$interests);
+          $colours=array('#FFE921','#28a745','#17a2b8','#FFE921',);
+          foreach($interests as $value)
+          {
+          $res="<span style='background-color:#AD4553;' class='interest-badge badge badge-secondary'>$value</span>";
+          echo $res;
+          }*/
+          ?>
+          </div>
+        </div>
+    </section>
+    <!--Specialities section ends-->
     <!--SME INFO SECTION-->
-    <section class="info">
+    <!--<section class="info">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-12">
@@ -220,11 +352,19 @@ if(isset($_GET['id']) && $_GET['id']!='') {
                                         </div>
                                     </div>
                                   </section>
+        -->
   
     <!--FOOTER SECTION-->
 <?php
 require('outerpagefooter.php');
 ?> 
+<script>
+  function openchat(email)
+  {
+  window.location.href='chat.php?email='+email;
+  }
+
+</script>
 </body>
 </html>
 

@@ -75,13 +75,10 @@ $css_class="alert-danger";
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     
       <ul class="navbar-nav mr-auto hide-nav">
-      <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="nav-icons fas fa-envelope mt-3"></i><span class="badge badge-danger" id="msg-count">0</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#"><i class="red-icons fas fa-check-circle"></i><h5>You're all caught up!</h5><br/>
-          <small>No new messages</small></a>
+      <li class="nav-item">
+      <li class="nav-item">
+      <a class="nav-link" href="chat_users.php"><i class="nav-icons fas fa-envelope-open mt-3"></i></a>
+      </li>
       </li>
       <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

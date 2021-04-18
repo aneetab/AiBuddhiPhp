@@ -29,6 +29,29 @@ mysqli_query($con,$sql);
 $role=$_SESSION['USER_ROLE'];
 $_SESSION['USER_NAME']=$firstname;
 $_SESSION['USER_LNAME']=$lastname;
+$template_file="./mail_template_register.php";
+$email_to=$email_id;
+$swap_var=array(
+    "{TO_NAME}"=>$firstname,
+    "{TO_EMAIL}"=>$_SESSION['USER_EMAIL']
+);
+$subject="Welcome to AiBuddhi!";
+$headers="From:	AiBuddhi Recruiting<recruiting.careers@aibuddhi.com>\r\n";
+$headers.="MIME-Version: 1.0\r\n";
+$headers.="Content-Type:text/html;charset=ISO-8859-1\r\n";
+if(file_exists($template_file))
+$message=file_get_contents($template_file);
+else
+die("unable to locate the template file");
+foreach(array_keys($swap_var) as $key){
+    if(strlen($key)>2 && trim($key)!='')
+    $message=str_replace($key,$swap_var[$key],$message);
+}
+echo $message;
+if(mail($email_to,$subject,$message,$headers))
+echo '<hr/>success';
+else
+echo '<hr/>not sent';
 if($role=='client')
 {
 header('location:clientpage.php');

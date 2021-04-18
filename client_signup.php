@@ -69,6 +69,7 @@ $username='';
 $email_id='';
 header('location:signup_name.php');
 die();
+
 }
 
 

@@ -31,6 +31,11 @@ if(isset($_POST['submit'])){
    $_SESSION['USER_LOGIN']='yes';
    $_SESSION['USER_EMAIL']=$email_id;
    $_SESSION['USER_NAME']=$row['firstname'];
+   $_SESSION['USER_LNAME']=$row['lastname'];
+   $_SESSION['USER_ID']=$row['client_id'];
+   $status = "Active now";
+   $id=$row['client_id'];
+   $sql2 = mysqli_query($con, "UPDATE client_users SET status = '$status' WHERE client_id ='$id'");
    if($row['role']=='1')
    {
    $_SESSION['USER_ROLE']='client';

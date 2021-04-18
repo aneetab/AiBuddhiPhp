@@ -5,6 +5,9 @@ $_SESSION['USER_ROLE']='sme';
 $email_id='';
 $firstname=$_SESSION['USER_NAME'];
 $lastname=$_SESSION['USER_LNAME'];
+$id='';
+$msg='';
+
 
 if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
 {
@@ -22,20 +25,37 @@ if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
   $res=mysqli_query($con,$sql);
   $row=mysqli_fetch_assoc($res);
   $id=$row['client_id'];
+  $_SESSION['USER_ID']=$id;
 }
 else{
     header('location:client_signup.php');
     die();
 }
+$industry='';
 
   if(isset($_POST['submit'])){
       print_r($_FILES);
       $date_val=date("Y-m-d H:i:s");
       $gender=$_POST['gender'];
       $language=$_POST['language'];
-      $industry=$_POST['industry'];
       $enterprise=$_POST['enterprise'];
       $about_me=$_POST['about_me'];
+      $specialities=get_safe_value($con,$_POST['specialities']);
+      $interests=get_safe_value($con,$_POST['interests']);
+      if(isset($_POST['industry_select']) && $_POST['industry_select']!='other' && $_POST['industry_select']!='')
+      {
+        $industry=$_POST['industry_select'];
+
+      }
+      else if(isset($_POST['industry1']))
+      {
+        $industry=$_POST['industry1'];
+      }
+      else
+      {
+        $msg='Select an Industry';
+      }
+
       /*PROFILE PIC STARTS*/
       $profile_pic=$_FILES['profile-pic'];
       $filename1=$profile_pic['name'];
@@ -48,7 +68,7 @@ else{
           $destinationfile1='profilepics/'.$filename1;
           move_uploaded_file($filetmp1,$destinationfile1);
       }else{
-          $msg1="Extension must be png/jpg/jpeg";
+          $msg="Extension must be png/jpg/jpeg";
       }
       /*PROFILE PIC ENDS*/
       /*VIDEO STARTS*/
@@ -59,14 +79,7 @@ else{
       $destinationfile2='intros/'.$filename2;
       move_uploaded_file($filetmp2,$destinationfile2);
       /*VIDEO ENDS*/
-      /*RESUME STARTS*/
-      $resume=$_FILES['resume'];
-      $filename3=$resume['name'];
-      $fileerror3=$resume['error'];
-      $filetmp3=$resume['tmp_name'];
-      $destinationfile3='resume/'.$filename3;
-      move_uploaded_file($filetmp3,$destinationfile3);
-      /*RESUME ENDS*/
+      
       /*PHOTO ID STARTS*/
       $photo_id=$_FILES['photo-id'];
       $filename4=$photo_id['name'];
@@ -78,30 +91,42 @@ else{
           $destinationfile4='photoID/'.$filename4;
           move_uploaded_file($filetmp4,$destinationfile4);
       }else{
-          $msg2="Extension must be png/jpg/jpeg.";
+          $msg="Extension must be png/jpg/jpeg.";
       }
-      /*PROFILE PIC ENDS*/
-      if(isset($_GET['type']) && $_GET['type']=='delete' && isset($_GET['id'])){
-        $id=get_safe_value($con,$_GET['id']);
-        mysqli_query($con,"delete from sme_apply where id='$id'");
-      }
-      echo $gender;
-      echo $industry;
-      echo $enterprise;
-
-      $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`profile-pic`,`language`,`industry`,`enterprise`,`video`,`about_me`,`resume`,`photo-id`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$destinationfile1','$language','$industry','$enterprise','$destinationfile2','$about_me','$destinationfile3','$destinationfile4','0','$date_val')";
+      /*PROFILE PIC ENDS*/  
+      $sqlget="select * from resume where client_id='$id'";
+      $res1=mysqli_query($con,$sqlget);
+      if(mysqli_num_rows($res1)>0)
+      {
+       if($msg=='')
+       {
+      
+      $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`profile-pic`,`language`,`industry`,`enterprise`,`video`,`about_me`,`interests`,`specialities`,`photo-id`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$destinationfile1','$language','$industry','$enterprise','$destinationfile2','$about_me','$interests','$specialities','$destinationfile4','0','$date_val')";
       $query=mysqli_query($con,$q);
       if($query)
       {
-      header('location:sme_experience.php');
+      header('location:sme_dashboard.php');
       die();
       }
       else
       {
         $msg="Failed to upload.";
         $css_class='alert-danger';
-
-      }
+        $sqldelete="delete from resume where client_id='$id'";
+        mysqli_query($con,$sqldelete);
+    }
+      
+    }
+    else
+    {
+      $css_class='alert-danger';
+    }
+  }
+    else
+    {
+      $msg="You must enter atleast one resume item.";
+      $css_class='alert-danger';
+    }
 
       
      
@@ -129,6 +154,15 @@ else{
     <?php
     include "css/sme.css";
     ?>
+    .resume-icons
+    {
+        font-size:30px;
+        color:rgb(82, 5, 5)!important;
+        padding:3px;
+    }
+    #resume_form select, #update_resume_form select,.form-container select{
+      width:100% !important;
+    }
   </style>
   
 </head>
@@ -278,19 +312,19 @@ else{
                     <div>
                         <h4>General Information</h4>
                               <div class="form-group">
-                                <label for="firstname">First Name:</label>
+                                <label class="label" for="firstname">First Name:</label>
                                 <input disabled value="<?php echo $firstname?>" type="text" class="form-control" name="firstname" id="firstname" required>
                               </div>
                               <div class="form-group">
-                                <label for="lastname">Last Name:</label>
+                                <label class="label" for="lastname">Last Name:</label>
                                 <input disabled value="<?php echo $lastname?>" type="text" class="form-control" id="lastname" name="lastname" required>
                               </div>
                               <div class="form-group">
-                                <label for="gender">Gender:</label>
+                                <label class="label" for="gender">Gender:</label>
                                 <input type="text" class="form-control" id="gender" name="gender" required>
                               </div>
                         <div class="form-group">
-                        <label for="file">Profile Pic:</label>
+                        <label class="label" for="file">Profile Pic:</label>
                         <input type="file" name="profile-pic" id="profile-pic" class="form-control" required>
 </div>
   </div>
@@ -300,20 +334,36 @@ else{
     <section>
         <div class="container languages">
             <h3>Languages</h3>
-            <h4>What is your language of instruction and what topics you offer consultation on</h4>
-                
-                    <div>
-                        
+                            <div>
                             <div class="form-group">
-                              <label for="language">Languages you speak:</label>
+                              <label class="label" for="language">Languages you speak:</label>
                               <input type="text" class="form-control" name="language" id="language" required>
                             </div>
                             <div class="form-group">
-                              <label for="industry">Industry of expertise:</label>
-                              <input type="text" class="form-control" id="industry" name="industry" required>
+                            <label class="label" for="industry">Industry of Enterprise:</label>
+                    <?php
+                     $sqlquery="select * from industry";
+                     $result=mysqli_query($con,$sqlquery);
+                     
+                    ?>
+
+                    <select class="form-control" id="industry_select" name="industry_select" onchange="select_industry(this.options[this.selectedIndex].value)">
+                    <option value="">Select an industry</option>
+                    <?php 
+                        while( $rows=mysqli_fetch_assoc($result))
+                        echo "<option value=".$rows['industry'].">".$rows['industry']."</option>";
+                       
+                        ?>
+                        <option value="other">Other</option>
+                    </select> 
+                    
+                    </div>
+                             <div class="other">
+                              <input type="text" class="form-control" id="industry1" name="industry1" placeholder="Enter industry">
                             </div>
+</div>
                             <div class="form-group">
-                              <label for="enterprise">Enterprise of expertise:</label>
+                              <label class="label" for="enterprise">Enterprise of expertise:</label>
                               <input type="text" class="form-control" id="enterprise" name="enterprise" required>
                             </div>                                   
   </div>
@@ -327,7 +377,7 @@ else{
                 
                     <div>
                                  <div class="form-group">
-                                <label for="video">Link to introduction video:</label>
+                                <label class="label" for="video">Link to introduction video:</label>
                                 <input type="file" name="video" id="video" class="form-control" required>
                               </div>
                          </div>                   
@@ -339,11 +389,11 @@ else{
         <div class="container biography-container">
             <h3>Biography</h3>
             <h4>Write about yourself and your qualifications.</h4>
-            <small>Introduce yourself to the AiBuddhi community.Include your qualifications and experiences.</small>
+           <small>Introduce yourself to the AiBuddhi community.Include your qualifications and experiences.</small>
                
                     <div class="">
                             <div class="form-group">
-                                <label for="about_me">About Me:</label>
+                                <label class="label" for="about_me">About Me:</label>
                                 <textarea class="form-control" rows="5" id="about_me" name="about_me" required></textarea>
                               </div>                        
                          </div>                   
@@ -355,30 +405,48 @@ else{
         <div class="container resume-container">
             <h3>Upload Resume</h3>
             <h4>List your qualifications</h4>
-            <small>Tell us more about your education,certifications and relevant work experience.Please upload your resume(PDF format).
-            <div>
-                <div class="form-group">
-                <input type="file" name="resume" id="resume" accept="application/pdf" class="form-control" required>  
-         </div>
-</div>
-     </div>
+            <small>Tell us more about your education,certifications and relevant work experience. Please add atleast one item</small><br/>
+            <div class="text-center">
+              <button type="button"  data-toggle="modal" data-target="#resumemodal">
+            + Add Item
+            </button>
+            </div>
+        <div class="resume-items">
+        </div>
+        </div>
+    </section>
+    <!-- Interests SECTION-->
+    <section>
+        <div class="container interests-container">
+            <h3>Interests,Hobbies,Key Skills</h3>
+            <div class="form-group">
+             <label class="label" for="specialities">Enter your specialities:</label>
+                 <input type="text" name="specialities" id="specialities" class="form-control" placeholder="Ex: Data Science,Excel,Photoshop">
+            </div>
+            <div class="form-group">
+             <label class="label" for="interests">Enter your interests/hobbies:</label>
+                 <input type="text" name="interests" id="interests" class="form-control" placeholder="Ex: Blogging,Volunteer work,Music,Sports,Cinema">
+            </div>
+            
+        
+        </div>
     </section>
     <!--PHOTO-ID SECTION-->
     <section>
         <div class="container photo-id">
             <h3>Photo of your ID</h3>
-            <small>Please upload a government ID(passport,driver's license or other form of governmental identity card) verifying your identity.</small>
+            <h4>Please upload a government ID(passport,driver's license or other form of governmental identity card) verifying your identity.</h4>
              <div class="form-group">
-             <label for="photo-id">Upload photo:</label>
+             <label class="label" for="photo-id">Upload photo:</label>
                  <input type="file" name="photo-id" id="photo-id" class="form-control" required>
-</div>
+              </div>
   </div>
 
     </section>
     <!--SUBMIT FORM SECTION-->
     <section>
         <div class="form-group container submission text-center">
-        <input type="submit" name="submit" value="CONTINUE">
+        <input type="submit" name="submit" value="SUBMIT APPLICATION">
         </div>
 </form>
     </section>
@@ -389,6 +457,298 @@ else{
 <?php
 require('outerpagefooter.php');
 ?>  
+<div class="modal" id="resumemodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Resume Item</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="resume_form" action="get_experience.php" method="POST">
+                    <div class="form-group">
+                        <label for="exp_type">Experience Type</label>
+                        <select name="exp_type" id="exp_type" class="form-control">
+                        <option value="1">Education</option>
+                        <option value="2">Experience</option>
+                        <option value="3">Certification</option>
+                        </select> 
+                    </div>
+                    <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" type="text" name="title" id="title" placeholder="Ex. Senior Software Engineer"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="org">Organization/Institution</label>
+                    <input class="form-control" type="text" name="org" id="org" placeholder="Ex. Amazon"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="location">Location</label>
+                    <input class="form-control" type="text" name="location" id="location" placeholder="Ex. Mumbai,Maharashtra"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="desc">Description(Optional)</label>
+                    <input class="form-control" type="text" name="desc" id="desc" placeholder="Ex. Focus on Sap Implementation"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="start">Start</label>
+                    <?php
+                    $i=date('Y');
+                    ?>
+
+                    <select class="form-control" id="start" name="start">
+                        <?php 
+                        for($j=$i;$j>=$i-90;$j--)
+                        {
+                        echo "<option value=".$j.">".$j."</option>";
+                        }
+                        ?>
+                    </select> 
+                    
+                    </div>
+                    <div class="form-group">
+                    <label for="end">End</label>
+                    <?php
+                    
+                    ?>
+
+                    <select class="form-control" id="end" name="end">
+                        <option value="">Present</option>;
+                        <?php 
+                        for($j=$i;$j>=$i-90;$j--)
+                        {
+                        echo "<option value=".$j.">".$j."</option>";
+                        }
+                        ?>
+                    </select> 
+                    
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+            <button type="submit" onclick="addRecords('<?php echo $id?>')" id="submitForm" class="btn btn-primary" name="save" data-dismiss="modal">Save</button>
+            </div>
+</div>
+</div>
+</div>
+    <div class="modal" id="update_user_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Resume Item</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="update_resume_form" action="get_experience.php" method="POST">
+                    <div class="form-group">
+                        <label for="update_exp_type">Experience Type</label>
+                        <select name="update_exp_type" id="update_exp_type" class="form-control">
+                        <option value="1">Education</option>
+                        <option value="2">Experience</option>
+                        <option value="3">Certification</option>
+                        </select> 
+                    </div>
+                    <div class="form-group">
+                    <label for="update_title">Title</label>
+                    <input class="form-control" type="text" name="update_title" id="update_title" placeholder="Ex. Senior Software Engineer"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="update_org">Organization</label>
+                    <input class="form-control" type="text" name="update_org" id="update_org" placeholder="Ex. Amazon"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="update_location">Location</label>
+                    <input class="form-control" type="text" name="update_location" id="update_location" placeholder="Ex. Mumbai,Maharashtra"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="update_desc">Description</label>
+                    <input class="form-control" type="text" name="update_desc" id="update_desc" placeholder="Ex. Focus on Sap Implementation"></input>
+                    </div>
+                    <div class="form-group">
+                    <label for="update_start">Start</label>
+                    <?php
+                    $i=date('Y');
+                    ?>
+
+                    <select class="form-control" id="update_start" name="update_start">
+                        <?php 
+                        for($j=$i;$j>=$i-90;$j--)
+                        {
+                        echo "<option value=".$j.">".$j."</option>";
+                        }
+                        ?>
+                    </select> 
+                    
+                    </div>
+                    <div class="form-group">
+                    <label for="update_end">End</label>
+                    <?php
+                    
+                    ?>
+
+                    <select class="form-control" id="update_end" name="update_end">
+                        <option value="">Present</option>;
+                        <?php 
+                        for($j=$i;$j>=$i-90;$j--)
+                        {
+                        echo "<option value=".$j.">".$j."</option>";
+                        }
+                        ?>
+                    </select> 
+                    
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+            <button type="submit" onclick="updateuserdetails()" id="updateForm" class="btn btn-primary" name="update" data-dismiss="modal">Update</button>
+            <input type="hidden" name="" id="hidden_user_id">
+        </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$("#resumemodal").on("hidden.bs.modal",function(){
+  $(this).find('#resume_form').trigger('reset');
+});
+$('.other').hide();
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+
+function select_industry(value)
+{
+ 
+            if(value=='other'){
+                
+                $(".other").show();
+            } else{
+                $(".other").hide();
+            }
+        
+
+}
+function readRecords()
+{
+    var readrecord="readrecord";
+    $.ajax({
+        url:"get_experience.php",
+        type:"post",
+        data:{readrecord:readrecord},
+        success:function(data,status){
+            $('.resume-items').html(data);
+        }
+    });
+}
+function DeleteUser(deleteid){
+    var conf=confirm("Are you sure you want to delete this record?");
+    if(conf==true){
+        $.ajax({
+            url:"get_experience.php",
+            type:"post",
+            data:{deleteid:deleteid},
+            success:function(data,status){
+                readRecords();
+            }
+        });
+    }
+}
+function addRecords(id)
+{
+  
+var client_id=id;
+var exp_type=$('#exp_type').val();
+var title=$('#title').val();
+var org=$('#org').val();
+var location=$('#location').val();
+var desc=$('#desc').val();
+var start=$('#start').val();
+var end=$('#end').val();
+$.ajax({
+    url:"get_experience.php",
+    type:'post',
+    data:{client_id:client_id,
+          exp_type:exp_type,
+          title:title,
+        org:org,
+        location:location,
+    desc:desc,
+start:start,
+end:end},
+success:function(data,status)
+{
+    readRecords();
+}
+});
+}
+function GetUserDetails(id){
+    $('#hidden_user_id').val(id);
+    $.post("get_experience.php",{
+        id:id,
+    },function(data,status){
+        var user=JSON.parse(data);
+        if(user.exp_type=="Education")
+        user.exp_type='1';
+        if(user.exp_type=="Experience")
+        user.exp_type='2';
+        if(user.exp_type=="Certification")
+        user.exp_type='3';
+        if(user.end=='Present')
+        user.end='';
+
+        $('#update_exp_type').val(user.exp_type);
+        $('#update_title').val(user.title);
+        $('#update_org').val(user.org);
+        $('#update_location').val(user.location);
+        $('#update_desc').val(user.description);
+        $('#update_start').val(user.start);
+        $('#update_end').val(user.end);
+    });
+    $('#update_user_modal').modal("show");
+    
+}
+function updateuserdetails()
+{
+var exp_type=$('#update_exp_type').val();
+var title=$('#update_title').val();
+var org=$('#update_org').val();
+var location=$('#update_location').val();
+var desc=$('#update_desc').val();
+var start=$('#update_start').val();
+var end=$('#update_end').val();
+var hidden_user_id=$('#hidden_user_id').val();
+
+
+
+$.ajax({
+    url:"get_experience.php",
+    type:'post',
+    data:{
+          exp_type:exp_type,
+          title:title,
+          org:org,
+          location:location,
+          desc:desc,
+          start:start,
+          end:end,
+          hidden_user_id:hidden_user_id},
+success:function(data,status)
+{ 
+    alert("DONE");
+    $('#update_user_modal').modal("hide");
+    readRecords();
+}
+});
+}
+
+</script>
 </body>
 </html>
 
