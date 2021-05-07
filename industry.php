@@ -10,16 +10,16 @@ if(isset($_GET['type']) && $_GET['type']!=''){
         }else{
             $status='0';
         }
-        $update_status_sql="update industry set status='$status' where id='$id'";
+        $update_status_sql="update sort_by set status='$status' where id='$id'";
         mysqli_query($con,$update_status_sql);
     }
     if($type=='delete'){
         $id=get_safe_value($con,$_GET['id']);
-        $delete_sql="delete from industry where id='$id'";
+        $delete_sql="delete from sort_by where id='$id'";
         mysqli_query($con,$delete_sql);
     }
 }
-$sql="select * from industry order by industry desc";
+$sql="select * from sort_by where type='industry' order by name";
 $res=mysqli_query($con,$sql);
 ?>
 
@@ -47,7 +47,7 @@ $res=mysqli_query($con,$sql);
       <tr>
       <th scope="row"><?php echo $i?></th>
       <td><?php echo $row['id']?></td>
-      <td><?php echo $row['industry']?></td>
+      <td><?php echo $row['name']?></td>
       <td><?php 
       if($row['status']==1)
       echo "<a href='?type=status&operation=deactive&id=".$row['id']."'><button class=".'btn-success'.">Active</button></a>&nbsp;";

@@ -5,11 +5,11 @@ $id='';
 $msg='';
 if(isset($_GET['id']) && $_GET['id']!=''){
     $id=get_safe_value($con,$_GET['id']);
-    $res=mysqli_query($con,"select * from enterprise where id='$id'");
+    $res=mysqli_query($con,"select * from sort_by where id='$id'");
     $check=mysqli_num_rows($res);
     if($check>0){
         $row=mysqli_fetch_assoc($res);
-        $enterprise=$row['enterprise'];
+        $enterprise=$row['name'];
     }
     else{
         header('location:enterprise.php');
@@ -18,16 +18,16 @@ if(isset($_GET['id']) && $_GET['id']!=''){
 }
 if(isset($_POST['submit'])){
     $enterprise=get_safe_value($con,$_POST['enterprise']);
-    $res=mysqli_query($con,"select * from enterprise where enterprise='$enterprise'");
+    $res=mysqli_query($con,"select * from sort_by where type='enterprise' and name='$enterprise'");
     $check=mysqli_num_rows($res);
     if($check>0){
       $msg="Enterprise already exists!";
     }else{
     if(isset($_GET['id']) && $_GET['id']!=''){
-        mysqli_query($con,"update enterprise set enterprise='$enterprise' where id='$id'");
+        mysqli_query($con,"update sort_by set name='$enterprise' where id='$id'");
     }
     else{
-    mysqli_query($con,"insert into enterprise(enterprise,status) values('$enterprise','1')");
+    mysqli_query($con,"insert into sort_by(type,name,status) values('enterprise','$enterprise','1')");
     }
     header('location:enterprise.php');
     die();

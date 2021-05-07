@@ -20,7 +20,8 @@ if(isset($_POST['submit'])){
  }
  if($is_error=='')
  {
- $sql="select * from admin_users where email_id='$email_id' and password='$password'";
+ $password=md5($password);
+ $sql="select * from client_users where email_id='$email_id' and password='$password' and role='0'";
  $res=mysqli_query($con,$sql);
  $count=mysqli_num_rows($res);
  if($count>0){

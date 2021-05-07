@@ -242,7 +242,7 @@ small{
     color:rgb(39, 20, 27)!important;
     
 }
-.profile-info button,.photo-id button,.resume-container button,.profile button,.video_intro button
+.profile-info button,.photo-id button,.profile button,.video_intro button
 {
     height:50px;
     outline:none;
@@ -366,7 +366,17 @@ button:hover
 /*----------------------*-------- SME INFO SECTION ENDS------------------*-----------*/
 
 /*----------------------*-------- SUBMIT_FORM SECTION STARTS------------------*-----------*/
-.submission input,.resume-container button{
+.resume-container button{
+    height:50px;
+    outline:none;
+    border:none;
+    background:rgb(82, 5, 5)!important;
+    color:#fff!important;
+    font-weight: bold;
+    margin:auto;
+    border-radius:10px;
+    }
+.submission input,.resume-button{
     height:50px;
     outline:none;
     border:none;
@@ -378,6 +388,7 @@ button:hover
     width:100%;
 
 }
+
 .close,.modal-footer button{
     background:rgb(82, 5, 5)!important;
     color:#fff!important;

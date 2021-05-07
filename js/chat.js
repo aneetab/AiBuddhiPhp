@@ -26,7 +26,7 @@ sendBtn.onclick = ()=>{
               inputField.value = "";
               scrollToBottom();
               let responseObj = xhr.response;
-              alert(responseObj.message);
+              
           }
       }
     }

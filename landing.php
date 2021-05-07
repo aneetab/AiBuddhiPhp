@@ -68,19 +68,19 @@ require('outerpageheader.php');
       <div class="container">
         <h1>We have experts covering over<span> 25 </span>domains.</h1>
           <div class="row">
-              <div class="extra-domains col-lg-3 col-md-6 col-6">
+              <div class="extra-domains col-lg-3 col-md-6 col-12">
                  <div class="img-container"> <img src="assets/images/hospital.jpg" alt="hospital"></div>
                   <h2>HOSPITAL</h2>
               </div>
-              <div class="extra-domains col-lg-3 col-md-6 col-6">
+              <div class="extra-domains col-lg-3 col-md-6 col-12">
                 <a href="#"> <img src="assets/images/transport.jpg" alt="transport"></a>
                 <h2>TRANSPORT</h2>
             </div>
-            <div class="extra-domains col-lg-3 col-md-6 col-6">
+            <div class="extra-domains col-lg-3 col-md-6 col-12">
                 <a href="#">  <img src="assets/images/computer.jpg" alt="computer"></a>
                 <h2>COMPUTER</h2>
             </div>
-            <div class="extra-domains col-lg-3 col-md-6 col-6">
+            <div class="extra-domains col-lg-3 col-md-6 col-12">
                 <img src="assets/images/textile.jpg" alt="textile">
                 <h2>TEXTILE</h2>
             </div>
@@ -381,7 +381,7 @@ require('outerpagefooter.php');
  
     function find_expert()
  {
-     window.location.href="http://localhost:8888/AI/admin/clientpage.php";
+     window.location.href="clientpage.php";
  }
 
  $(document).ready(function(){

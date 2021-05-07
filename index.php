@@ -1,6 +1,6 @@
 <?php
 require('top.inc.php');
-$sql="select * from admin_users";
+$sql="select * from client_users where role='0'";
 $res=mysqli_query($con,$sql);
 ?>
 
@@ -17,7 +17,7 @@ $res=mysqli_query($con,$sql);
       <th scope="col" width="15%">#</th>
       <th scope="col" width="15%">ID</th>
       <th scope="col" width="20%">Username</th>
-      <th scope="col" width="30%">Password</th>
+      <th scope="col" width="30%">Added On</th>
     </tr>
   </thead>
   <tbody>
@@ -26,9 +26,9 @@ $res=mysqli_query($con,$sql);
     while($row=mysqli_fetch_assoc($res)){?>
       <tr>
       <th scope="row"><?php echo $i?></th>
-      <td><?php echo $row['id']?></td>
+      <td><?php echo $row['client_id']?></td>
       <td><?php echo $row['email_id']?></td>
-      <td><?php echo $row['password']?></td>
+      <td><?php echo $row['added_on']?></td>
     </tr>
     <?php } ?>
   </tbody>

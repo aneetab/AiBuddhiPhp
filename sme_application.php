@@ -9,6 +9,7 @@ $id='';
 $msg='';
 
 
+
 if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
 {
   $email_id=$_SESSION['USER_EMAIL'];
@@ -57,43 +58,46 @@ $industry='';
       }
 
       /*PROFILE PIC STARTS*/
-      $profile_pic=$_FILES['profile-pic'];
-      $filename1=$profile_pic['name'];
-      $fileerror1=$profile_pic['error'];
-      $filetmp1=$profile_pic['tmp_name'];
-      $fileext=explode('.',$filename1);
-      $filecheck=strtolower(end($fileext));
-      $fileextstored=array('png','jpg','jpeg');
-      if(in_array($filecheck,$fileextstored)){
-          $destinationfile1='profilepics/'.$filename1;
-          move_uploaded_file($filetmp1,$destinationfile1);
-      }else{
-          $msg="Extension must be png/jpg/jpeg";
+      
+      if(!empty($_FILES["profile-pic"]["name"])) { 
+        $fileName1 = basename($_FILES["profile-pic"]["name"]);
+        $fileTemp1=$_FILES["profile-pic"]["tmp_name"]; 
+        $fileType = pathinfo($fileName1, PATHINFO_EXTENSION); 
+        $allowTypes = array('jpg','png','jpeg'); 
+        if(in_array($fileType, $allowTypes)){ 
+          $destinationfile1='uploaded_docs/'.$fileName1;
+          move_uploaded_file($fileTemp1,$destinationfile1);
+        }
       }
+         
+
+ 
       /*PROFILE PIC ENDS*/
       /*VIDEO STARTS*/
       $video=$_FILES['video'];
       $filename2=$video['name'];
       $fileerror2=$video['error'];
       $filetmp2=$video['tmp_name'];
-      $destinationfile2='intros/'.$filename2;
+      $destinationfile2='uploaded_docs/'.$filename2;
       move_uploaded_file($filetmp2,$destinationfile2);
+      
+
       /*VIDEO ENDS*/
       
       /*PHOTO ID STARTS*/
-      $photo_id=$_FILES['photo-id'];
-      $filename4=$photo_id['name'];
-      $fileerror4=$photo_id['error'];
-      $filetmp4=$photo_id['tmp_name'];
-      $fileext=explode('.',$filename4);
-      $filecheck=strtolower(end($fileext));
-      if(in_array($filecheck,$fileextstored)){
-          $destinationfile4='photoID/'.$filename4;
-          move_uploaded_file($filetmp4,$destinationfile4);
-      }else{
-          $msg="Extension must be png/jpg/jpeg.";
+      if(!empty($_FILES["photo-id"]["name"])) { 
+        $fileName3 = basename($_FILES["photo-id"]["name"]); 
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        $fileTmp3=$_FILES["photo-id"]["tmp_name"]; 
+        $allowTypes = array('jpg','png','jpeg'); 
+        if(in_array($fileType, $allowTypes)){ 
+          $destinationfile3='uploaded_docs/'.$fileName3;
+          move_uploaded_file($fileTmp3,$destinationfile3);
+        }
       }
-      /*PROFILE PIC ENDS*/  
+            
+            
+      /*PHOT0 ID ENDS*/  
       $sqlget="select * from resume where client_id='$id'";
       $res1=mysqli_query($con,$sqlget);
       if(mysqli_num_rows($res1)>0)
@@ -101,12 +105,18 @@ $industry='';
        if($msg=='')
        {
       
-      $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`profile-pic`,`language`,`industry`,`enterprise`,`video`,`about_me`,`interests`,`specialities`,`photo-id`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$destinationfile1','$language','$industry','$enterprise','$destinationfile2','$about_me','$interests','$specialities','$destinationfile4','0','$date_val')";
+      $q="INSERT INTO `sme_apply`(`email`,`firstname`,`lastname`,`gender`,`language`,`industry`,`profile-pic`,`enterprise`,`about_me`,`interests`,`specialities`,`photo-id`,`video`,`status`,`date_time`) VALUES ('$email_id','$firstname','$lastname','$gender','$language','$industry','$destinationfile1','$enterprise','$about_me','$interests','$specialities','$destinationfile3','$destinationfile2','0','$date_val')";
       $query=mysqli_query($con,$q);
       if($query)
       {
+      
+      $sqlupdate="UPDATE client_users set profile_photo='$destinationfile1' where email_id='$email_id'";
+      
+      if(mysqli_query($con,$sqlupdate))
+      {
       header('location:sme_dashboard.php');
       die();
+      }
       }
       else
       {
@@ -126,10 +136,7 @@ $industry='';
     {
       $msg="You must enter atleast one resume item.";
       $css_class='alert-danger';
-    }
-
-      
-     
+    }     
 }
 ?>
 
@@ -199,9 +206,17 @@ $industry='';
       <ul class="navbar-nav ml-auto d-sm-none d-none d-md-none d-lg-block">
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <img src="assets/images/placeholder.jpg">
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <?php 
+        $getimage="select image from images where id='111'";
+        $resdisplayimg=mysqli_query($con,$getimage);
+        $rowdisplayimg=mysqli_fetch_assoc($resdisplayimg);
+        $display_photo=$rowdisplayimg['image'];
+        ?>
+        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($display_photo); ?>">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <?php 
+       $profile='fa-user red-icons';
+       echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; ?>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
@@ -215,7 +230,9 @@ $industry='';
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
+    <?php 
+       $profile='fa-user red-icons';
+       echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; ?>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
@@ -337,12 +354,12 @@ $industry='';
                             <div>
                             <div class="form-group">
                               <label class="label" for="language">Languages you speak:</label>
-                              <input type="text" class="form-control" name="language" id="language" required>
+                              <input autocomplete="off" type="text" class="form-control" name="language" id="language" required>
                             </div>
                             <div class="form-group">
                             <label class="label" for="industry">Industry of Enterprise:</label>
                     <?php
-                     $sqlquery="select * from industry";
+                     $sqlquery="select * from sort_by where type='industry'";
                      $result=mysqli_query($con,$sqlquery);
                      
                     ?>
@@ -351,7 +368,7 @@ $industry='';
                     <option value="">Select an industry</option>
                     <?php 
                         while( $rows=mysqli_fetch_assoc($result))
-                        echo "<option value=".$rows['industry'].">".$rows['industry']."</option>";
+                        echo "<option value=".$rows['name'].">".$rows['name']."</option>";
                        
                         ?>
                         <option value="other">Other</option>
@@ -361,10 +378,10 @@ $industry='';
                              <div class="other">
                               <input type="text" class="form-control" id="industry1" name="industry1" placeholder="Enter industry">
                             </div>
-</div>
+                             </div>
                             <div class="form-group">
                               <label class="label" for="enterprise">Enterprise of expertise:</label>
-                              <input type="text" class="form-control" id="enterprise" name="enterprise" required>
+                              <input autocomplete="off" type="text" class="form-control" id="enterprise" name="enterprise" required>
                             </div>                                   
   </div>
   </div>
@@ -394,11 +411,10 @@ $industry='';
                     <div class="">
                             <div class="form-group">
                                 <label class="label" for="about_me">About Me:</label>
-                                <textarea class="form-control" rows="5" id="about_me" name="about_me" required></textarea>
+                                <textarea autocomplete="off" class="form-control" rows="5" id="about_me" name="about_me" required></textarea>
                               </div>                        
-                         </div>                   
-  
-</div>
+                            </div>
+                    </div>
     </section>
     <!--RESUME SECTION-->
     <section>
@@ -407,7 +423,7 @@ $industry='';
             <h4>List your qualifications</h4>
             <small>Tell us more about your education,certifications and relevant work experience. Please add atleast one item</small><br/>
             <div class="text-center">
-              <button type="button"  data-toggle="modal" data-target="#resumemodal">
+              <button type="resume-button button"  data-toggle="modal" data-target="#resumemodal">
             + Add Item
             </button>
             </div>
@@ -421,14 +437,12 @@ $industry='';
             <h3>Interests,Hobbies,Key Skills</h3>
             <div class="form-group">
              <label class="label" for="specialities">Enter your specialities:</label>
-                 <input type="text" name="specialities" id="specialities" class="form-control" placeholder="Ex: Data Science,Excel,Photoshop">
+                 <input autocomplete="off" type="text" name="specialities" id="specialities" class="form-control" placeholder="Ex: Data Science,Excel,Photoshop">
             </div>
             <div class="form-group">
              <label class="label" for="interests">Enter your interests/hobbies:</label>
-                 <input type="text" name="interests" id="interests" class="form-control" placeholder="Ex: Blogging,Volunteer work,Music,Sports,Cinema">
+                 <input autocomplete="off" type="text" name="interests" id="interests" class="form-control" placeholder="Ex: Blogging,Volunteer work,Music,Sports,Cinema">
             </div>
-            
-        
         </div>
     </section>
     <!--PHOTO-ID SECTION-->
@@ -488,7 +502,7 @@ require('outerpagefooter.php');
                     </div>
                     <div class="form-group">
                     <label for="desc">Description(Optional)</label>
-                    <input class="form-control" type="text" name="desc" id="desc" placeholder="Ex. Focus on Sap Implementation"></input>
+                    <textarea class="form-control" rows="3" type="text" name="desc" id="desc" placeholder="Ex. Focus on Sap Implementation"></textarea>
                     </div>
                     <div class="form-group">
                     <label for="start">Start</label>
@@ -585,6 +599,7 @@ require('outerpagefooter.php');
                     <?php
                     
                     ?>
+                    
 
                     <select class="form-control" id="update_end" name="update_end">
                         <option value="">Present</option>;
@@ -610,30 +625,15 @@ require('outerpagefooter.php');
 $("#resumemodal").on("hidden.bs.modal",function(){
   $(this).find('#resume_form').trigger('reset');
 });
-$('.other').hide();
-    $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".box").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".box").hide();
-            }
-        });
-    }).change();
+
 
 function select_industry(value)
 {
- 
-            if(value=='other'){
-                
-                $(".other").show();
-            } else{
-                $(".other").hide();
-            }
-        
-
+    if(value=='other'){
+    $(".other").show();
+    } else{
+    $(".other").hide();
+    }           
 }
 function readRecords()
 {
@@ -661,8 +661,7 @@ function DeleteUser(deleteid){
     }
 }
 function addRecords(id)
-{
-  
+{  
 var client_id=id;
 var exp_type=$('#exp_type').val();
 var title=$('#title').val();
@@ -677,11 +676,11 @@ $.ajax({
     data:{client_id:client_id,
           exp_type:exp_type,
           title:title,
-        org:org,
-        location:location,
-    desc:desc,
-start:start,
-end:end},
+          org:org,
+          location:location,
+          desc:desc,
+          start:start,
+          end:end},
 success:function(data,status)
 {
     readRecords();
@@ -724,9 +723,6 @@ var desc=$('#update_desc').val();
 var start=$('#update_start').val();
 var end=$('#update_end').val();
 var hidden_user_id=$('#hidden_user_id').val();
-
-
-
 $.ajax({
     url:"get_experience.php",
     type:'post',
@@ -740,8 +736,7 @@ $.ajax({
           end:end,
           hidden_user_id:hidden_user_id},
 success:function(data,status)
-{ 
-    alert("DONE");
+{     
     $('#update_user_modal').modal("hide");
     readRecords();
 }

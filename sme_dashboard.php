@@ -2,7 +2,7 @@
 require('connection.inc.php');
 require('functions.inc.php');
 $email_id=$_SESSION['USER_EMAIL'];
-$sql="Select * from sme_apply where email='$email_id'";
+$sql="Select sme_apply.status as status,id,`profile-pic`,client_id from sme_apply,client_users where sme_apply.email='$email_id' and sme_apply.email=client_users.email_id";
 $res=mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($res);
 $status=$row['status'];
@@ -106,10 +106,16 @@ $css_class="alert-danger";
       <ul class="navbar-nav ml-auto d-sm-none d-none d-md-none d-lg-block">
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <img src="<?php echo $row['profile-pic']?>">
+        <?php
+        $photo=$row['profile-pic'];
+        ?>
+        <img src="<?php echo $photo ?>">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href=""><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
+          
+        <?php 
+       $profile='fa-user red-icons';
+       echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; ?>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
 
@@ -122,7 +128,7 @@ $css_class="alert-danger";
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-user"></i>&nbsp;&nbsp;Profile</a>
+    <?php echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"?>; 
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>

@@ -1,7 +1,10 @@
 <?php
 require('connection.inc.php');
 require('functions.inc.php');
-
+$id=$_SESSION['USER_ID'];
+$sql="select * from client_users where client_id='$id'";
+$res=mysqli_query($con,$sql);
+$row=mysqli_fetch_assoc($res);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +22,9 @@ require('functions.inc.php');
   <!--Custom Css file-->
   <title></title>
   <style>
+      .all_teams table{
+        background:#fff;
+      }
       .modal h3{
         text-transform: uppercase;
     text-align:center;
@@ -111,11 +117,11 @@ require('functions.inc.php');
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
   <ul class="navbar-nav mr-auto">
-      <li class="nav-item active dropdown dropright d-sm-none d-none d-md-none d-lg-block">
-        <a class="nav-link" href="#">Experts <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="clientpage.php">Experts</a>
       </li>
-      <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
-        <a class="nav-link" href="project_team_create.php">Projects</a>
+      <li class="nav-item">
+        <a class="nav-link" href="project_team_create.php">Projects<span class="sr-only">(current)</span></a>
       </li>
  </ul>
     
@@ -141,7 +147,11 @@ require('functions.inc.php');
       <ul class="navbar-nav ml-auto d-sm-none d-none d-md-none d-lg-block">
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <img src="<?php echo "profilepics/".$row['profile_photo'];?>">
+       <?php 
+       $photo=$row['profile_photo'];
+         
+       ?>
+       <img src="<?php echo $photo?>"> 
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <?php 
@@ -156,6 +166,8 @@ require('functions.inc.php');
           <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
+      <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
+
       
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
@@ -187,62 +199,38 @@ require('functions.inc.php');
   </div>
 </nav>
 
-   
-<section class="teams">
-    <div class="container">
-    <h3>Teams</h3>
-    <div class="create_or_join float-right">
-        <button class="btn btn-light" data-toggle="modal" data-target="#teammodal"><i class="fas fa-cog"></i>&nbsp;Create Team </button>
-    </div>
-    <div class="row teams-menu mx-auto mt-5">
-     
-                 
-    </div> 
-         
-    </div> 
-    </div>
 
-</section>
-<div class="modal" id="teammodal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Create your team</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+
+<section class="mt-15">
+<div class="container">
+<div class="create_or_join float-right mt-3 mb-5 px-2">
+    <a class="btn btn-dark" href="project_request.php"><i class="fas fa-cog"></i>&nbsp; Create Project </a>
+</div>
+    <div class="all_teams py-3 text-center" style="background-color:#fff" id="all_teams">
+     <p style="font-family:'Poppins',sans-seriff;font-weight:bold"> No projects created yet</p>
     </div>
-    <div class="modal-header">
-                <small>Collaborate closely with a group of people inside your organization based on project, initiative, or common interest.</small>
-            </div>
-            <div class="modal-body">
-                <form id="team_form" action="" method="POST">
-                    <div class="form-group">
-                    <label for="title">Team name</label>
-                    <input class="form-control" type="text" name="team_name" id="team_name" placeholder=""></input>
-                    </div>
-                    <div class="form-group">
-                    <label for="desc">Description(Optional)</label>
-                    <textarea class="form-control" rows="5" name="team_desc" id="team_desc" placeholder="Let people know what this team is all about"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-dark" onclick="createTeam('13','<?php echo date('Y-m-d h:i:s')?>')" name='save' id="submitForm" data-dismiss="modal">Next</button>
-            </div>
 </div>
-</div>
-</div>
+    </section>
+     
+
 
 
     <!--FOOTER SECTION-->
-<?php
-require('outerpagefooter.php');
-?>  
+<script src="assets/fontawesome-icons/all.js"></script>
+<!--jQuery file-->
+<script src="assets/jquery/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!--Bootstrap file-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
 <script>
     readTeams();
-    function open_team()
+  
+    function open_team(id)
     {
-        window.location.href="thisteam.php";
+        window.location.href="team.php?id="+id+"&channel=general";
     }
     function readTeams(){
        
@@ -252,49 +240,12 @@ require('outerpagefooter.php');
         type:"post",
         data:{getteam:getteam},
         success:function(data,status){
-            $('.teams-menu').html(data);
+            $('.all_teams').html(data);
         }
     });
 
     }
-    function createTeam(id,date)
-    {
-      
-      var team_name=$('#team_name').val();
-      var team_desc=$('#team_desc').val();
-      var arr=team_name.split(" ");
-      var display_title='';
-      if(arr.length>1)
-      {
-      var first=arr[0].charAt(0);
-      var second=arr[1].charAt(0);
-      display_title=first+second;
-      }
-      else
-      {
-        var first=arr[0].charAt(0);
-      var second=arr[0].charAt(1);
-      display_title=first+second;  
-      }
-      alert(display_title);
-      var client_id=id;
-      var date=date;
-      $.ajax({
-       url:"create_team.php",
-       type:'post',
-       data:{
-           team_name:team_name,
-           display_title:display_title,
-           team_desc:team_desc,
-           client_id:client_id,
-           date:date
-   },
-        success:function(data,status)
-           {
-              readTeams();
-            }
-});
-}
+    
   
    
 </script>

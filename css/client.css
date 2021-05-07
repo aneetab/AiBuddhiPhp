@@ -136,7 +136,7 @@ section{
 .sme{
     background-image:linear-gradient(rgba(245, 240, 240, 0.774),rgba(241, 225, 225, 0.774)),url("assets/images/laptop.jpg");
 }
-.btn{
+.btn-red{
     height:50px;
     width:100%;
     outline:none;

@@ -14,8 +14,8 @@ if(isset($_GET['id']) && $_GET['id']!='') {
 $sql="select * from sme_apply where id='$id'";
 $res=mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($res);
-$industry=$row['industry_tag'];
-$enterprise=$row['enterprise_tag'];
+$industry=$row['industry'];
+$enterprise=$row['enterprise'];
 if(isset($_POST['submit']))
 {
     $industry=get_safe_value($con,$_POST['industry']);
@@ -34,7 +34,7 @@ if(isset($_POST['submit']))
     
     if($is_error=='')
     {
-        $sql="UPDATE sme_apply set industry_tag='$industry',enterprise_tag='$enterprise' where id='$id'";
+        $sql="UPDATE sme_apply set industry='$industry',enterprise='$enterprise' where id='$id'";
         $res=mysqli_query($con,$sql);
         if($res)
         {
@@ -106,7 +106,7 @@ include "css/admin.css";
     <li class="nav-item">
 <a href="fill_details.php?id=<?php echo $id ?>" class="nav-link text-dark">
                 <i class="fas fa-magic mr-3 text-primary fa-fw"></i>
-                Complete Profile
+                Update Profile
             </a>
   </li>
     

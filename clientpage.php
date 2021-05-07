@@ -10,7 +10,7 @@ if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
   $row=mysqli_fetch_assoc($res);
   $id=$row['client_id'];
   $_SESSION['USER_ID']=$id;
-  $_SESSION['USER_PIC']='profilepics/'.$row['profile_photo'];
+  $_SESSION['USER_PIC']=$row['profile_photo'];
 }
 else{
     header('location:client_signup.php');
@@ -54,7 +54,7 @@ else{
         <a class="nav-link" href="#">Experts <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown dropright d-sm-none d-none d-md-none d-lg-block">
-        <a class="nav-link" href="project_team_create.php">Projects</a>
+        <a class="nav-link" href="project_request.php">Projects</a>
       </li>
  </ul>
     
@@ -80,7 +80,10 @@ else{
       <ul class="navbar-nav ml-auto d-sm-none d-none d-md-none d-lg-block">
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       <img src="<?php echo "profilepics/".$row['profile_photo'];?>">
+       <?php 
+       $photo=$row['profile_photo'];   
+       ?>
+       <img src='<?php echo $photo;?>'>   
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <?php 
@@ -131,7 +134,7 @@ else{
       <div class="container dropdowns text-center text-uppercase">
         Sort By:
         <div class="dropdown btn-group">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-red btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Industry
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -141,7 +144,7 @@ else{
           </div>
         </div>
         <div class="dropdown btn-group">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-red btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Enterprise
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -169,7 +172,7 @@ else{
           <h6 class="card-title">Industry: <?php echo $list['industry']?></h6>
           <h6 class="card-title">Enterprise: <?php echo $list['enterprise']?></h6>
           <p class="card-text"><?php echo $list['about_me']?></p>
-          <a href="sme_profile.php?id=<?php echo $list['id']?>" class="btn btn-primary mb-2">View Profile</a>
+          <a href="sme_profile.php?id=<?php echo $list['id']?>" class="btn btn-red btn-primary mb-2">View Profile</a>
         </div>
       </div>
       </div>

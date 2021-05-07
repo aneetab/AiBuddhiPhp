@@ -5,11 +5,11 @@ $id='';
 $msg='';
 if(isset($_GET['id']) && $_GET['id']!=''){
     $id=get_safe_value($con,$_GET['id']);
-    $res=mysqli_query($con,"select * from industry where id='$id'");
+    $res=mysqli_query($con,"select * from sort_by where type='industry' and id='$id'");
     $check=mysqli_num_rows($res);
     if($check>0){
         $row=mysqli_fetch_assoc($res);
-        $industry=$row['industry'];
+        $industry=$row['name'];
     }
     else{
         header('location:industry.php');
@@ -18,23 +18,23 @@ if(isset($_GET['id']) && $_GET['id']!=''){
 }
 if(isset($_POST['submit'])){
     $industry=get_safe_value($con,$_POST['industry']);
-    $res=mysqli_query($con,"select * from industry where industry='$industry'");
+    $res=mysqli_query($con,"select * from sort_by where type='industry' and name='$industry'");
     $check=mysqli_num_rows($res);
     if($check>0){
       $msg="Industry already exists!";
     }else{
     if(isset($_GET['id']) && $_GET['id']!=''){
-        mysqli_query($con,"update industry set industry='$industry' where id='$id'");
+        mysqli_query($con,"update sort_by set name='$industry' where id='$id'");
     }
     else{
-    mysqli_query($con,"insert into industry(industry,status) values('$industry','1')");
+    mysqli_query($con,"insert into sort_by(type,name,status) values('industry','$industry','1')");
     }
     header('location:industry.php');
     die();
 }
 }
 
-$sql="select * from industry order by industry desc";
+$sql="select * from sort_by where type='industry' order by name desc";
 $res=mysqli_query($con,$sql);
 ?>
 <div class="page-content p-5" id="content">

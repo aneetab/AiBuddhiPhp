@@ -3,9 +3,10 @@ require('connection.inc.php');
 require('functions.inc.php');
 $msg='';
 $css_class='';
+$role=$_SESSION['USER_ROLE'];
 if(isset($_GET['id']) && $_GET['id']!='') {
   $id=get_safe_value($con,$_GET['id']);
-  $sql="select * from client_users where client_id='$id' and role='1'";
+  $sql="select * from client_users where client_id='$id'";
   $res=mysqli_query($con,$sql);
   $row=mysqli_fetch_assoc($res);
   }
@@ -13,40 +14,47 @@ if(isset($_POST['submit']))
 {
     $firstname=$_POST['firstname'];
     $lastname=$_POST['lastname'];
-    $profileImageName=time().'_'.$_FILES['profileImage']['name'];
-    $fileext=explode('.',$profileImageName);
-    $filecheck=strtolower(end($fileext));
-    $fileextstored=array('png','jpg','jpeg');
-    if(in_array($filecheck,$fileextstored)){
-        $target='profilepics/'.$profileImageName;       
-        if(move_uploaded_file($_FILES['profileImage']['tmp_name'],$target)){
-        $sql="update client_users set profile_photo='$profileImageName',firstname='$firstname',lastname='$lastname' where client_id='$id'";
-        if(mysqli_query($con,$sql)){
-        $msg="Successfully updated";
-        $css_class="alert-success";
-        }
-        else
-        {
-        $msg="Database Error-Failed to update";
-        $css_class="alert-danger";
-        }
+    if(!empty($_FILES["profileImage"]["name"])) { 
+        $fileName = basename($_FILES["profileImage"]["name"]); 
+        $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        $fileTmp=$_FILES["profileImage"]["tmp_name"]; 
+        $allowTypes = array('jpg','png','jpeg'); 
+        if(in_array($fileType, $allowTypes)){ 
+            $destinationfile='uploaded_docs/'.$fileName;
+            move_uploaded_file($fileTmp,$destinationfile);
+            $date=date('Y-m-d h:i:s');
+                $update="update client_users set profile_photo='$destinationfile',firstname='$firstname',lastname='$lastname' where client_id='$id'";
+                mysqli_query($con,$update);
+                $email=$_SESSION['USER_EMAIL'];
+                $update="update sme_apply set profile-pic='$destinationfile' where email='$email'";
+                if(mysqli_query($con,$update))
+                {
+                $url='manage_profile.php?id='.$id;
+                header('location:'.$url);
+                }
+                else
+                {
+                    $msg="Failed to update profile pic";
+                    $css_class='alert-danger';
+                }
+            
+        }else{ 
+            $msg = 'Image must be in JPG, JPEG or PNG format only.'; 
+            $css_class='alert-danger';
+        } 
+    }else{ 
+        $msg = 'Please select a profile image to upload.'; 
+        $css_class='alert-danger';
     }
-    else
-    {
-        $msg="Failed to update";
-        $css_class="alert-danger";  
-    }
-  }else{
-        $msg="Image should be in png,jpeg or jpeg format";
-        $css_class="alert-danger";
-    }
+   
 }
 if(isset($_POST['remove']))
 {
 
    
-        $sql="update client_users set profile_photo='placeholder.jpg' where client_id='$id'";
+        $sql="update client_users set profile_photo='uploaded_docs/placeholder.jpg' where client_id='$id'";
         if(mysqli_query($con,$sql)){
+        $sql="update sme_apply set profile-pic='uploaded_docs/placeholder.jpg' where email='$email'";
         $msg="Successfully updated";
         $css_class="alert-success";
         }
@@ -178,20 +186,10 @@ include "css/style.css";
                 
                     <form method="post" enctype="multipart/form-data">
                         <div class="form-group text-center">
-                            <img src="<?php
-                                        if($row['profile_photo'])
-                                        {
-                                            echo "profilepics/".$row['profile_photo'];
-                                        }
-                                        else
-                                        {
-                                            echo "placeholder.jpg";
-                                        }
-                                        ?>"
-                             id="profileDisplay" onclick="triggerClick()" alt=""/>
+                            <img onclick='triggerClick()' id='profileDisplay' src="<?php echo $row['profile_photo']?>">
                             <label for="profileImage">Profile Image</label>
                             <input style="display:none;" onchange="displayImage(this)" type="file" name="profileImage" id="profileImage" class="form-control"><br/>
-                            <?php if($row['profile_photo']!="placeholder.jpg")
+                            <?php if($row['profile_photo']!='uploaded_docs/placeholder.jgp')
                             {
                                 echo "<button class='btn-dark' type='submit' name='remove'>Remove</button>";
                             }
@@ -207,7 +205,7 @@ include "css/style.css";
                         </div>
                         <div class="social-login-content">
                             <div class="social-button text-center">
-                                <button type="button" onclick="go_back()" class="btn-group btn-info">Back</button>
+                                <button type="button" onclick="go_back('<?php echo $role?>')" class="btn-group btn-info">Back</button>
                                 <button type="submit" name="submit" class="btn-group btn-info">Save</button>
                             </div>
                         </div>
@@ -221,8 +219,12 @@ include "css/style.css";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        function go_back(){
-            window.location.href="clientpage.php";
+        function go_back(role){
+            if(role=='client')
+            window.location.href='clientpage.php';
+            else if(role=='sme')
+            window.location.href='sme_dashboard.php';
+
         }
         function triggerClick(){
             document.querySelector('#profileImage').click();

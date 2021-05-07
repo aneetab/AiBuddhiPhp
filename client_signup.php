@@ -63,7 +63,7 @@ if($r=='')
 $r='1';
 $_SESSION['USER_ROLE']='client';
 }
-$sql="insert into client_users(email_id,password,role,added_on,profile_photo) VALUES('$email_id','$password','$r','$added_on','placeholder.jpg')";
+$sql="insert into client_users(email_id,password,role,added_on,profile_photo) VALUES('$email_id','$password','$r','$added_on','111')";
 mysqli_query($con,$sql);
 $username='';
 $email_id='';

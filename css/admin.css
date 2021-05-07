@@ -6,8 +6,8 @@ body {
     font-family: "Poppins",sans-serif;
   }
    .vertical-nav {
-    min-width: 17rem;
-    width: 17rem;
+    min-width: 20rem;
+    width: 20rem;
     height: 100vh;
     position: fixed;
     top: 0;

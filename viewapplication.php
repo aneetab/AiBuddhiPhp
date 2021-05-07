@@ -11,6 +11,7 @@ if(isset($_GET['type']) && $_GET['type']=='update' && isset($_GET['id'])){
     mysqli_query($con,"update sme_apply set status='$status' where id='$id'");
     if($status=='2')
     {
+      //CHANGE THIS TO AUTOMATED EMAIL
      $msg="We are extremely sorry to inform you that your application has been rejected. We truly appreciate you taking your time to apply to AiBuddhi, and we wish you the very best for your future endeavours.";
       $sql="select * from sme_apply where id='$id'";
       $res=mysqli_query($con,$sql);
@@ -30,6 +31,11 @@ if(isset($_GET['type']) && $_GET['type']=='update' && isset($_GET['id'])){
 $sql="select * from sme_apply where id='$id'";
 $res=mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($res);
+$email=$row['email'];
+$sqlget="select * from client_users where email_id='$email'";
+$res1=mysqli_query($con,$sqlget);
+$row1=mysqli_fetch_assoc($res1);
+$readid=$row1['client_id'];
 ?>
 
 <!DOCTYPE html>
@@ -53,8 +59,148 @@ $row=mysqli_fetch_assoc($res);
 <?php
 include "css/sme.css";
 include "css/admin.css";
-?>
 
+?>
+.resume-items{   
+    width:100%;height:auto;
+    margin:20px 0;
+    border-radius:20px;
+    padding:10px 20px;
+    background:#fff;        
+    }
+    .profile-display img{
+        border-radius:5px;
+        width:200px;
+        height:200px;
+        margin-top:10px;
+      }
+    .user-profile{
+    width:100%;height:auto;
+    margin:20px 0;
+    border-radius:20px;
+    padding:10px 20px;
+    }
+    .user-profile button{
+        margin:auto;    
+    }
+    .user-profile h3{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    margin:6px 0 15px 0;
+    font-weight:bold;
+    line-height:1;
+    word-spacing:4px;
+    font-family:"Poppins",sans-serif; 
+    color: rgb(34, 23, 15);
+    }
+    .card-text img{
+        height:30px;
+        width:30px;
+        border-radius:10%;
+    }
+    .card-title{
+        font-size:10px !important;
+    }
+    .card{
+        margin-left:auto;
+        margin-right:auto;     
+    }
+.video-body{
+    width:auto;height:auto;
+    margin:20px 0;
+    border-radius:20px;
+    padding:10px 20px;
+    background:#fff;
+    text-align:center;
+}
+.profile-display{
+    width:100%;height:auto;
+    margin:20px auto;
+    border-radius:20px;
+    padding:10px 20px;
+    background:#fff;
+    text-align:center;
+} 
+  .interest-badge{
+          color:#fff;
+          font-family:"Poppins",sans-seriff;
+          font-weight:bold;
+          text-transform:uppercase;
+          padding:20px!important;
+          margin:20px!important;
+          font-size:16px!important;
+          border-radius:3px!important;
+          box-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+      }
+     .resume-icons
+    {
+        font-size:30px;
+        color:rgb(82, 5, 5)!important;
+        padding:3px;
+    }
+    .resume-items h4{  
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight:bold;
+    line-height:1.1;
+    word-spacing:2px;
+    font-family:"Poppins",sans-serif;
+    color:rgb(49, 31, 17)
+    }
+    .resume-items h3{
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      font-weight:bold;
+      line-height:1.1;
+      word-spacing:2px;
+      font-family:sans-serif;
+      color:#000;
+      text-transform:uppercase;
+      }
+   .card_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background:#fff;
+    margin:20px auto;
+    border-radius:20px;
+    padding:10px 20px;
+  }  
+  .card_container .card{
+    width:12rem;
+    margin:1rem;
+    background: #52090930;
+    color:#000;
+    font-weight:bold;
+    border-radius: .5rem;
+    box-shadow: 0 .3rem .5rem rgba(0,0,0,.3);
+    overflow: hidden;
+    position: relative;
+    height:8rem;
+    text-align:center;
+  }
+  .card_container .card img{
+    height:60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 90%;
+    margin:auto;
+    margin-top:2px;
+    font-weight:bold;
+  }
+  
+  .card_container .content{
+    padding-bottom: 2px;
+    text-align: center;
+    font-weight:bold !important;
+  }
+  .card_container .content p{
+    color:#333;
+    font-size: 0.9rem;
+    padding:2px;
+  }
 </style>
 </head>
 <body>
@@ -64,7 +210,15 @@ include "css/admin.css";
       <div class="media-body">
         <h4 class="m-0"></h4>
         <div class="container">
-              <img src="<?php echo $row['profile-pic'] ?>" alt="">
+        <?php
+        $photo_id=$row['profile-pic'];
+        $getimage="select * from images where id='$photo_id'";
+        $resimg=mysqli_query($con,$getimage);
+        $rowimg=mysqli_fetch_assoc($resimg);
+        $image=$rowimg['image'];
+        ?>
+        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($image); ?>">
+              
              
 </div>
 <p class="font-weight-normal text-muted mb-0"><?php echo $row['firstname'].' '.$row['lastname'] ?></p>
@@ -96,7 +250,7 @@ include "css/admin.css";
     <li class="nav-item">
 <a href="fill_details.php?id=<?php echo $id ?>" class="nav-link text-dark">
                 <i class="fas fa-clipboard-list mr-3 text-primary fa-fw"></i>
-                Complete Profile
+                Update Profile
             </a>
   </li>
     
@@ -119,97 +273,146 @@ include "css/admin.css";
   <!-- Toggle button -->
   <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
 
-
-<section class="container-fluid">
-      <section class="row justify-content-center text-center">
-          <section class="video_intro col-lg-10 col-md-8 col-sm-6 m-auto display-block py-2">
-          <h2>Video Introduction</h2>
-              <div class="container">
-              <video id="video" width="320" height="300" controls>
-                            <source src="<?php echo $row['video']?>" type=video/mp4>
-                          </video>
-             
-</div>
-</section>
-</section>
-</section>
-
-    <!--SME VIDEO INTRO SECTION-->
-   
-    <section class="container-fluid">
-      <section class="row justify-content-center">
-          <section class="details col-lg-10 col-md-8 col-sm-6 m-auto display-block py-2">
-          <div class="info container">
-          <div class="table-responsive">
-<table class="table table-bordered table-hover">
-
-<tbody>
-<tr>
-    <td><h3> About me<h3> </td>
-    <td><p><?php echo $row['about_me']?><p></td>
-</tr>
-<tr>
-    <td><h3>Languages<h3> </td>
-    <td><p><?php echo $row['language']?><p></td>
-</tr>
-<tr>
-    <td><h3>Industry<h3> </td>
-    <td><p><?php echo $row['industry']?><p></td>
-</tr>
-<tr>
-    <td><h3>Enterprise<h3> </td>
-    <td><p><?php echo $row['enterprise']?><p></td>
-</tr>
-<tr>
-    <td><h3>Profession<h3> </td>
-    <td><p><?php echo $row['profession']?><p></td>
-</tr>
-<tr>
-    <td><h3>Education<h3> </td>
-    <td><p><?php echo $row['education']?><p></td>
-</tr>
-<tr>
-    <td><h3>Experience<h3> </td>
-    <td><p><?php echo $row['experience']?><p></td>
-</tr>
-<tr>
-    <td><h3>Specialities<h3> </td>
-    <td><p><?php echo $row['specialities']?><p></td>
-</tr>
-<tr>
-    <td><h3>Interests<h3> </td>
-    <td><p><?php echo $row['interests']?><p></td>
-</tr>
-<tr>
-    <td><h3>Resume<h3> </td>
-    <td><p><a href="<?php echo $row['resume']?>"><?php echo $row['resume']?></a><p></td>
-</tr>
-<tr>
-    <td><h3>Photo ID<h3> </td>
-    <td><p><a href="<?php echo $row['photo-id']?>"><?php echo $row['photo-id']?></a><p></td>
-</tr>
-<tr>
-    <td><h3>Industry sort tag<h3> </td>
-    <td><p><a href="<?php echo $row['industry_tag']?>"><?php echo $row['industry_tag']?></a><p></td>
-</tr>
-<tr>
-    <td><h3>Enterprise sort tag<h3> </td>
-    <td><p><a href="<?php echo $row['enterprise_tag']?>"><?php echo $row['enterprise_tag']?></a><p></td>
-</tr>
-
-
-      
-</tbody>
-</table>
-<div class="text-center">
-<a href='experts.php'><button class="btn-success">Back</button>
+  <section class="intro_video">
+    <div class="container">
+    
+            <div class="video-body">
+            <video id="video" width="400" height="300" controls>
+            <source src="<?php echo $row['video']?>" type=video/mp4>
+            </video>
+            </div>
+    
     </div>
-</div>
-</div>
+    </section>
+
+    <section class="user-profile">
+    <div class="container">
+    <div class="profile-display">
+    <h3> ABOUT ME</h3><br/>
+    <div class="row d-flex justify-content-center">
+        
+        <?php echo $row['about_me']?>
+       
+
+    </div>
+    <hr>
+    <h3> Speaks</h3><br/>
+    <div class="row d-flex justify-content-center">
+        
+        <?php echo $row['language']?>
+       
+
+    </div>
+    <hr>
+    <h3> Specialities</h3><br/>
+    <div class="row d-flex justify-content-center">
+        
+        <?php 
+          $specialities=$row['specialities'];
+          $specialities=explode(',',$specialities);
+          $colours=array('#FFE921','#28a745','#17a2b8','#FFE921',);
+          foreach($specialities as $value)
+          {
+          $res="<span style='background-color:#8B0000;' class='interest-badge badge badge-secondary'>$value</span>";
+          echo $res;
+          }
+        ?>
+       
+
+    </div>
+    </div>
+    </section>
+  
+    <!--Resume container-->
+    <section class="resume_container">
+        <div class="container">
+        <div class="resume-items">
+        <h3> Resume </h3><br>
+          <?php
+          $readSql="select * from resume where client_id='$readid' and exp_type='Experience'";
+          $readRes=mysqli_query($con,$readSql);
+          if(mysqli_num_rows($readRes)>0)
+          {
+              echo '<h3><i class="resume-icons fas fa-briefcase"></i>EXPERIENCE</h3>';
+          }
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            
+                $output = '<div class="row offset-2">
+                           <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                           $readRow['start'].'-'.$readRow['end'].'</h4></div>'
+                           .'<div class="col-lg-6 col-md-6 col-12">
+                            <h3>'.$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div></div><hr>';
+                echo $output;
+          }?>
+           
+           <?php
+          $readSql="select * from resume where client_id='$readid' and exp_type='Education'";
+          $readRes=mysqli_query($con,$readSql);
+          if(mysqli_num_rows($readRes)>0)
+          {
+              echo '<h3><i class="resume-icons fas fa-university"></i>EDUCATION</h3>';
+          }
+
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            $output = '<div class="row offset-2">
+                           <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                           $readRow['start'].'-'.$readRow['end'].'</h4></div>'
+                           .'<div class="col-lg-6 col-md-6 col-12">
+                            <h3>'.$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div></div><hr>';
+                echo $output;
+                
+          }?>
+          <?php
+          $readSql="select * from resume where client_id='$readid' and exp_type='Certification'";
+          $readRes=mysqli_query($con,$readSql);
+          if(mysqli_num_rows($readRes)>0)
+          {
+              echo '<h3><i class="resume-icons fas fa-file-alt"></i>CERTIFICATION</h3>';
+          }
+          while($readRow=mysqli_fetch_assoc($readRes))
+          {
+            
+                $output = '<div class="row offset-2">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                '."<h3><i class='resume-icons fas fa-file-alt'></i>".$readRow['title'] .'</h3><br><h4>'.$readRow['org'].'-'.$readRow['location'].'<br>'.$readRow['description'].'</h4>
+                            </div>'.'
+                            <div class="col-lg-6 col-md-6 col-12">'."<h4><i class='resume-icons fas fa-calendar-alt'></i>".
+                            $readRow['start'].'-'.$readRow['end'].'</h4></div>
+                            </div><hr>';
+                echo $output;
+          }
+         
+          ?>
+          </div>
+        </div>
+    </section>
    
-</section>
-</section>
-</section>
+    <section class="industry">
+        <div class="card_container container justify-content-center">
+          <div class="card">
+            <img src="assets/images/factory.png" alt="">
+            <p>INDUSTRY</p>
+          <div class="content">
+            <p><?php echo $row['industry']?></p>
+          </div>
+          </div>
+    
+          <div class="card">
+            <img src="assets/images/teamwork.png" alt="">
+            <p>ENTERPRISE</p>
+            <div class="content">
+            <p><?php echo $row['enterprise']?></p>
+            </div>
+          </div>
+        </div>
+    </section>
+
+   
+   
 </div>
     
 <script>

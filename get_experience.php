@@ -32,7 +32,6 @@
         $res=mysqli_query($con,$displayquery);
         $i=1;
         if(mysqli_num_rows($res)>0){
-
         while($row = mysqli_fetch_assoc($res)){
                 if($row['exp_type']=="Education")
                 {

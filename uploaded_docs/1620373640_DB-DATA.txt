@@ -1,0 +1,409 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:8889
+-- Generation Time: Apr 30, 2021 at 10:27 AM
+-- Server version: 5.7.24
+-- PHP Version: 7.4.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ai`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_users`
+--
+
+CREATE TABLE `client_users` (
+  `client_id` int(11) NOT NULL,
+  `email_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role` tinyint(10) NOT NULL,
+  `added_on` datetime NOT NULL,
+  `profile_photo` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Active Now'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `client_users`
+--
+
+INSERT INTO `client_users` (`client_id`, `email_id`, `password`, `firstname`, `lastname`, `role`, `added_on`, `profile_photo`, `status`) VALUES
+(12, 'mina@gmail.com', '91b827e257eeae8e5989d961fe3011df', 'Mina', 'Binoy', 2, '2021-04-06 04:53:18', 'uploaded_docs/p7.jpg', 'Active Now'),
+(13, 'arushka@gmail.com', '4bbe2faa1cdcc2cc63d5d657583b4688', 'Arushka', 'Shastry', 2, '2021-04-06 05:00:57', 'uploaded_docs/p6.jpg', 'Offline'),
+(14, 'sebin@gmail.com', 'b9f5b8bd9b146c2995129e0b2329c99c', 'Sebin', 'Binoy', 2, '2021-04-06 05:38:25', 'uploaded_docs/banner1.jpg', 'Active Now'),
+(15, 'binoy@gmail.com', '2a6009a229bb96cc41c55d7e7522d4eb', 'Binoy', 'Theruvan', 2, '2021-04-06 06:09:49', 'uploaded_docs/p10.jpg', 'Active now'),
+(16, 'aneeta@gmail.com', 'f2b53f6c4d30ed849a2e2b7f0d1b4248', 'Aneeta', 'Binoy', 1, '2021-04-06 06:32:14', '1617690771_p6.jpg', 'Offline'),
+(17, 'user@gmail.com', 'ee11cbb19052e40b07aac0ca060c23ee', 'User', 'User', 1, '2021-04-06 06:39:49', 'uploaded_docs/p10.jpg', 'Active now'),
+(21, 'tanya@gmail.com', 'd37eaa547940fdd713097006308bf6c9', 'Tanya', 'Banerjee', 2, '2021-04-06 09:33:50', 'placeholder.jpg', 'Offline'),
+(22, 'binoyd@hpcl.in', '545ecb321b647cd8a565fbca380f8d99', 'Binoy', 'Theruvan', 1, '2021-04-10 04:33:49', 'placeholder.jpg', 'Active Now'),
+(23, 'harini@gmail.com', 'b2f7d6e27829d7da30ab470e11a67a6e', 'Harini', 'Rao', 2, '2021-04-19 04:38:46', '111', 'Active now'),
+(24, 'daksh@gmail.com', '879c8e97dd5961fdcc7dcaf24e98f75d', 'Sonakshi', 'Agarwal', 2, '2021-04-20 08:39:18', 'uploaded_docs/girl.jpg', 'Offline'),
+(25, 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Aneeta', 'Binoy', 0, '2021-04-28 00:00:00', NULL, 'Active Now'),
+(26, 'aditi@gmail.com', '2b197829d548512d1d4b8bd5c773d6c3', 'Aditi', 'C', 2, '2021-04-28 07:32:36', 'uploaded_docs/banner4.jpg', 'Offline');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `files`
+--
+
+CREATE TABLE `files` (
+  `file_id` int(11) NOT NULL,
+  `team_id` int(11) DEFAULT NULL,
+  `folder_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `channel` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_type` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `extension` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_folder` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `modified_by` int(11) DEFAULT NULL,
+  `added_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`file_id`, `team_id`, `folder_name`, `channel`, `file`, `file_name`, `file_type`, `extension`, `parent_folder`, `modified_by`, `added_on`) VALUES
+(5, 10, NULL, 'general', 'uploaded_docs/1619692312_Aneeta_CV.pdf', 'Aneeta_CV.pdf', 'file', 'pdf', 'general', 17, '2021-04-29 10:31:52'),
+(6, 10, 'Testing', 'general', NULL, NULL, 'folder', NULL, 'general', 17, '2021-04-29 10:46:05'),
+(7, 10, NULL, 'general', 'uploaded_docs/1619693184_12 th  science HW.pdf', '12 th  science HW.pdf', 'file', 'pdf', 'Testing', 17, '2021-04-29 10:46:24'),
+(8, 10, NULL, 'general', '', '170905270_PR4.pdf', 'file', 'pdf', 'general', 17, '2021-04-29 10:48:49'),
+(9, 10, NULL, 'general', '', 'Aneeta Binoy T.docx', 'file', 'docx', 'general', 17, '2021-04-29 10:49:03'),
+(11, 10, 'Test1', 'general', NULL, NULL, 'folder', NULL, 'Testing', 17, '2021-04-29 02:10:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `msg_id` int(11) NOT NULL,
+  `incoming_msg_id` int(11) NOT NULL,
+  `outgoing_msg_id` int(11) NOT NULL,
+  `msg` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`) VALUES
+(26, 13, 17, 'Hello'),
+(27, 13, 17, 'Good Morning! How are you?');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `receiveid` int(11) NOT NULL,
+  `fromname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `notification` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `sent_date` datetime NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_team`
+--
+
+CREATE TABLE `project_team` (
+  `team_id` int(11) NOT NULL,
+  `team_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `team_desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `project_team`
+--
+
+INSERT INTO `project_team` (`team_id`, `team_name`, `team_desc`, `created_by`, `created_on`) VALUES
+(8, 'Team AiBuddhi', 'Test', 13, '2021-04-18 05:15:27'),
+(10, 'User123', 'I am Testing', 17, '2021-04-26 07:08:56'),
+(12, 'Testing', '', 17, '2021-04-28 10:47:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resume`
+--
+
+CREATE TABLE `resume` (
+  `id` int(11) NOT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  `exp_type` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `org` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `location` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `start` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `end` varchar(7) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `resume`
+--
+
+INSERT INTO `resume` (`id`, `client_id`, `exp_type`, `title`, `org`, `location`, `description`, `start`, `end`) VALUES
+(130, 13, 'Experience', 'Summer Internship', 'ICP', 'Ahmedabad,Gujarat', '5 month summer internship at ICP', '2021', 'Present'),
+(131, 13, 'Education', 'Btech in Architecture', 'LS Raheja', 'Mumbai,Maharashtra', 'Junior Architect', '2017', 'Present'),
+(139, 23, 'Experience', 'Summer Intern', 'Bhabha Atomic Research Center', 'Mumbai,Maharashtra', 'Had a 2 month research internship', '2017', '2017'),
+(141, 23, 'Education', 'Bsc in BioTechnology', 'SIES Junior College', 'Mumbai,Maharashtra', 'Major in Research', '2017', '2020'),
+(142, 23, 'Education', 'Post Graduate in Environmental Science', 'Jaipur College', 'Jaipur, Rajasthan', '', '2021', 'Present'),
+(150, 24, 'Education', 'Btech in Computer Science', 'Manipal Institute of Technology', 'Manipal,Karnataka', 'Minor in Big Data', '2017', 'Present'),
+(151, 24, 'Experience', 'Summer Internship', 'Jio', 'Mumbai,maharashtra', '2 month Marketing analyst internship', '2020', '2020'),
+(152, 24, 'Experience', 'Summer Intern', 'Bhabha Atomic Research Center', 'Mumbai,maharashtra', NULL, '2017', '2017');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sme_apply`
+--
+
+CREATE TABLE `sme_apply` (
+  `id` int(11) NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `lastname` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `profile-pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `language` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `industry` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `enterprise` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `video` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `about_me` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `photo-id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `interests` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `specialities` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `status` int(11) DEFAULT NULL,
+  `date_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sme_apply`
+--
+
+INSERT INTO `sme_apply` (`id`, `email`, `firstname`, `lastname`, `gender`, `profile-pic`, `language`, `industry`, `enterprise`, `video`, `about_me`, `photo-id`, `interests`, `specialities`, `status`, `date_time`) VALUES
+(9, 'sebin@gmail.com', 'Sebin', 'Binoy', 'male', 'uploaded_docs/banner1.jpg\r\n', 'English,Hindi', 'Marketing', 'Finance', 'intros/test.mp4', 'I am 26 years old.', 'photoID/AB Logo.png', 'Badminton, Football,Reading', 'Python, Excel', 1, '2021-04-06 05:41:54'),
+(10, 'arushka@gmail.com', 'Arushka', 'Shastry', 'female', 'uploaded_docs/p6.jpg', 'English,Hindi', 'Architecture', 'EXCEL', 'intros/test.mp4', 'I am a fourth year architecture student from LS Raheja. I am currently completing my final year internship at ICP, Ahmedabad.', 'photoID/AB Logo.png', 'Singing, Dancing, Drawing, Cooking', 'Autocad, Sketching', 1, '2021-04-06 05:49:35'),
+(11, 'mina@gmail.com', 'Mina', 'Binoy', 'female', 'uploaded_docs/p7.jpg', 'English,Hindi,Malayalam', 'Teaching', 'Mathematics', 'intros/test.mp4', 'I have been teaching Mathematics at AFAC Junior college for the past 15 years. I also teach Environmental Studies.', 'photoID/AB Logo.png', 'Singing, Dancing, Cooking', 'Mathematics, Environmental Studies', 1, '2021-04-06 05:56:24'),
+(12, 'binoy@gmail.com', 'Binoy', 'Theruvan', 'Male', 'uploaded_docs/p10.jpg', 'English,Hindi,Malayalam', 'Oil and Gas', 'Sap', 'intros/test.mp4', 'I have been working with Hindustan Petroleum for the past 23 years. I work with SAP implementation software.', 'photoID/AB Logo.png', 'Badminton, Cricket, F1 Racing', 'SAP, Excel,Word', 1, '2021-04-06 06:11:50'),
+(26, 'daksh@gmail.com', 'Sonakshi', 'Agarwal', 'Female', 'uploaded_docs/girl.jpg\r\n', 'English, Hindi', 'Information', 'Marketing', 'intros/test.mp4', 'I am a final year computer science undergrad with a minor in Big Data. I am going to start working with Jio, a company based in Mumbai, post my graduation in 2021.', '1618914372_54', 'Music, Singing, Football,Reading', 'Social media marketing, Article writing, Powerpoint', 1, '2021-04-20 10:26:12'),
+(27, 'aditi@gmail.com', 'Aditi', 'C', 'Female', 'uploaded_docs/banner4.jpg', 'English,Hindi', 'Production', 'Sap', 'uploaded_docs/test.mp4', 'testingg', '', 'shs,djd', 'Blh,hsj', 0, '2021-04-28 19:57:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sort_by`
+--
+
+CREATE TABLE `sort_by` (
+  `id` int(11) NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `status` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sort_by`
+--
+
+INSERT INTO `sort_by` (`id`, `type`, `name`, `status`) VALUES
+(17, 'industry', 'Manufacturing', 1),
+(18, 'industry', 'Finance', 1),
+(19, 'industry', 'Technology', 1),
+(20, 'industry', 'Retail', 1),
+(21, 'industry', 'Construction', 1),
+(22, 'industry', 'Agriculture', 1),
+(23, 'industry', 'Mining', 1),
+(25, 'industry', 'Telecommunication', 1),
+(26, 'industry', 'Insurance', 1),
+(27, 'industry', 'Production', 1),
+(28, 'industry', 'Investment', 1),
+(29, 'industry', 'Engineering', 1),
+(30, 'industry', 'Education', 1),
+(31, 'industry', 'Financial services', 1),
+(32, 'industry', 'Healthcare', 1),
+(33, 'industry', 'Goods', 1),
+(34, 'industry', 'Bank', 1),
+(35, 'industry', 'Real Estate', 1),
+(36, 'industry', 'Pharmaceutical industries', 1),
+(37, 'industry', 'Trade', 1),
+(38, 'industry', 'Food Industry', 1),
+(39, 'industry', 'Advertising', 1),
+(40, 'industry', 'Sales', 1),
+(41, 'industry', 'BioTechnology', 1),
+(42, 'industry', 'Hospitality Industry', 1),
+(43, 'industry', 'Printing', 1),
+(44, 'industry', 'Information Technology', 1),
+(45, 'industry', 'Renewable Energy', 1),
+(46, 'industry', 'Electronics', 1),
+(47, 'industry', 'Design', 1),
+(48, 'industry', 'Marketing', 1),
+(49, 'industry', 'Research', 1),
+(50, 'industry', 'Computer', 1),
+(51, 'enterprise', 'Autocad', 1),
+(52, 'enterprise', 'Finance', 1),
+(53, 'enterprise', 'Mathematics', 1),
+(54, 'enterprise', 'Sap', 1),
+(55, 'industry', 'Transport', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_members`
+--
+
+CREATE TABLE `team_members` (
+  `id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `added_on` datetime NOT NULL,
+  `role` varchar(7) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Member'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `team_members`
+--
+
+INSERT INTO `team_members` (`id`, `team_id`, `client_id`, `added_on`, `role`) VALUES
+(1, 12, 14, '2021-04-19 10:40:32', 'Member'),
+(2, 14, 14, '2021-04-19 03:08:58', 'Member');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `client_users`
+--
+ALTER TABLE `client_users`
+  ADD PRIMARY KEY (`client_id`);
+
+--
+-- Indexes for table `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`file_id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`msg_id`);
+
+--
+-- Indexes for table `project_team`
+--
+ALTER TABLE `project_team`
+  ADD PRIMARY KEY (`team_id`);
+
+--
+-- Indexes for table `resume`
+--
+ALTER TABLE `resume`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sme_apply`
+--
+ALTER TABLE `sme_apply`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sort_by`
+--
+ALTER TABLE `sort_by`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `team_members`
+--
+ALTER TABLE `team_members`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `client_users`
+--
+ALTER TABLE `client_users`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `files`
+--
+ALTER TABLE `files`
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `project_team`
+--
+ALTER TABLE `project_team`
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `resume`
+--
+ALTER TABLE `resume`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+
+--
+-- AUTO_INCREMENT for table `sme_apply`
+--
+ALTER TABLE `sme_apply`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `sort_by`
+--
+ALTER TABLE `sort_by`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `team_members`
+--
+ALTER TABLE `team_members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
