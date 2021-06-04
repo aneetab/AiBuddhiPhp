@@ -24,24 +24,29 @@ if(isset($_POST['submit'])){
  {
  $password=md5($password);
  $sql="select * from client_users where email_id='$email_id' and password='$password'";
- $res=mysqli_query($con,$sql);
- $count=mysqli_num_rows($res);
- $row=mysqli_fetch_assoc($res);
- if($count>0){
+ $count=check_num_rows($con,$sql);
+ $row=get_data($con,$sql);
+ if($count=='1'){
    $_SESSION['USER_LOGIN']='yes';
    $_SESSION['USER_EMAIL']=$email_id;
-   $_SESSION['USER_NAME']=$row['firstname'];
-   $_SESSION['USER_LNAME']=$row['lastname'];
-   $_SESSION['USER_ID']=$row['client_id'];
+   $_SESSION['USER_NAME']=$row[0]['firstname'];
+   $_SESSION['USER_LNAME']=$row[0]['lastname'];
+   $_SESSION['USER_ID']=$row[0]['client_id'];
    $status = "Active now";
-   $id=$row['client_id'];
+   $id=$row[0]['client_id'];
    $sql2 = mysqli_query($con, "UPDATE client_users SET status = '$status' WHERE client_id ='$id'");
-   if($row['role']=='1')
+   if($row[0]['role']=='0')
+   {
+    $_SESSION['USER_ROLE']='admin';
+    header('location:admin.php');
+    die();
+   }
+   else if($row[0]['role']=='1')
    {
    $_SESSION['USER_ROLE']='client';
    $r='1';
    }
-   else
+   else if($row[0]['role']=='2')
    {
     $_SESSION['USER_ROLE']='sme';
     $r='2';  

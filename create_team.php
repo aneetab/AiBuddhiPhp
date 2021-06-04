@@ -41,7 +41,7 @@
             $expert=substr($expert,0,strlen($expert)-2);
         }
         $date=date('Y-m-d h:i:s');
-        $insert="INSERT into project_team(team_name,team_desc,industry,experts,enterprise,requested_on,requested_by) VALUES('$team_name','$team_desc','$industry','$expert','$enterprise','$date','13')";
+        $insert="INSERT into project_team(team_name,team_desc,industry,experts_requested,enterprise,requested_on,requested_by) VALUES('$team_name','$team_desc','$industry','$expert','$enterprise','$date','13')";
         if(mysqli_query($con,$insert))
         {
             echo "Success";
@@ -121,13 +121,15 @@ echo $output;
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Created</th>
+            <th scope="col"></th>
             </tr>
             </thead><tbody>';
             while($row1 = mysqli_fetch_assoc($res1)){
-                $output.='<tr onclick="open_team('.$row1['team_id'].')">
+                $output.='<tr>
                 <td>'.$row1['team_name'].'</td>
                 <td>'.$row1['team_desc'].'</td>
                 <td>'.$row1['requested_on'].'</td>
+                <td><button class="btn btn-red" onclick="open_team('.$row1['team_id'].')">View Team</button></td>
               </tr>';
             }
             $output.='</tbody></table>';

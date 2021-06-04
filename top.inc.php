@@ -2,13 +2,13 @@
 require('connection.inc.php');
 require('functions.inc.php');
 $email_id='';
-if(isset($_SESSION['ADMIN_LOGIN']) && $_SESSION['ADMIN_LOGIN']!='')
+if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!='')
 {
-  $email_id=$_SESSION['ADMIN_EMAIL'];
-  $fname=$_SESSION['ADMIN_FNAME'];
+  $email_id=$_SESSION['USER_EMAIL'];
+  $fname=$_SESSION['USER_NAME'];
 }
 else{
-    header('location:admin_login.php');
+    header('location:client_login.php');
     die();
 
 }?>
@@ -46,7 +46,7 @@ else{
 
   <ul class="nav flex-column bg-white mb-0">
     <li class="nav-item">
-      <a href="index.php" class="nav-link text-dark">
+      <a href="admin.php" class="nav-link text-dark">
                 <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
                 home
             </a>

@@ -12,10 +12,9 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     $id=get_safe_value($con,$_GET['id']);
 }
 $sql="select * from sme_apply where id='$id'";
-$res=mysqli_query($con,$sql);
-$row=mysqli_fetch_assoc($res);
-$industry=$row['industry'];
-$enterprise=$row['enterprise'];
+$row=get_data($con,$sql);
+$industry=$row[0]['industry'];
+$enterprise=$row[0]['enterprise'];
 if(isset($_POST['submit']))
 {
     $industry=get_safe_value($con,$_POST['industry']);
@@ -35,8 +34,7 @@ if(isset($_POST['submit']))
     if($is_error=='')
     {
         $sql="UPDATE sme_apply set industry='$industry',enterprise='$enterprise' where id='$id'";
-        $res=mysqli_query($con,$sql);
-        if($res)
+        if(modify($con,$sql)=='1')
         {
         $msg="Updated Sucessfully!";
         $css_class="alert-success";
@@ -83,10 +81,10 @@ include "css/admin.css";
       <div class="media-body">
         <h4 class="m-0"></h4>
         <div class="container">
-              <img src="<?php echo $row['profile-pic'] ?>" alt="">
+              <img src="<?php echo $row[0]['profile-pic'] ?>" alt="">
              
 </div>
-<p class="font-weight-normal text-muted mb-0"><?php echo $row['firstname'].' '.$row['lastname'] ?></p>
+<p class="font-weight-normal text-muted mb-0"><?php echo $row[0]['firstname'].' '.$row[0]['lastname'] ?></p>
         
         
       </div>

@@ -11,7 +11,7 @@ if(isset($_GET['team_id']) && $_GET['team_id']!='') {
 $level=$channel;
 $client_id=$_SESSION['USER_ID'];
 $sqlFolders="select * from files,client_users where team_id='$team_id' and channel='$channel' and parent_folder='$level' and client_users.client_id=files.modified_by";
-$res1=mysqli_query($con,$sqlFolders);
+$rows=get_data($con,$sqlFolders);
 require('project_team_header.php');
 $id='';
 ?>
@@ -33,17 +33,15 @@ $id='';
  </div>
  </nav>
  <div class="container">
- <div class="dragdrop mt-5 mx-auto" style="width:700px;align:center;" >
-    <div class="file_drag_area">
+ 
     
    
      <div class="all_files">
          <?php 
          $output='';
-         if(mysqli_num_rows($res1)<1)
+         if(check_num_rows($con,$sqlFolders)=='0')
          {
-            $output.='<h3 class="text-center"> Drag and drop files here</h3>
-            <img src="assets/images/upload.png" height="300px" width="300px">';
+            $output.='<h3 class="text-center"> No files yet</h3>';
             echo $output;
 
          }
@@ -58,14 +56,14 @@ $id='';
             </tr>
             </thead><tbody>';
    
-   while($row1 = mysqli_fetch_assoc($res1)){
+   foreach($rows as $row1){
 
            if($row1['file_type']=='folder') 
            {          
            $output .= '<tr>
              <td><a href="view_folder.php?fid='.$row1['file_id'].'&channel='.$channel.'"><i class="fas fa-folder" style="color:#dbbd7d;"></i>  '.$row1['folder_name'].'</a></td>
              <td>'.$row1['added_on'].'</td>
-             <td>'.$row1['modified_by'].'</td>
+             <td>'.$row1['firstname'].' '.$row1['lastname'].'</td>
            </tr>';
            
            }
@@ -78,7 +76,7 @@ $id='';
                    $output .= '<tr>
                      <td><a target="_blank" href="display.php?id='.$row1['file_id'].'"><i class="fas fa-file-alt" style="color:#dbbd7d;"></i>  '.$row1['file_name'].'</a></td>
                      <td>'.$row1['added_on'].'</td>
-                     <td>'.$row1['modified_by'].'</td>
+                     <td>'.$row1['firstname'].' '.$row1['lastname'].'</td>
                    </tr>';
                            
          }
@@ -87,8 +85,6 @@ $id='';
     echo $output;
          }
          ?>
-    </div>
-    </div>
     </div>
     </div> 
 
@@ -127,45 +123,7 @@ $id='';
 <!--Bootstrap file-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $('.file_drag_area').on('dragover',function(){
-        $(this).addClass('file_drag_over');
-        return false;
-    });
-    $('.file_drag_area').on('dragleave',function(){
-        $(this).removeClass('file_drag_over');
-        return false;
-    });
-    $('.file_drag_area').on('drop',function(e){
-       e.preventDefault();
-       $(this).removeClass('file_drag_over');
-       var formData=new FormData();
-       var channel='<?=$channel?>';
-       var folder_name='<?=$level?>';
-       var team_id='<?=$team_id?>';
-       var files_list=e.originalEvent.dataTransfer.files;
-       for(var i=0;i<files_list.length;i++)
-       {
-           formData.append('file[]',files_list[i]);
-       }
-       var dragdrop='dragdrop';
-       formData.append('dragdrop',dragdrop);
-       formData.append('channel',channel);
-       formData.append('folder_name',folder_name);
-       formData.append('team_id',team_id);
-       $.ajax({
-           url:"submit.php",
-           method:"POST",
-           dataType:'script',
-           data:formData,
-           contentType:false,
-           cache:false,
-           processData:false,
-           success:function(data){
-            readFiles(team_id,channel,folder_name);
-           }
-       })
-    });    
+$(document).ready(function(){  
     var pgurl = window.location.href.substr(window.location.href
     .lastIndexOf("/")+1);
 	$("nav ul li a").each(function(){

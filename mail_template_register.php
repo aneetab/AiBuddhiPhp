@@ -34,6 +34,7 @@
 <p>We encourage you to complete your application – it’s the first step in getting to know you!Please attach your resume, add your education, experiences and interests.</p>
 
 <p>We hope you’ll take some time to explore our website and our other social media platforms. Our team will review your application and get back to you shortly</p>
+<p>To login to your account, visit <a href="https://findfacts.in/AiBuddhi/admin/client_login.php" target="_blank" rel="noopener noreferrer">https://findfacts.in/AiBuddhi</a>.</p>
 
 <p>Thank you,</p>
 

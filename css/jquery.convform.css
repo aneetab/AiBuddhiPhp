@@ -2,16 +2,16 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    -webkit-animation: typing 1s linear infinite alternate;
-    -moz-animation: typing 1s linear infinite alternate;
-    -ms-animation: typing 1s linear infinite alternate;
-    animation: typing 1s linear infinite alternate;
+    -webkit-animation: typing 2s linear infinite alternate;
+    -moz-animation: typing 2s linear infinite alternate;
+    -ms-animation: typing 2s linear infinite alternate;
+    animation: typing 2s linear infinite alternate;
     position: relative;
     left: -12px;
     margin: 7px 15px 6px;
 }
 .to .typing_loader {
-    animation: typing-black 1s linear infinite alternate;
+    animation: typing-black 2s linear infinite alternate;
 }
 @-webkit-keyframes typing{
     0%{
@@ -146,7 +146,7 @@ div.conv-form-wrapper {
 }
 div.conv-form-wrapper div.wrapper-messages {
     position: relative;
-    height: 577px;
+    height: 350px!important;
     max-height: 71vh;
     overflow-y: scroll;
     transition: margin 0.1s;
@@ -217,17 +217,17 @@ div.conv-form-wrapper div.options:after {
 }
 div.conv-form-wrapper div.options div.option {
     padding: 7px 12px;
-    border: 1px solid rgba(6,153,184,0.3);
+    border: 1px solid rgba(82, 3, 7, 0.747);
     display: inline-block;
     margin: 5px;
     background: #fff;
-    color: #06c5a6;
+    color: #800000;
     cursor: pointer;
     border-radius: 20px;
     font-size: 0.9rem;
 }
 div.conv-form-wrapper div.message {
-    animation: slideTop 0.15s ease;
+    animation: slideTop 0.45s ease;
 }
 div.conv-form-wrapper div.message:after {
     content: '';
@@ -235,7 +235,7 @@ div.conv-form-wrapper div.message:after {
     clear: both;
 }
 div.conv-form-wrapper  div.message.ready {
-    animation: bounceIn 0.2s ease;
+    animation: bounceIn 0.6s ease;
     transform-origin: 0 0 0;
 }
 div.conv-form-wrapper  div#messages div.message {
@@ -259,7 +259,7 @@ div.conv-form-wrapper  div#messages div.message.to {
     border-top-left-radius: 0;
 }
 div.conv-form-wrapper div#messages div.message.from {
-    background: #06b79a;
+    background: #800000;
     color: #fff;
     border-top-right-radius: 0;
 }
@@ -287,11 +287,11 @@ div.conv-form-wrapper div.options div.option:hover {
     background: #eeeeee;
 }
 div.conv-form-wrapper div.options div.option.selected {
-    background: #06b79a;
+    background: #800000;
     color: #fff;
 }
 div.conv-form-wrapper div.options div.option.selected:hover {
-    background: #069c7f;
+    background: #800000;
 }
 
 form.convFormDynamic button.submit {
@@ -299,7 +299,7 @@ form.convFormDynamic button.submit {
     border: none;
     float: left;
     margin: 5px;
-    color: #06c5a6;
+    color: #800000;
     cursor: pointer;
     border-radius: 8px;
     font-size: 1.1rem;
@@ -312,12 +312,12 @@ form.convFormDynamic button.submit {
 
 
 form.convFormDynamic button.submit:hover {
-    background: #06b79a;
+    background: #470913;
     color: #fff;
 }
 
 button.submit.glow {
-    box-shadow: 0 0 10px 5px rgba(6, 197, 166, 0.4);
+    box-shadow: 0 0 10px 5px #800000;
 }
 .no-border {
     border: none !important;
@@ -339,14 +339,14 @@ span.clear {
 .spinLoader,
 .spinLoader:before,
 .spinLoader:after {
-    background: #06c5a6 !important;
+    background: #800000!important;
     -webkit-animation: spinLoaderChat 1s infinite ease-in-out;
     animation: spinLoaderChat 1s infinite ease-in-out;
     width: 1em;
     height: 4em;
 }
 .spinLoader {
-    color: #06c5a6 !important;
+    color: #800000 !important;
     text-indent: -9999em;
     margin: 50% auto;
     position: relative;

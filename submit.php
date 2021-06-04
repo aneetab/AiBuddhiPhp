@@ -2,6 +2,75 @@
 require ('connection.inc.php');
 require ('functions.inc.php');
 
+if(isset($_POST['industry']) && isset($_POST['enterprise']))
+{
+  $industry=get_safe_value($con,$_POST['industry']);
+  $enterprise=get_safe_value($con,$_POST['enterprise']);
+  if($industry!='' && $enterprise=='')
+  {
+      
+    $sqlget="SELECT * from sme_apply where industry='$industry' and status='1'";
+  }
+  else if($enterprise!='' && $industry=='')
+  {
+   
+    $sqlget="SELECT * from sme_apply where enterprise='$enterprise' and status='1'";
+  }
+  else if($industry!='' && $enterprise!='')
+  {
+   
+    $sqlget="SELECT * from sme_apply where industry='$industry' and enterprise='$enterprise' and status='1'";
+
+  }
+  else
+  {
+    $sqlget="SELECT * from sme_apply where status='1'";
+  }
+   $res=mysqli_query($con,$sqlget);
+   $output='';
+   if(mysqli_num_rows($res)<1)
+   {
+    $sqlget="SELECT * from sme_apply where status='1'";
+    $res=mysqli_query($con,$sqlget);
+    while($row=mysqli_fetch_assoc($res))
+    {
+     $output.='<div class="col-lg-4 col-md-6 col-12 d-flex">
+      <div class="sme-card py-3 py-sm-0">
+        <img src="'.$row['profile-pic'].'" class="card-img-top" alt="...">
+        <div class="card-body flex-fill">
+          <h5 class="card-title">'.$row['firstname'].' '.$row['lastname'].'</h5>
+          <h6 class="card-title">Industry:'. $row['industry'].'</h6>
+          <h6 class="card-title">Enterprise:'.$row['enterprise'].'</h6>
+          <p class="card-text">'. $row['about_me'].'</p>
+          <a href="sme_profile.php?id='.$row['id'].'"class="btn btn-red btn-primary mb-2">View Profile</a>
+        </div>
+      </div>
+      </div>';
+    }
+    }
+    else{
+        $res=mysqli_query($con,$sqlget);
+        while($row=mysqli_fetch_assoc($res))
+        {
+         $output.=' <div class="col-lg-4 col-md-6 col-12 d-flex">
+          <div class="sme-card py-3 py-sm-0">
+            <img src="'.$row['profile-pic'].'" class="card-img-top" alt="...">
+            <div class="card-body flex-fill">
+              <h5 class="card-title">'.$row['firstname'].' '.$row['lastname'].'</h5>
+              <h6 class="card-title">Industry:'.$row['industry'].'</h6>
+              <h6 class="card-title">Enterprise:'.$row['enterprise'].'</h6>
+              <p class="card-text">'.$row['about_me'].'</p>
+              <a href="sme_profile.php?id='. $row['id'].'"class="btn btn-red btn-primary mb-2">View Profile</a>
+            </div>
+          </div>
+          </div>';
+        }
+
+    }
+    
+    echo $output;
+   }
+
 
 if(isset($_POST["insert_file"]))
 {

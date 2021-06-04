@@ -87,17 +87,18 @@ padding-right:5px !important;
 /*----------------------*-------- NAVBAR ENDS------------------*-----------*/
 
 /*----------------------*-------- SME SECTION STARTS------------------*-----------*/
-.sme .card
+.sme .sme-card
 {
     margin:100px 10px 20px 10px!important;
     box-shadow:0px 2px 10px rgba(0,0,0,0.2);
+    background-color: #fff;
 }
-.card img
+.sme-card img
 {
     height:150px;
     width:130px;
 }
-.sme .card h5{
+.sme .sme-card h5{
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.9rem;
@@ -107,7 +108,7 @@ padding-right:5px !important;
     word-spacing:4px;
     font-family:"Poppins",sans-serif;
 }
-.sme .card h6{
+.sme .sme-card h6{
 
     letter-spacing: 1px;
     opacity: 0.9;
@@ -117,7 +118,7 @@ padding-right:5px !important;
     line-height:1.1;
     font-family:"Poppins",sans-serif;
 }
-.sme .card p{
+.sme .sme-card p{
     letter-spacing: 1px;
     opacity: 0.9;
     font-size: 0.7rem;
@@ -126,7 +127,7 @@ padding-right:5px !important;
     word-spacing:3px;
     font-family:"Poppins",sans-serif;
 }
-.card
+.sme-card
 {
     width:18rem;
 }

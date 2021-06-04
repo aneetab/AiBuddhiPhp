@@ -9,33 +9,19 @@ if(isset($_GET['type']) && $_GET['type']=='update' && isset($_GET['id'])){
     $id=get_safe_value($con,$_GET['id']);
     $status=get_safe_value($con,$_GET['status']);
     mysqli_query($con,"update sme_apply set status='$status' where id='$id'");
-    if($status=='2')
-    {
-      //CHANGE THIS TO AUTOMATED EMAIL
-     $msg="We are extremely sorry to inform you that your application has been rejected. We truly appreciate you taking your time to apply to AiBuddhi, and we wish you the very best for your future endeavours.";
-      $sql="select * from sme_apply where id='$id'";
-      $res=mysqli_query($con,$sql);
-      $row=mysqli_fetch_assoc($res);
-      $email_id=$row['email'];
-      $from=$_SESSION['ADMIN_FNAME'].' '.$_SESSION['ADMIN_LNAME'];
-
-      $date_val=date("Y-m-d H:i:s");
-     
-      
-      $sql_insert="INSERT INTO `notifications`(`receiveid`,`fromname`,`notification`,`sent_date`) VALUES('$id','$from','$msg','$date_val')";
-      $res=mysqli_query($con,$sql_insert);
-      
-
-    }
+    
 }
 $sql="select * from sme_apply where id='$id'";
 $res=mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($res);
 $email=$row['email'];
+$email_id=$row['id'];
 $sqlget="select * from client_users where email_id='$email'";
 $res1=mysqli_query($con,$sqlget);
 $row1=mysqli_fetch_assoc($res1);
 $readid=$row1['client_id'];
+$email_to=$row1['email_id'];
+$to_name=$row1['firstname'].' '.$row1['lastname'];
 ?>
 
 <!DOCTYPE html>
@@ -57,10 +43,22 @@ $readid=$row1['client_id'];
 <title></title>
 <style>
 <?php
-include "css/sme.css";
+//include "css/sme.css";
 include "css/admin.css";
 
 ?>
+li{
+  list-style-type:none;
+}
+#sidebar img{
+    height:100px;
+    width:100px;
+    margin:auto;
+    border-radius:20px;
+}
+select{
+    width:80% !important;
+}
 .resume-items{   
     width:100%;height:auto;
     margin:20px 0;
@@ -212,12 +210,8 @@ include "css/admin.css";
         <div class="container">
         <?php
         $photo_id=$row['profile-pic'];
-        $getimage="select * from images where id='$photo_id'";
-        $resimg=mysqli_query($con,$getimage);
-        $rowimg=mysqli_fetch_assoc($resimg);
-        $image=$rowimg['image'];
         ?>
-        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($image); ?>">
+        <img src="<?php echo $photo_id ?>">
               
              
 </div>
@@ -253,6 +247,14 @@ include "css/admin.css";
                 Update Profile
             </a>
   </li>
+  <div id="sendmail">
+<li class="nav-item">
+<a class="nav-link text-dark" id="test" data-target="#reject_modal" data-toggle="modal">
+                <i class="fas fa-envelope mr-3 text-primary fa-fw"></i>
+                Send Rejection Mail
+</a>
+  </li>
+</div>
     
     
   </ul>
@@ -263,13 +265,15 @@ include "css/admin.css";
   <select class="form-control ml-3" onchange="update_application_status(<?php echo $row['id']?>,this.options[this.selectedIndex].value)">
   <option value="">Update Status</option>
   <option value="1">Approved</option>
-  <option value="2">Rejected</option>
+  <option value="2" id="#test">Rejected</option>
   </select> 
   </li>  
 </ul>
 
 </div>
 <div class="page-content p-5" id="content">
+<div class="alert mt-3" id="msg">
+</div>
   <!-- Toggle button -->
   <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
 
@@ -414,17 +418,143 @@ include "css/admin.css";
    
    
 </div>
+<div class="modal" id="reject_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-uppercase text-center">
+                <h6>Reasons for putting application on hold</h6>
+                <button type="button" style="color:#fff;background-color:#800000;" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                    <form method="POST" id="reject_form">
+                    <table class="table table-bordered" id="dynamic_field">
+                    <tr>
+                    <td><input type="text" name="reason[]" placeholder="Enter a reason" class="form-control reason_list" /></td>  
+                    <td><i name="add" id="add" style="color:#00CED1;" class="fas fa-2x fa-plus-square"></i></td>  
+                   </tr> 
+                    </table> 
+                
+            </div>
+            <div class="modal-footer justify-content-center">
+            <input style="background-color:#800000;color:#fff" type="submit" name="submit" value="Send" class="btn btn-dark"/>
+                        </div>
+        </form>
+       </div>
+    </div>
+</div>
     
 <script>
     function update_application_status(id,select_value)
     {
+        if(select_value=='1')
+        {
+          $('#sendmail').hide();
+          var email_to="<?php echo $email_to?>";
+          var to_name="<?php echo $to_name?>";
+          var email_id="<?php echo $email_id?>";
+          let form_data=$(this).serializeArray();
+          form_data.push({ name:'email_to',value:email_to });
+          form_data.push({ name:'id',value:email_id });
+          form_data.push({ name:'to_name',value:to_name });
+          console.log(form_data);
+          $.ajax({
+           url:"sendmail_acceptance.php",
+           method:"POST",
+           data:form_data,
+           success:function(data)
+           {
+             var result=$.trim(data);
+               
+            if(result==='Success')
+            {
+            $('#msg').addClass('alert-success');
+            $('#msg').html('Mail sent successfully!');
+          }
+          if(data==='No')
+          {
+            $('#msg').addClass('alert-danger');
+            $('#msg').html('Error!Could not send mail.');
+          }
+           
+           }
+           
+        });
+        }
+        else if(select_value=='2')
+        {
+        $('#sendmail').show();
+        }
+        else
+        {
+        $('#sendmail').hide();
         window.location.href='viewapplication.php?id='+id+'&type=update&status='+select_value;
+        }
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="assets/jquery/jquery-3.5.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="js/main.js"></script>
+<script>
+
+$('#reject_form').on('submit',function(event){
+       event.preventDefault();
+       let myForm=document.getElementById("reject_form");
+       $('#reject_modal').modal('hide');
+       var email_to="<?php echo $email_to?>";
+       var to_name="<?php echo $to_name?>";
+       var email_id="<?php echo $email_id?>";
+
+       let form_data=$(this).serializeArray();
+       form_data.push({ name:'email_to',value:email_to });
+       form_data.push({ name:'id',value:email_id });
+       form_data.push({ name:'to_name',value:to_name });
+       console.log(form_data);
+       $.ajax({
+           url:"sendmail_reject.php",
+           method:"POST",
+           data:form_data,
+           success:function(data)
+           {
+             var result=$.trim(data);
+               
+            if(result==='Success')
+            {
+            myForm.reset();
+            $('#msg').addClass('alert-success');
+            $('#msg').html('Mail sent successfully!');
+
+          }
+          if(data==='No')
+          {
+            $('#msg').addClass('alert-danger');
+            $('#msg').html('Error!Could not send mail.');
+          }
+           
+           }
+           
+        });
+        
+                  
+      });
+
+ 
+ $(document).ready(function(){ 
+    $('#sendmail').hide(); 
+      var i=1;  
+      $('#add').click(function(){  
+           i++;  
+           $('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="reason[]" placeholder="Enter a reason" class="form-control reason_list" /></td><td><i name="remove" id="'+i+'"class="btn_remove fas fa-2x fa-minus-square" style="color:#800000;"></i></td></tr>');  
+      });
+            
+      $(document).on('click', '.btn_remove', function(){  
+           var button_id = $(this).attr("id");   
+           $('#row'+button_id+'').remove();  
+      });  
+     
+  }); 
+ </script>
 </body>
 </html>
 

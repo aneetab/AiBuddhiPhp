@@ -5,14 +5,16 @@ if(isset($_GET['id']) && $_GET['id']!='')
 {
  $id=get_safe_value($con,$_GET['id']);
 }
-$sql1="select * from project_team where team_id='$id'";
-$res1=mysqli_query($con,$sql1);
-$row1=mysqli_fetch_assoc($res1);
-$status1=$row1['status'];
+$sql1="select * from project_team,client_users where team_id='$id' and client_users.client_id=project_team.requested_by";
+$row1=get_data($con,$sql1);
 $experts="select * from client_users,sme_apply where sme_apply.status='1' and client_users.email_id=sme_apply.email and client_users.client_id NOT IN(SELECT client_id from team_members where team_id='$id')";
-$experts_res=mysqli_query($con,$experts);
 
+$experts_row=get_data($con,$experts);
+$project_teams="select * from project_team where team_id='$id'";
 
+$team_row=get_data($con,$project_teams);
+$team_status=$team_row[0]['status'];
+$requested_by=$team_row[0]['requested_by'];
 ?>
 <div class="vertical-nav bg-white" id="sidebar">
   <div class="py-4 px-3 mb-4 bg-light">
@@ -24,22 +26,41 @@ $experts_res=mysqli_query($con,$experts);
     </div>
   </div>
 
+<?php
+if($team_status=='1')
+{
+  ?>
   <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Manage Team</p>
 
   <ul class="nav flex-column bg-white mb-0">
     <li class="nav-item">
-      <a href="index.php" class="nav-link text-dark">
+      <a href="manage_member.php?team_id=<?php echo $id?>" class="nav-link text-dark">
                 <i class="fas fa-user-plus mr-3 text-primary fa-fw"></i>
-                Add members
+                Manage members
             </a>
     </li>
     <li class="nav-item">
-      <a href="clients.php" class="nav-link text-dark">
-                <i class="fas fa-user-minus mr-3 text-primary fa-fw"></i>
-                Delete members
+    <?php
+    $url="admin_library.php?team_id=".$id."&channel=general";
+    ?>
+      <a href="<?php echo $url?>" class="nav-link text-dark">
+                <i class="fas fa-file-upload mr-3 text-primary fa-fw"></i>
+                Add Files
+            </a>
+    </li>
+    <li class="nav-item">
+    <?php
+    $url="calendar.php?team_id=".$id;
+    ?>
+      <a href="<?php echo $url?>" class="nav-link text-dark">
+                <i class="fas fa-calendar-alt mr-3 text-primary fa-fw"></i>
+                Calendar       
             </a>
     </li>
   </ul>
+  <?php
+}
+?>
 </div>
 
 <div class="page-content p-5" id="content">
@@ -52,7 +73,7 @@ $experts_res=mysqli_query($con,$experts);
 
   <!-- Demo content -->
  
-  <h5 class="box-title px-3">Team Name: <?php echo $row1['team_name']?> </h5>
+  <h5 class="box-title px-3">Team Name: <?php echo $row1[0]['team_name']?> </h5>
                       
   <div class="container my-5">
                     <div class="table-responsive">
@@ -61,24 +82,28 @@ $experts_res=mysqli_query($con,$experts);
                         <tbody>
                         
                         <?php 
-                        if(mysqli_num_rows($res1)>0)
+                        if(check_num_rows($con,$sql1)=='1')
                         {
                         ?>
                         <tr>
                         <th>Team Description</th>
-                        <td><?php echo $row1['team_desc']?></td>
+                        <td><?php echo $row1[0]['team_desc']?></td>
                         </tr>
                         <tr>
                         <th>Industries</th>
-                        <td><?php echo $row1['industry']?></td>
+                        <td><?php echo $row1[0]['industry']?></td>
                         </tr>
                         <tr>
                         <th>Enterprises</th>
-                        <td><?php echo $row1['enterprise']?></td>
+                        <td><?php echo $row1[0]['enterprise']?></td>
                         </tr>
                         <tr>
                         <th>Experts Requested</th>
-                        <td><?php echo $row1['experts_requested']?></td>
+                        <td><?php echo $row1[0]['experts_requested']?></td>
+                        </tr>
+                        <tr>
+                        <th> Requested By</th>
+                        <td><?php echo $row1[0]['firstname'].' '.$row1[0]['lastname'].'(Client ID:'. $team_row[0]['requested_by'].')'?></td>
                         </tr>
 
                         <?php  } ?>
@@ -86,7 +111,7 @@ $experts_res=mysqli_query($con,$experts);
                     </table>
                     </div>
                     <?php 
-                    if($status1=='0')
+                    if($team_status=='0')
                     {                    
                     ?>
                     <div class="create_team mt-5 text-center" style="background-color:#fff">
@@ -96,13 +121,13 @@ $experts_res=mysqli_query($con,$experts);
                   
                     <div class="form-group">
                    
-                    <select onchange="addmember('<?php echo $id?>')" name="experts[]" id="experts" multiple class="form-control">
+                    <select onchange="addmember('<?php echo $id?>','<?php echo $requested_by?>')" name="experts[]" id="experts" multiple class="form-control">
                     <?php
 
-                    if(mysqli_num_rows($experts_res)>0)
+                    if(check_num_rows($con,$experts)=='1')
                     {
 
-                        while($expert_row=mysqli_fetch_assoc($experts_res))
+                        foreach($experts_row as $expert_row)
                         {
                             echo "<option value='".$expert_row['firstname'].' '.$expert_row['lastname']."(Client ID: ".$expert_row['client_id'].")"."'>".$expert_row['firstname'].' '.$expert_row['lastname']."(Industry: ".$expert_row['industry']." , Enterprise: ".$expert_row['enterprise'].")</option>";
                         }
@@ -113,6 +138,7 @@ $experts_res=mysqli_query($con,$experts);
                     <br>
                     <div class="form-group text-center">
                     <input type="hidden" name="" id="hidden_team_id">
+                    <input type="hidden" name="" id="hidden_requested_by">
                         <input style="background-color:#800000;color:#fff" type="submit" name="submit" value="Create" class="btn btn-dark"/>
                     </div>
                 </form>
@@ -183,11 +209,12 @@ $experts_res=mysqli_query($con,$experts);
     }
     function go_back()
     {
-        window.history.back();
+        window.location.href="projects.php";
     }
-    function addmember(id)
+    function addmember(id,requested_by)
     {
         $('#hidden_team_id').val(id);
+        $('#hidden_requested_by').val(requested_by);
         let members='';
       $('#experts option:selected').each(function(){
           members+=$(this).prop('value');
@@ -204,9 +231,13 @@ $experts_res=mysqli_query($con,$experts);
        event.preventDefault();
        let myForm=document.getElementById("member_form");
        var team_id=$('#hidden_team_id').val();
+       var requested_by=$('#hidden_requested_by').val();
+       var addmember=addmember;
        var form_data=new FormData();
        form_data=$(this).serializeArray();
        form_data.push({ name:'team_id',value:team_id });
+       form_data.push({name:'requested_by',value:requested_by});
+       form_data.push({name:'addmember',value:addmember});
        console.log(form_data);
        
        
@@ -216,8 +247,9 @@ $experts_res=mysqli_query($con,$experts);
            data:form_data,
            success:function(data)
            {
+             var result=$.trim(data);
                
-            if(data==='Success')
+            if(result==='Success')
             {
             $('#experts option:selected').each(function(){
                 $(this).prop('selected',false);
@@ -226,7 +258,8 @@ $experts_res=mysqli_query($con,$experts);
             $('#added_members').html('');
             myForm.reset();
             $('#msg').addClass('alert-success');
-            $('#msg').html('Team created successfully!')
+            $('#msg').html('Team created successfully!');
+            window.location.reload();
           }
           if(data==='No')
           {
@@ -237,6 +270,7 @@ $experts_res=mysqli_query($con,$experts);
            }
            
         });
+        
                   
       });
 </script>

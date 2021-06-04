@@ -10,7 +10,7 @@ $res=mysqli_query($con,$sql);
 
   <!-- Demo content -->
  
-                        
+  <div class="container ml-3">                     
   <table class="table table-bordered">
   <thead class="thead-dark">
     <tr>
@@ -39,6 +39,7 @@ $res=mysqli_query($con,$sql);
     <?php  $i++;} ?>
   </tbody>
 </table>
+    </div>
 <?php
 require('footer.inc.php');
 ?>                    

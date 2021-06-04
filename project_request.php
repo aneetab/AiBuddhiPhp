@@ -143,7 +143,7 @@ else{
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
-          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+          <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
       <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
@@ -173,7 +173,7 @@ else{
         <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
       </li>
     </ul>
   </div>
@@ -244,7 +244,7 @@ else{
                     </div>
                     <br>
                     <div class="form-group">
-                    <label for="desc">Describe your project requirements(Specify briefly what kind of help ypu require)</label>
+                    <label for="desc">Describe your project requirements(Specify briefly what kind of help you require)</label>
                     <textarea required class="form-control" rows="5" name="team_desc" id="team_desc" placeholder="Briefly describe your project requirements"></textarea>
                     </div>
                     <div class="form-group text-center">
@@ -354,7 +354,7 @@ else{
     });
     
     });
-    readTeams();
+   
    
     function go_back()
     {

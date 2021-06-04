@@ -3,14 +3,14 @@ require('connection.inc.php');
 require('functions.inc.php');
 $email_id=$_SESSION['USER_EMAIL'];
 $sql="Select sme_apply.status as status,id,`profile-pic`,client_id from sme_apply,client_users where sme_apply.email='$email_id' and sme_apply.email=client_users.email_id";
-$res=mysqli_query($con,$sql);
-$row=mysqli_fetch_assoc($res);
-$status=$row['status'];
-$id=$row['id'];
+$row=get_data($con,$sql);
+$status=$row[0]['status'];
+$id=$row[0]['id'];
 $count='';
 $sql_get="select * from notifications where receiveid='$id'";
 $res=mysqli_query($con,$sql_get);
 $count=mysqli_num_rows($res);
+
 if($status=='0')
 {
 $msg="Thank you for applying at AiBuddhi. Your application will be reviewed shortly";
@@ -107,7 +107,7 @@ $css_class="alert-danger";
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <?php
-        $photo=$row['profile-pic'];
+        $photo=$row[0]['profile-pic'];
         ?>
         <img src="<?php echo $photo ?>">
         </a>
@@ -115,20 +115,20 @@ $css_class="alert-danger";
           
         <?php 
        $profile='fa-user red-icons';
-       echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; ?>
+       echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; ?>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
-          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+          <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
       <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item">
-    <?php echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"?>; 
+    <?php echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"?>; 
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
@@ -140,7 +140,7 @@ $css_class="alert-danger";
         <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
       </li>
     </ul>
   </div>

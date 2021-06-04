@@ -46,9 +46,8 @@ if($password!==$cpassword)
   $cpassword_error="Password doesn't match";
   $is_error='yes'; 
 }
-$res=mysqli_query($con,"select * from client_users where email_id='$email_id'");
-$check_user=mysqli_num_rows($res);
-if($check_user>0){
+$sql="select * from client_users where email_id='$email_id'";
+if(check_num_rows($con,$sql)=='1'){
     $email_error="Email ID already exists!";
     $is_error='yes';
 }
@@ -63,8 +62,8 @@ if($r=='')
 $r='1';
 $_SESSION['USER_ROLE']='client';
 }
-$sql="insert into client_users(email_id,password,role,added_on,profile_photo) VALUES('$email_id','$password','$r','$added_on','111')";
-mysqli_query($con,$sql);
+$sql="insert into client_users(email_id,password,role,added_on,profile_photo) VALUES('$email_id','$password','$r','$added_on','uploaded_docs/placeholder.jpg')";
+modify($con,$sql);
 $username='';
 $email_id='';
 header('location:signup_name.php');

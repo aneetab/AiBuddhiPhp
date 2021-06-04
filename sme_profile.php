@@ -5,13 +5,11 @@ $id='';
 if(isset($_GET['id']) && $_GET['id']!='') {
     $id=get_safe_value($con,$_GET['id']);
     $sql="select * from sme_apply where id='$id'";
-    $res=mysqli_query($con,$sql);
-    $row=mysqli_fetch_assoc($res);
-    $email=$row['email'];
+    $row=get_data($con,$sql);
+    $email=$row[0]['email'];
     $sqlget="select * from client_users where email_id='$email'";
-    $res1=mysqli_query($con,$sqlget);
-    $row1=mysqli_fetch_assoc($res1);
-    $readid=$row1['client_id'];
+    $row1=get_data($con,$sql_get);
+    $readid=$row1[0]['client_id'];
 }
 ?>
 <!DOCTYPE html>
@@ -233,7 +231,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
-          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+          <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
       <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
@@ -248,7 +246,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     <li class="nav-item">
     <?php 
         $profile='fa-user red-icons';
-        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
+        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
     ?>
     </li>
     <li class="nav-item">
@@ -261,7 +259,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
         <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
       </li>
     </ul>
   </div>
@@ -284,7 +282,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     
             <div class="video-body">
             <video id="video" width="400" height="300" controls>
-            <source src="<?php echo $row['video']?>" type=video/mp4>
+            <source src="<?php echo $row[0]['video']?>" type=video/mp4>
             </video>
             </div>
     
@@ -297,8 +295,8 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     <div class="row">
     <div class="col-lg-6 col-md-6 col-12 d-flex justify-content-center">
         <div>
-            <img src="<?php echo $row['profile-pic']?>" alt="person 1">
-            <h3><?php echo $row['firstname'].' '.$row['lastname']?></h3>
+            <img src="<?php echo $row[0]['profile-pic']?>" alt="person 1">
+            <h3><?php echo $row[0]['firstname'].' '.$row[0]['lastname']?></h3>
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-12">
@@ -312,7 +310,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     <h3> ABOUT ME</h3><br/>
     <div class="row d-flex justify-content-center">
         
-        <?php echo $row['about_me']?>
+        <?php echo $row[0]['about_me']?>
        
 
     </div>
@@ -320,7 +318,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     <h3> Speaks</h3><br/>
     <div class="row d-flex justify-content-center">
         
-        <?php echo $row['language']?>
+        <?php echo $row[0]['language']?>
        
 
     </div>
@@ -329,7 +327,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
     <div class="row d-flex justify-content-center">
         
         <?php 
-          $specialities=$row['specialities'];
+          $specialities=$row[0]['specialities'];
           $specialities=explode(',',$specialities);
           $colours=array('#FFE921','#28a745','#17a2b8','#FFE921',);
           foreach($specialities as $value)
@@ -418,7 +416,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
             <img src="assets/images/factory.png" alt="">
             <p>INDUSTRY</p>
           <div class="content">
-            <p><?php echo $row['industry']?></p>
+            <p><?php echo $row[0]['industry']?></p>
           </div>
           </div>
     
@@ -426,7 +424,7 @@ if(isset($_GET['id']) && $_GET['id']!='') {
             <img src="assets/images/teamwork.png" alt="">
             <p>ENTERPRISE</p>
             <div class="content">
-            <p><?php echo $row['enterprise']?></p>
+            <p><?php echo $row[0]['enterprise']?></p>
             </div>
           </div>
         <div class="card">

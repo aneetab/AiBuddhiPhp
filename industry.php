@@ -26,6 +26,7 @@ $res=mysqli_query($con,$sql);
 <div class="page-content p-5" id="content">
   <!-- Toggle button -->
   <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
+  <div class="container ml-3"> 
 
   <!-- Demo content -->
  
@@ -60,6 +61,7 @@ $res=mysqli_query($con,$sql);
     <?php $i=$i+1;} ?>
   </tbody>
 </table>
+    </div>
 <?php
 require('footer.inc.php');
 ?>                    

@@ -38,19 +38,19 @@ nav a
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                  <a class="nav-link" href="landing.php">Home</a>
+                  <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="clientpage.php">Find an Expert</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">About Us</a>
+                  <a class="nav-link" href="about.php">About Us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Services</a>
+                  <a class="nav-link" href="services.php">Services</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Contact Us</a>
+                  <a class="nav-link" href="contact.php">Contact Us</a>
                 </li>
               </ul>
               <ul class="navbar-nav second-nav ml-auto mt-2 mt-lg-0">

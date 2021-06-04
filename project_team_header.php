@@ -1,5 +1,5 @@
 <?php
-$sql="select * from project_team where team_id='$id'";
+$sql="select * from project_team where team_id='$team_id'";
 $res=mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($res);
 $client_id=$_SESSION['USER_ID'];
@@ -242,7 +242,7 @@ $rowClient=mysqli_fetch_assoc($resClient);
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
-          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+          <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
       <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
@@ -270,7 +270,7 @@ $rowClient=mysqli_fetch_assoc($resClient);
         <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
       </li>
     </ul>
  </div>

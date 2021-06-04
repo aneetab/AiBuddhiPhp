@@ -120,8 +120,11 @@ $row=mysqli_fetch_assoc($res);
       <li class="nav-item">
         <a class="nav-link" href="clientpage.php">Experts</a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Projects<span class="sr-only">(current)</span></a>
+      </li>
       <li class="nav-item">
-        <a class="nav-link" href="project_team_create.php">Projects<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="client_calendar.php">Calendar<span class="sr-only">(current)</span></a>
       </li>
  </ul>
     
@@ -163,7 +166,7 @@ $row=mysqli_fetch_assoc($res);
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
-          <a class="dropdown-item" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+          <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
       <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
@@ -175,7 +178,7 @@ $row=mysqli_fetch_assoc($res);
         <a class="nav-link" href="clientpage.php"><i class="red-icons fas fa-user-tie"></i>&nbsp;&nbsp;Experts<span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="project_team_create.php"><i class="red-icons fas fa-tasks"></i>&nbsp;&nbsp;Projects</a>
+        <a class="nav-link" href="#"><i class="red-icons fas fa-tasks"></i>&nbsp;&nbsp;Projects</a>
     </li>
     <li class="nav-item">
     <?php 
@@ -193,7 +196,7 @@ $row=mysqli_fetch_assoc($res);
         <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="user_signout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
+        <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
       </li>
     </ul>
   </div>

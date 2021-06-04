@@ -28,7 +28,7 @@ $res=mysqli_query($con,$sql);
   <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
 
   <!-- Demo content -->
- 
+  <div class="container ml-3"> 
   <h5 class="box-title">Enterprises</h5>
   <h6 class="box-link"><a href="manage_enterprise.php">Add enterprise</a></h6>                      
   <table class="table table-bordered">
@@ -60,6 +60,7 @@ $res=mysqli_query($con,$sql);
     <?php $i=$i+1;} ?>
   </tbody>
 </table>
+    </div>
 <?php
 require('footer.inc.php');
 ?>                    

@@ -25,4 +25,29 @@ function get_experts($con)
     }
     return $data;
 }
+function get_data($con,$sql)
+{
+    $res=mysqli_query($con,$sql);
+    $data=array();
+    while($row=mysqli_fetch_assoc($res))
+    {
+        $data[]=$row;
+    }
+    return $data;
+}
+function check_num_rows($con,$sql)
+{
+    $res=mysqli_query($con,$sql);
+    if(mysqli_num_rows($res)>0)
+    return '1';
+    else
+    return '0';
+}
+function modify($con,$sql)
+{
+    if(mysqli_query($con,$sql))
+    return '1';
+    else
+    return '0';
+}
 ?>

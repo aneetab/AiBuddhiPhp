@@ -12,7 +12,7 @@ require('top.inc.php');
   <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small></button>
 
   <!-- Demo content -->
- 
+  <div class="container ml-3"> 
   <h5 class="box-title">Experts Application</h5>
                       
   <div class="container my-5">
@@ -26,6 +26,7 @@ require('top.inc.php');
                             <th>Industry </th>
                             <th>Enterprise </th>
                             <th scope="col" width="10%">Status</th>
+                            <th></th>
                     </thead>
                     <tbody>
                     <?php
@@ -100,6 +101,7 @@ require('top.inc.php');
                             <th>Industry </th>
                             <th>Enterprise </th>
                             <th scope="col" width="10%">Status</th>
+                            <th></th>
                     </thead>
                     <tbody>
                     <?php
@@ -152,6 +154,7 @@ require('top.inc.php');
                     </table>
                     </div>
                     </div>
+                        </div>
    
 <?php
 require('footer.inc.php');
