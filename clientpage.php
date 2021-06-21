@@ -140,14 +140,14 @@ include ('calculator.php');
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
   <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="">Experts</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="project_team_create.php">Projects<span class="sr-only"></span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="project_team_create.php">Projects</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="client_calendar.php">Calendar<span class="sr-only"></span></a>
+        <a class="nav-link" href="client_calendar.php">Calendar</a>
       </li>
  </ul>
     
@@ -182,17 +182,17 @@ include ('calculator.php');
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <?php 
         $profile='fa-user red-icons';
-        echo "<a class='dropdown-item' href='manage_profile.php?id="."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
+        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
         ?>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
 
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+          <a class="dropdown-item" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
           <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
-      <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
+      <small>Hi, <?php echo $row[0]['firstname'] ?>!</small>
 
       
     </ul>
@@ -219,7 +219,7 @@ include ('calculator.php');
         <a class="nav-link" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+        <a class="nav-link" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
@@ -359,6 +359,7 @@ include ('calculator.php');
 <script type="text/javascript" src="js/jquery.convform.js"></script>
 <!--------------------- JS for CHATBOT starts-------------------------->
 <script>
+    
     function closeAlert(e,id)
     {
       var updateevent='updateevent';

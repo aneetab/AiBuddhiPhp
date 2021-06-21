@@ -86,7 +86,7 @@ else{
 
 <ul class="nav flex-column bg-white mb-0">
 <li class="nav-item">
-    <a href="notify.php" class="nav-link text-dark">
+    <!--Link to notify.php--><a href="" class="nav-link text-dark">
               <i class="fas fa-bell mr-3 text-primary fa-fw"></i>
               notify
           </a>

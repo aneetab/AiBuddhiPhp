@@ -149,8 +149,8 @@
               <div class="credits row">
                   <div class="col-lg-5 col-md-5 col-5">
                       <div class="social-links">
-                          <li><a href="#">Privacy Policy</a></li>
-                          <li><a href="#">Terms and Conditions</a></li>
+                          <li><a href="privacy_policy.php">Privacy Policy</a></li>
+                          <li><a href="terms_and_conditions.php">Terms and Conditions</a></li>
                           
                       </div>
                   </div>

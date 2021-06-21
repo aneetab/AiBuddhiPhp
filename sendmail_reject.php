@@ -34,15 +34,15 @@ foreach(array_keys($swap_var) as $key){
     if(strlen($key)>2 && trim($key)!='')
     $message=str_replace($key,$swap_var[$key],$message);
 }
-echo $message;
-/*
+
+
 if(mail($email_to,$subject,$message,$headers)){
-    if(mysqli_query($con,"update sme_apply set status='2' where id='$id'");)
+    if(mysqli_query($con,"update sme_apply set status='2' where id='$id'"))
     echo "Success";
 }
 else
 echo "Failed";
-*/
+
 }
 
 

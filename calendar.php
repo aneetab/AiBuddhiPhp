@@ -98,6 +98,12 @@ if(isset($_GET['team_id']) && $_GET['team_id']!='')
 		    <input type="text" autocomplete="off" name="picker2" class="form-control" id="picker2">
 			</div>
 		  </div>
+      <div class="form-group">
+			<label for="end" class="col-sm-2 control-label">Event Description(Optional)</label>
+			<div class="col-sm-10">
+		    <textarea autocomplete="off" name="desc" class="form-control" id="desc" rows="3"></textarea>
+			</div>
+		  </div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
@@ -196,9 +202,14 @@ if(isset($_GET['team_id']) && $_GET['team_id']!='')
             allDayDefault: false,
 			select: function(start, end) {
 				
-				$('#ModalAdd #picker1').val(moment(start).format('YYYY-MM-DD HH:mm'));
-				$('#ModalAdd').modal('show');
-                
+				//$('#ModalAdd #picker1').val(moment(start).format('YYYY-MM-DD HH:mm'));
+				//$('#ModalAdd').modal('show');
+        var today = moment();
+        start.set({ hours: today.hours(), minute: today.minutes() });
+        $('#ModalAdd #start').val(start.format('YYYY-MM-DD HH:mm'));
+        $('#ModalAdd #end').val(end.format('YYYY-MM-DD HH:mm'));
+        $('#ModalAdd').modal('show');
+              
 			},
 			eventRender: function(event, element) {
 				element.bind('click', function() {
@@ -307,9 +318,10 @@ if(isset($_GET['team_id']) && $_GET['team_id']!='')
        var startTime = $('#picker1').val();
        var endTime = $('#picker2').val();
        var team_id=team_id;
+       var description=$('#desc').val();
        $.ajax({
            url: 'addEvent.php',
-           data: 'action=add&title='+title+'&start='+startTime+'&end='+endTime+"&team_id="+team_id,
+           data: 'action=add&title='+title+'&start='+startTime+'&end='+endTime+"&team_id="+team_id+"&description="+description,
            type: "POST",
            success: function(data) {
 			window.location.reload();

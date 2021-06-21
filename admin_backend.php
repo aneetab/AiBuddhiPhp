@@ -37,6 +37,7 @@
                 echo "Fail";
             }
         }
+       
         else if ($filetype=='folder')
         { 
             $sqlget="select * from files where file_id='$file_id'";
@@ -60,6 +61,30 @@
         }
 
 
+        }
+        if(isset($_POST['deleteclient']))
+        {
+            echo "Bye";
+            $id=get_safe_value($con,$_POST['id']);
+            $email=get_safe_value($con,$_POST['email']);
+            $sqldelete="delete from client_users where client_id='$id'";
+            $res=modify($con,$sqldelete);
+            $sqlcheck="select * from sme_apply where email='$email'";
+            if(check_num_rows($con,$sqlcheck)=='1')
+            {
+                $sqldelete="delete from sme_apply where email='$email'";
+                $res=modify($con,$sqldelete);
+                $sqldelete="delete from resume where client_id='$id'";
+                $res=modify($con,$sqldelete);
+            }
+            if($res=='1')
+            {
+               echo "Success";
+            }
+            else
+            {
+                echo "Fail";
+            }
         }
         if(isset($_POST['deleteteam']))
         {
@@ -141,7 +166,7 @@
             if(in_array($fileType, $allowTypes)){ 
                 $destinationfile='uploaded_docs/'.time().'_'.$fileName;
                 move_uploaded_file($fileTmp,$destinationfile);
-                $modified_by=$_SESSION['ADMIN_ID'];
+                $modified_by=$_SESSION['USER_ID'];
                 $date=date('Y-m-d h:i:s');
                 $insert = "INSERT into files(`team_id`,`file_name`,`file_type`,`extension`,`file`,`added_on`,`modified_by`,`channel`,`parent_folder`) VALUES('$team_id','$fileName','file','$fileType','$destinationfile','$date','$modified_by','$channel','$folder_name')"; 
                   if(modify($con,$insert)=='0'){ 
@@ -155,7 +180,7 @@
     if(isset($_POST["createfolder"]))
     {
         $folder_name=get_safe_value($con,$_POST['folder_name']);
-        $created_by=$_SESSION['ADMIN_ID'];
+        $created_by=$_SESSION['USER_ID'];
         $date=date('Y-m-d h:i:s');
         $team_id=get_safe_value($con,$_POST['team_id']);
         $channel=get_safe_value($con,$_POST['channel']);

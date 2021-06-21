@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
    $_SESSION['USER_ID']=$row[0]['client_id'];
    $status = "Active now";
    $id=$row[0]['client_id'];
-   $sql2 = mysqli_query($con, "UPDATE client_users SET status = '$status' WHERE client_id ='$id'");
+   $sql2 = mysqli_query($con, "UPDATE client_users SET status = '$status',account_status='1' WHERE client_id ='$id'");
    if($row[0]['role']=='0')
    {
     $_SESSION['USER_ROLE']='admin';
@@ -85,6 +85,9 @@ if(isset($_POST['submit'])){
       <?php
       include "css/style.css";
       ?>
+      .social-button{
+          display:none;
+      }
     </style>
 </head>
 <body>

@@ -4,14 +4,15 @@ require "functions.inc.php";
 
 if(isset($_POST['action']) && $_POST['action']=="add")
 {
-if (isset($_POST['title']) && isset($_POST['start']) && isset($_POST['end']) && isset($_POST['team_id']))
+if (isset($_POST['title']) && isset($_POST['start']) && isset($_POST['end']) && isset($_POST['team_id']) && isset($_POST['description']))
  {	
 	$title = get_safe_value($con,$_POST['title']);
 	$start = get_safe_value($con,$_POST['start']);
 	$end = get_safe_value($con,$_POST['end']);
     $team_id = get_safe_value($con,$_POST['team_id']);
+    $description=get_safe_value($con,$_POST['description']);
 
-	$sql = "INSERT INTO events(title, start, end,team_id) VALUES ('$title', '$start', '$end','$team_id')";
+	$sql = "INSERT INTO events(title, start, end,team_id,description) VALUES ('$title', '$start', '$end','$team_id','$description')";
     $res=modify($con,$sql);
     if($res=='0')
     {

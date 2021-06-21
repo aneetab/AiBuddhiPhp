@@ -2,7 +2,7 @@
 require('connection.inc.php');
 require('functions.inc.php');
 $email_id=$_SESSION['USER_EMAIL'];
-$sql="Select sme_apply.status as status,id,`profile-pic`,client_id from sme_apply,client_users where sme_apply.email='$email_id' and sme_apply.email=client_users.email_id";
+$sql="Select sme_apply.status as status,id,`profile-pic`,sme_apply.firstname as firstname,client_id from sme_apply,client_users where sme_apply.email='$email_id' and sme_apply.email=client_users.email_id";
 $row=get_data($con,$sql);
 $status=$row[0]['status'];
 $id=$row[0]['id'];
@@ -120,11 +120,11 @@ $css_class="alert-danger";
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
 
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+          <a class="dropdown-item" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
           <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
-      <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
+      <small>Hi, <?php echo $row[0]['firstname'] ?>!</small>
     </ul>
     <ul class="navbar-nav ml-auto d-sm-block d-block d-md-block d-lg-none">
     <li class="nav-item">
@@ -137,7 +137,7 @@ $css_class="alert-danger";
         <a class="nav-link" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+        <a class="nav-link" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>

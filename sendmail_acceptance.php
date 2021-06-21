@@ -28,7 +28,7 @@ foreach(array_keys($swap_var) as $key){
     $message=str_replace($key,$swap_var[$key],$message);
 }
 //echo $message;
-/*if(mail($email_to,$subject,$message,$headers)){
+if(mail($email_to,$subject,$message,$headers)){
     if(mysqli_query($con,"update sme_apply set status='1' where id='$id'"))
     {
     echo "Success";
@@ -39,8 +39,10 @@ foreach(array_keys($swap_var) as $key){
     }
 }
 else
+{
 echo "Failed to send mail";
-}*/
+}
+}
 else
 echo "Failed";
 

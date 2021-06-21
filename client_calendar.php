@@ -3,8 +3,8 @@ include "connection.inc.php";
 include "functions.inc.php";
 $client_id=$_SESSION['USER_ID'];
 $sql="select * from client_users where client_id='$client_id'";
-$res=mysqli_query($con,$sql);
-$row=mysqli_fetch_assoc($res);
+$row=get_data($con,$sql);
+include ('calculator.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +76,7 @@ $row=mysqli_fetch_assoc($res);
       <li class="nav-item dropdown dropleft">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
        <?php 
-       $photo=$row['profile_photo'];
+       $photo=$row[0]['profile_photo'];
          
        ?>
        <img src="<?php echo $photo?>"> 
@@ -84,17 +84,17 @@ $row=mysqli_fetch_assoc($res);
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <?php 
         $profile='fa-user red-icons';
-        echo "<a class='dropdown-item' href='manage_profile.php?id="."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
+        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
         ?>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-comment-dots"></i>&nbsp;&nbsp;Messages</a>
           <a class="dropdown-item" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
 
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+          <a class="dropdown-item" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
           <a class="dropdown-item" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
         </div>
       </li>
-      <small>Hi, <?php echo $_SESSION['USER_NAME'] ?>!</small>
+      <small>Hi, <?php echo $row[0]['firstname'] ?>!</small>
 
       
     </ul>
@@ -108,7 +108,7 @@ $row=mysqli_fetch_assoc($res);
     <li class="nav-item">
     <?php 
         $profile='fa-user red-icons';
-        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
+        echo "<a class='dropdown-item' href='manage_profile.php?id=".$row[0]['client_id']."'><i class='fas " .$profile ."'></i>&nbsp;&nbsp;Profile</a>"; 
     ?>
     </li>
     <li class="nav-item">
@@ -118,7 +118,7 @@ $row=mysqli_fetch_assoc($res);
         <a class="nav-link" href="#"><i class="red-icons fas fa-bell"></i>&nbsp;&nbsp;Notifications</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
+        <a class="nav-link" href="account_settings.php"><i class="red-icons fas fa-cog"></i>&nbsp;&nbsp;Account Settings</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout.php"><i class="red-icons fas fa-sign-out-alt"></i>&nbsp;&nbsp;Sign Out</a>
@@ -126,6 +126,26 @@ $row=mysqli_fetch_assoc($res);
     </ul>
   </div>
 </nav>
+<?php
+    foreach($event_results as $val)
+    {   
+    ?>
+    <div class="container mt-3 mb-3">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="alert alert-info" style="font-weight:bold;">
+          <div onclick="closeAlert(this ,'<?php echo $val['eventid']?>')">
+          <i class="fas fa-window-close float-right"></i>
+          </div>
+            <strong><?php echo $val['start'].'-'.$val['end'].'<br>'.$val['name']?><strong>
+            
+        </div>
+        </div>
+        </div>
+        </div>
+   <?php
+    }
+    ?>
 <div class="container">
 <div style="background-color:#fff" class="mt-2 mb-2" id="calendar"></div>
 </div>
@@ -241,10 +261,10 @@ let url='load.php/client_id='+<?php echo $client_id?>;
 			center: 'title',
 			right: 'month,basicWeek,basicDay',
 			},
-			editable: true,
+			editable: false,
 			eventLimit: true, 
-			selectable: true,
-			selectHelper: true,
+			selectable: false,
+			selectHelper: false,
             resizable:true,
             eventResize: true,
             eventDurationEditable:true,
@@ -408,6 +428,31 @@ let url='load.php/client_id='+<?php echo $client_id?>;
           })
       }
   })
+  function closeAlert(e,id)
+    {
+      var updateevent='updateevent';
+      $.ajax({
+        url:'updateEvent.php',
+        type:"post",
+        data:{updateevent:updateevent,eventid:id},
+        success:function(data){
+          console.log(data);
+          data=data.trim();
+          console.log(data);
+          if(data==="UPDATED")
+          {
+          e.parentNode.parentNode.parentNode.parentNode.remove();
+          }
+          else
+          {
+            alert("ERROR");
+          }
+
+        }
+
+      });
+     
+    } 
   </script>
 </body>
 </html>

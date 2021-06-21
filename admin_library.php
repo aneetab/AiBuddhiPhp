@@ -93,7 +93,7 @@ $rows=get_data($con,$sqlFolders);
                <th scope="col">Name</th>
                <th scope="col">Created</th>
                <th scope="col">Created By</th>
-               <th scope="col">
+               <th scope="col"></th>
                </tr>
                </thead><tbody>
                <?php
@@ -107,7 +107,7 @@ $rows=get_data($con,$sqlFolders);
                 <td><a href="viewfolder_admin.php?fid=<?php echo $row1['file_id']?>'&channel=<?php echo $channel?>"><i class="fas fa-folder" style="color:#dbbd7d;"></i><?php echo $row1['folder_name']?></a></td>
                 <td><?php echo $row1['added_on'] ?> </td>
                 <td><?php echo $row1['firstname'].' '.$row1['lastname']?></td>
-                <td><a onclick="delete_file('<?php echo $row1['file_id']?>',folder)" class='fas fa-trash text-primary fa-fw mr-3'></i></a>&nbsp;
+                <td><a onclick="delete_file('<?php echo $row1['file_id']?>','folder')" class='fas fa-trash text-primary fa-fw mr-3'></i></a>&nbsp;
               </tr>
               <?php 
               
@@ -197,6 +197,7 @@ function triggerfolderclick()
 } 
 function insertFile(team_id,channel,folder_name)
 {
+   
     var team_id=team_id;
     var folder_name=folder_name;
     var channel=channel;
@@ -207,6 +208,9 @@ function insertFile(team_id,channel,folder_name)
     form_data.append("team_id",team_id);
     form_data.append("channel",channel);
     form_data.append("folder_name",folder_name);
+    console.log(team_id);
+    console.log(folder_name);
+    console.log(channel);
     $.ajax({
         url:"admin_backend.php",
         type:"POST",
@@ -219,8 +223,8 @@ function insertFile(team_id,channel,folder_name)
             window.location.reload();
         }
     });
-    //readFiles(team_id,channel,folder_name);
-    window.location.reload();
+    
+    //window.location.reload();
 }
 function insertFolder()
 {
@@ -277,7 +281,7 @@ function go_back()
 }
 function createFolder(team_id,channel,parent_folder)
     {
-     
+    
       var folder_name=$('#folder_name').val();
       var parent_folder=parent_folder;
       var channel=channel;
@@ -285,7 +289,7 @@ function createFolder(team_id,channel,parent_folder)
       var team_id=team_id;
       $.ajax({
        url:"admin_backend.php",
-       type:'post',
+       type:'POST',
        data:{
            folder_name:folder_name,
            parent_folder:parent_folder,
@@ -293,11 +297,12 @@ function createFolder(team_id,channel,parent_folder)
            team_id:team_id,
            channel:channel
            },
-        success:function(data,status)
+        success:function(response)
            {
               window.location.reload();
             }
 });
+
 }
 </script>
    

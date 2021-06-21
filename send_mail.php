@@ -144,7 +144,8 @@ if(isset($_POST['email_to']) && isset($_POST['to_name']) && $_POST['email_to']!=
      echo $msg;
     
    }
- }
+  }
+  
    else
    {
      $msg="Resume";
@@ -153,5 +154,6 @@ if(isset($_POST['email_to']) && isset($_POST['to_name']) && $_POST['email_to']!=
      mysqli_query($con,$sqldelete);
    }     
 }
+
 
 ?>

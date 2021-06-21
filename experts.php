@@ -3,6 +3,8 @@ require('top.inc.php');
     if(isset($_GET['type']) && $_GET['type']=='delete' && isset($_GET['id'])){
       $id=get_safe_value($con,$_GET['id']);
       mysqli_query($con,"delete from sme_apply where id='$id'");
+
+
     }
     
 ?>
@@ -31,7 +33,7 @@ require('top.inc.php');
                     <tbody>
                     <?php
                           $i=1;
-                          $sql1="select * from sme_apply,client_users where sme_apply.status='0' and sme_apply.email=client_users.email_id order by date_time desc";
+                          $sql1="select * from sme_apply,client_users where sme_apply.status='0' and sme_apply.email=client_users.email_id and client_users.account_status='1' order by date_time desc";
                           $res1=mysqli_query($con,$sql1);
                           while($row1=mysqli_fetch_assoc($res1)){
                           ?>
@@ -78,7 +80,7 @@ require('top.inc.php');
                           echo "<a href='viewapplication.php?id=".$row1['id']."'><i class='fas " .$eye ."'></i></a>"; ?>
                           <?php
                            $icon='fa-trash text-primary fa-fw mr-3';
-                           echo "<a onclick='javascript:confirmationDelete($(this));return false;' href='experts.php?id=".$row1['id']."&type=delete'><i class='fas " .$icon ."'></i></a>&nbsp;";
+                           echo "<a onclick='javascript:confirmationDelete($(this));return false;' href='experts.php?id=".$row1['id']."&type=delete&client_id=".$row1['client_id']."><i class='fas " .$icon ."'></i></a>&nbsp;";
                            ?>
                         </td>
                         </tr>
@@ -106,7 +108,7 @@ require('top.inc.php');
                     <tbody>
                     <?php
                           $i=1;
-                          $sql1="select * from sme_apply,client_users where sme_apply.status='1' and sme_apply.email=client_users.email_id order by date_time desc";
+                          $sql1="select * from sme_apply,client_users where sme_apply.status='1' and sme_apply.email=client_users.email_id and client_users.account_status='1' order by date_time desc";
                           $res1=mysqli_query($con,$sql1);
                           while($row1=mysqli_fetch_assoc($res1)){
                           ?>
@@ -145,7 +147,7 @@ require('top.inc.php');
                           echo "<a href='viewapplication.php?id=".$row1['id']."'><i class='fas " .$eye ."'></i></a>"; ?>
                           <?php
                            $icon='fa-trash text-primary fa-fw mr-3';
-                           echo "<a onclick='javascript:confirmationDelete($(this));return false;' href='experts.php?id=".$row1['id']."&type=delete'><i class='fas " .$icon ."'></i></a>&nbsp;";
+                           echo "<a onclick='javascript:confirmationDelete($(this));return false;' href='experts.php?id=".$row1['id']."&type=delete&client_id=".$row1['client_id']."><i class='fas " .$icon ."'></i></a>&nbsp;";
                            ?>
                         </td>
                         </tr>

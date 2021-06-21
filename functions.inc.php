@@ -50,4 +50,9 @@ function modify($con,$sql)
     else
     return '0';
 }
+function get_num_rows($con,$sql)
+{
+    $res=mysqli_query($con,$sql);
+    return mysqli_num_rows($res);
+}
 ?>

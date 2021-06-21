@@ -7,7 +7,7 @@ if(isset($_GET['id']) && $_GET['id']!='')
 }
 $sql1="select * from project_team,client_users where team_id='$id' and client_users.client_id=project_team.requested_by";
 $row1=get_data($con,$sql1);
-$experts="select * from client_users,sme_apply where sme_apply.status='1' and client_users.email_id=sme_apply.email and client_users.client_id NOT IN(SELECT client_id from team_members where team_id='$id')";
+$experts="select * from client_users,sme_apply where sme_apply.status='1' and client_users.email_id=sme_apply.email and client_users.account_status='1' and client_users.client_id NOT IN(SELECT client_id from team_members where team_id='$id')";
 
 $experts_row=get_data($con,$experts);
 $project_teams="select * from project_team where team_id='$id'";

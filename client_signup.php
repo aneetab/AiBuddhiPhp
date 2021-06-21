@@ -4,11 +4,14 @@ require('functions.inc.php');
 $email_error='';
 $password_error='';
 $cpassword_error='';
+$firstname_error='';
+$lastname_error='';
 $is_error='';
 $firstname='';
 $lastname='';
 $email_id='';
 $r='';
+$role='';
 if(isset($_SESSION['USER_ROLE']) && $_SESSION['USER_ROLE']!='')
 {
 $role=$_SESSION['USER_ROLE'];
@@ -20,12 +23,28 @@ if($role=='sme')
 {
     $r='2';
 }
+if($role=='')
+{
+    $role='client';
+}
 }
 if(isset($_POST['submit']))
 {
 $email_id=get_safe_value($con,$_POST['email_id']);
 $password=get_safe_value($con,$_POST['password']);
 $cpassword=get_safe_value($con,$_POST['cpassword']);
+$firstname=get_safe_value($con,$_POST['firstname']);
+$lastname=get_safe_value($con,$_POST['lastname']);
+if($firstname=='')
+{
+  $firstname_error='Please enter firstname';
+  $is_error='yes';
+}
+if($lastname=='')
+{
+  $lastname_error='Please enter lastname';
+  $is_error='yes';
+}
 if($email_id=='')
 {
   $email_error='Please enter email';
@@ -57,17 +76,52 @@ $password=md5($password);
 $added_on=date('Y-m-d h:i:s');
 $_SESSION['USER_LOGIN']='yes';
 $_SESSION['USER_EMAIL']=$email_id;
+$_SESSION['USER_NAME']=$firstname;
+$_SESSION['USER_LNAME']=$lastname;
 if($r=='')
 {
 $r='1';
 $_SESSION['USER_ROLE']='client';
 }
-$sql="insert into client_users(email_id,password,role,added_on,profile_photo) VALUES('$email_id','$password','$r','$added_on','uploaded_docs/placeholder.jpg')";
+$sql="insert into client_users(email_id,password,role,added_on,profile_photo,firstname,lastname) VALUES('$email_id','$password','$r','$added_on','uploaded_docs/placeholder.jpg','$firstname','$lastname')";
 modify($con,$sql);
-$username='';
-$email_id='';
-header('location:signup_name.php');
+$template_file="./mail_template_register.php";
+$email_to=$email_id;
+$swap_var=array(
+    "{TO_NAME}"=>$firstname,
+    "{TO_EMAIL}"=>$_SESSION['USER_EMAIL']
+);
+$subject="Welcome to AiBuddhi!";
+$headers="From:	AiBuddhi Recruiting<recruiting.careers@aibuddhi.com>\r\n";
+$headers.="MIME-Version: 1.0\r\n";
+$headers.="Content-Type:text/html;charset=ISO-8859-1\r\n";
+if(file_exists($template_file))
+$message=file_get_contents($template_file);
+else
+die("unable to locate the template file");
+foreach(array_keys($swap_var) as $key){
+    if(strlen($key)>2 && trim($key)!='')
+    $message=str_replace($key,$swap_var[$key],$message);
+}
+
+
+/*if(mail($email_to,$subject,$message,$headers))
+echo '<hr/>success';
+else
+echo '<hr/>not sent';
+*/
+
+if($role=='client')
+{
+header('location:clientpage.php');
 die();
+}
+if($role=='sme')
+{
+    header('location:sme_application.php');
+    die(); 
+}
+
 
 }
 
@@ -93,6 +147,9 @@ die();
     <?php
     include "css/style.css";
     ?>
+    .social-button{
+          display:none;
+      }
     </style>
 </head>
 <body>
@@ -118,6 +175,16 @@ require('outerpageheader.php');
                             <input autocomplete="off" required value="<?php echo $email_id?>" type="email" name="email_id" id="email_id" class="form-control" placeholder="Email">
                         </div>
                         <small><?php echo $email_error?></small>
+                        <div class="form-group">
+                            <label>Enter firstname:</label>
+                            <input autocomplete="off" required value="<?php echo $firstname?>" type="text" name="firstname" id="firstname" class="form-control" placeholder="First Name">
+                        </div>
+                        <small><?php echo $firstname_error?></small>
+                        <div class="form-group">
+                            <label>Enter lastname:</label>
+                            <input autocomplete="off" required value="<?php echo $lastname?>" type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name">
+                        </div>
+                        <small><?php echo $lastname_error?></small>
                         <div class="form-group">
                             <label>Enter password:</label>
                             <input required type="password" name="password" id="password" class="form-control" placeholder="Password">

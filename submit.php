@@ -28,9 +28,9 @@ if(isset($_POST['industry']) && isset($_POST['enterprise']))
   }
    $res=mysqli_query($con,$sqlget);
    $output='';
-   if(mysqli_num_rows($res)<1)
+   if(mysqli_num_rows($res)>0)
    {
-    $sqlget="SELECT * from sme_apply where status='1'";
+   // $sqlget="SELECT * from sme_apply where status='1'";
     $res=mysqli_query($con,$sqlget);
     while($row=mysqli_fetch_assoc($res))
     {
@@ -49,27 +49,13 @@ if(isset($_POST['industry']) && isset($_POST['enterprise']))
     }
     }
     else{
-        $res=mysqli_query($con,$sqlget);
-        while($row=mysqli_fetch_assoc($res))
-        {
-         $output.=' <div class="col-lg-4 col-md-6 col-12 d-flex">
-          <div class="sme-card py-3 py-sm-0">
-            <img src="'.$row['profile-pic'].'" class="card-img-top" alt="...">
-            <div class="card-body flex-fill">
-              <h5 class="card-title">'.$row['firstname'].' '.$row['lastname'].'</h5>
-              <h6 class="card-title">Industry:'.$row['industry'].'</h6>
-              <h6 class="card-title">Enterprise:'.$row['enterprise'].'</h6>
-              <p class="card-text">'.$row['about_me'].'</p>
-              <a href="sme_profile.php?id='. $row['id'].'"class="btn btn-red btn-primary mb-2">View Profile</a>
-            </div>
-          </div>
-          </div>';
-        }
+        
+         $output="<p>No results found</p>";
 
     }
     
     echo $output;
-   }
+}
 
 
 if(isset($_POST["insert_file"]))
@@ -165,7 +151,44 @@ if(isset($_POST["insert_file"]))
            $output.='</tbody></table>';
            echo $output;
 }
-
+if(isset($_POST['action']) && $_POST['action']=='deactivate')
+{
+  $client_id=get_safe_value($con,$_POST['id']);
+  $sql="select * from client_users where client_id='$client_id'";
+  $row=get_data($con,$sql);
+  $password=get_safe_value($con,$_POST['password']);
+  $password=md5($password);
+  $cpassword=$row[0]['password'];
+  $msg='';
+  $email_id=get_safe_value($con,$_POST['email']);
+  if($password==='')
+   {
+       $msg='Please enter your password';
+       
+   }
+   else if($password!=$cpassword)
+   {
+    $msg='Incorrect password.Please try again';
+    
+   }
+   else if($password==$cpassword)
+   {
+       $sql="UPDATE client_users set account_status='0' where email_id='$email_id'";
+       if(modify($con,$sql)=='1')
+       {
+         echo "Success";
+       }
+       else
+       {
+         echo "Fail";
+       }
+   }
+   if($msg!='')
+   {
+     echo $msg;
+   }
+   
+}
 if(isset($_POST['dragdrop']))
 {
 

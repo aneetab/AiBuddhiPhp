@@ -4,16 +4,42 @@ require('functions.inc.php');
 $msg='';
 $css_class='';
 $role=$_SESSION['USER_ROLE'];
+$id='';
+$url='';
+$email=$_SESSION['USER_EMAIL'];
+$destinationfile='';
 if(isset($_GET['id']) && $_GET['id']!='') {
   $id=get_safe_value($con,$_GET['id']);
+  $url="location:manage_profile.php?id=".$id;
   $sql="select * from client_users where client_id='$id'";
   $res=mysqli_query($con,$sql);
   $row=mysqli_fetch_assoc($res);
+  $firstname=$row['firstname'];
+  $lastname=$row['lastname'];
   }
 if(isset($_POST['submit']))
 {
-    $firstname=$_POST['firstname'];
-    $lastname=$_POST['lastname'];
+    if(isset($_POST['firstname']))
+    {
+        $firstname=$_POST['firstname'];
+        if($firstname=='')
+        {
+            $msg="Firstname cannot be blank.";
+            $css_class='alert-danger';
+            
+        } 
+    }
+    if(isset($_POST['lastname']))
+    {
+        $lastname=$_POST['lastname']; 
+        if($lastname=='')
+        {
+            $msg="Lastname cannot be blank.";
+            $css_class='alert-danger';
+            
+        } 
+    }
+    
     if(!empty($_FILES["profileImage"]["name"])) { 
         $fileName = basename($_FILES["profileImage"]["name"]); 
         $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -22,47 +48,77 @@ if(isset($_POST['submit']))
         if(in_array($fileType, $allowTypes)){ 
             $destinationfile='uploaded_docs/'.$fileName;
             move_uploaded_file($fileTmp,$destinationfile);
-            $date=date('Y-m-d h:i:s');
-                $update="update client_users set profile_photo='$destinationfile',firstname='$firstname',lastname='$lastname' where client_id='$id'";
-                mysqli_query($con,$update);
-                $email=$_SESSION['USER_EMAIL'];
-                $update="update sme_apply set profile-pic='$destinationfile' where email='$email'";
-                if(mysqli_query($con,$update))
-                {
-                $url='manage_profile.php?id='.$id;
-                header('location:'.$url);
-                }
-                else
-                {
-                    $msg="Failed to update profile pic";
-                    $css_class='alert-danger';
-                }
             
         }else{ 
             $msg = 'Image must be in JPG, JPEG or PNG format only.'; 
             $css_class='alert-danger';
         } 
-    }else{ 
-        $msg = 'Please select a profile image to upload.'; 
-        $css_class='alert-danger';
     }
+    if($msg=='')
+    {
+                if($destinationfile=='')
+                {
+                    $destinationfile=$row['profile_photo'];
+                }
+                $date=date('Y-m-d h:i:s');
+                $update="update client_users set profile_photo='$destinationfile',firstname='$firstname',lastname='$lastname' where client_id='$id'";
+                
+                if(!mysqli_query($con,$update))
+                {
+        
+                    $msg="Failed to update profile pic clients";
+                    $css_class='alert-danger';
+                }
+                else
+                {
+                $sqlcheck="SELECT * from sme_apply where email='$email'";
+                if(check_num_rows($con,$sqlcheck)=='1')
+                {
+                echo $destinationfile;
+                $update1="update sme_apply set `profile-pic`='$destinationfile',firstname='$firstname',lastname='$lastname' where email='$email'";
+                if(!mysqli_query($con,$update1))
+                {
+                    $msg="Failed to update profile pic sme_apply";
+                    $css_class='alert-danger';
+                }
+               
+                }
+              }
+              if($msg=='')
+              {
+                  header($url);
+              }
+    }
+    
    
 }
 if(isset($_POST['remove']))
 {
 
-   
+        $email=$_SESSION['USER_EMAIL'];
         $sql="update client_users set profile_photo='uploaded_docs/placeholder.jpg' where client_id='$id'";
-        if(mysqli_query($con,$sql)){
-        $sql="update sme_apply set profile-pic='uploaded_docs/placeholder.jpg' where email='$email'";
-        $msg="Successfully updated";
-        $css_class="alert-success";
+        if(!mysqli_query($con,$sql)){
+            $msg="Database Error-Failed to update";
+            $css_class="alert-danger";
         }
         else
         {
-        $msg="Database Error-Failed to update";
-        $css_class="alert-danger";
+            $sqlcheck="SELECT * from sme_apply where email='$email'";
+            if(check_num_rows($con,$sqlcheck)=='1')
+            {
+            echo $destinationfile;
+            $update1="update sme_apply set `profile-pic`='uploaded_docs/placeholder.jpg' where email='$email'";
+            if(!mysqli_query($con,$update1))
+            {
+                $msg="Failed to update profile pic sme_apply";
+                $css_class='alert-danger';
+            }
         }
+      }
+      if($msg=='')
+      {
+          header($url);
+      }
 }  
 
 ?>
