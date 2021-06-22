@@ -1,3 +1,10 @@
+<?php
+include "connection.inc.php";
+include "functions.inc.php";
+$sqlindustry="select * from sort_by where type='industry'";
+$industries=get_data($con,$sqlindustry);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,57 +29,50 @@
   </style>
   </head>
 <body>
-    
-  <main class="my-5">
+  <?php include "outerpageheader.php" ?>
+  <main class="mt-5">
     <div class="container">
-     
-      <section class="text-center">
-        <h4 class="mb-5"><strong>ALL POSTS</strong></h4>
+    <div class="row">
+    <div class="col-lg-6 col-md-6">
+    <select class="form-control" id='industry_select' onchange="sorting()" style="width:70%;margin-top:3px" text="Select">
+    <option selected disabled>Sort By: Industry</option>
+    <option value="all">All</option>
+    </select>
+    </div>
 
-        <div class="row">
+    </div>
+     
+      <section class="text-center mt-5">
+          <div class="row" id="article_list">
+          <?php
+          $get_post=get_posts($con);
+          foreach($get_post as $list){
+        ?>
+          <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card">
+              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                <img src="<?php echo $list['post_display']?>" class="img-fluid" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title"><a style="text-decoration:underline" href="post.php?id=<?php echo $list['post_id']?>"><?php echo $list['post_title']?></a></h5><br>
+                <h6 class="text-muted"><i class="fas fa-tag"></i> <?php echo $list['industry']?></h6>
+                <p class="card-text">
+                  <?php echo $list['post_desc'] ?>
+                </p>
+              </div>
+            </div>
+          </div>
+         <?php
+          }
+          ?>
+             
           
 
-         
-
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                <img src="https://mdbootstrap.com/img/new/standard/nature/111.jpg" class="img-fluid" />
-                <a href="#!">
-                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                </a>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <a href="#!" class="btn btn-primary">Read</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-md-12 mb-4">
-            <div class="card">
-              <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                <img src="https://mdbootstrap.com/img/new/standard/nature/002.jpg" class="img-fluid" />
-                <a href="#!">
-                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                </a>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <a href="post.php?id=<?php echo $post['id']?>" class="btn btn-primary">Read</a>
-              </div>
-            </div>
-          </div>
+        
+       
 
           
 
@@ -81,6 +81,34 @@
       
     </div>
   </main>
+  <?php include "outerpagefooter.php" ?>
+  <script>
+    
+    var industry=<?php echo json_encode($industries);?>;
+    var select1=document.getElementById('industry_select');
+    industry.forEach(function (obj, i) {
+    select1.appendChild(new Option(obj.name, obj.name));
+    });
+    function sorting()
+  {
+    var industry=document.getElementById("industry_select").value;
+    var getposts='getposts';
+    $.ajax({
+           url:"submit.php",
+           method:"POST",
+           data:{
+             getposts:getposts,
+             industry:industry,
+             
+           },
+           success:function(data,status){
+            $('#article_list').html(data);
+           
+          }
+           
+        });
+  }
+  </script>
   <script src="assets/fontawesome-icons/all.js"></script>
 <!--jQuery file-->
 <script src="assets/jquery/jquery-3.5.1.js"></script>

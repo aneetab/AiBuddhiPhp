@@ -1,12 +1,14 @@
 <?php
 include "connection.inc.php";
 include "functions.inc.php";
+$id='';
 if(isset($_GET['id']) && $_GET['id']!='')
 {
     $id=get_safe_value($con,$_GET['id']);
-    $get_post="SELECT * from posts where post_id='$id'";
+    $get_post="SELECT * from article_blog where post_id='$id'";
     $post=get_data($con,$get_post);
 }
+
 ?>
 
 
@@ -45,44 +47,39 @@ if(isset($_GET['id']) && $_GET['id']!='')
     </style>
 </head>
 <body>
-<div class="container">
-<div class="row">
-<div class="col-md-6">
-<div class="card">
+<?php include "outerpageheader.php" ?>
+<div class="container mx-auto mt-5" style="padding:5px">
+<div><button class="btn btn-primary mt-3 ml-3 mb-3" onclick="go_back()" style="background:#800000;color:#fff;"><i class="fas fa-arrow-left"></i>All Posts</button></div>
+<div class="card mx-auto" style="width:700px">
     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-        <img src="<?php echo $post[0]['image']?>" class="img-fluid" />
+        <img src="<?php echo $post[0]['post_display']?>" class="img-fluid" />
         <a href="#!">
     <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
         </a>
     </div>
     <div class="card-body">
-     <h5 class="card-title"><?php echo $post[0]['post_title']?></h5>
-     <h6 class="text-muted">Posted by <?php echo $post[0]['posted_by'] ?> on <?php echo date('F j,Y',strtotime($post[0]['created_on'])) ?></h6>
+     <h4 class="card-title text-center"><?php echo $post[0]['post_title']?></h4>
+     <h5 class="text-muted"><?php echo $post[0]['author'] ?></h5>
+      <h6 class="text-muted"><i class="fas fa-calendar-alt"></i> <?php echo date('F j,Y',strtotime($post[0]['post_date'])) ?></h6>
+      <?php
+      if($post[0]['author_email']!='')
+      {
+      ?>
+       <h6 class="text-muted"><i class="fas fa-envelope"></i> <?php echo $post[0]['author_email']?></h6><br>
+       <h6 class="text-muted"><i class="fas fa-tag"></i><?php echo $post[0]['industry']?></h6>
+      <?php
+      }
+      ?>
      <p class="card-text">
-     <?php echo $post[0]['content']?>
+     
+     <?php echo nl2br(html_entity_decode($post[0]['content']))?>
      </p>
     </div>
     </div>
 </div>
+<?php include "outerpagefooter.php" ?>
 
-</div>
-</div>
-<div class="row">
-<div class="col">
-<div class="comment-box">
-No comments
 
-<form action="POST">
-<div class="form-group">
-<input type="text" name="comment" placeholder="Add comment..">
-<input type="submit" value="post" name="submit">
-</form>
-</div>
-
-</div>
-
-</div>
-</div>
 
 <script src="assets/fontawesome-icons/all.js"></script>
 <!--jQuery file-->
@@ -92,6 +89,28 @@ No comments
 <!--Bootstrap file-->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+$( document ).ready(function() {
+    var post_id='<?=$id?>';
+    var setviews='setviews';
+    $.ajax({
+           url:"submit.php",
+           method:"POST",
+           data:{
+             setviews:setviews,
+             post_id:post_id,
+             
+           },
+           success:function(data,status){
+            
+           
+          }
+           
+        });
+});
+function go_back()
+{
+    window.history.back();
+}
 </script>
 </body>
 </html>

@@ -132,7 +132,7 @@
               <div class="col-lg-3 col-md-3 col-6">
                   <div>
                       <h3>Resources</h3>
-                      <li><a href="#">Blog</a></li>
+                      <li><a href="viewposts.php">Blog</a></li>
                   </div>
                   <div class="mt-4">
                       <h3>Contact & follow us</h3>

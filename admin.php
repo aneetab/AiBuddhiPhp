@@ -8,8 +8,8 @@ $sql="select * from client_users where role='2' and account_status='1'";
 $num_experts=get_num_rows($con,$sql);
 $sql="select * from project_team where status='1'";
 $num_projects=get_num_rows($con,$sql);
-$sql="select * from events where status='1'";
-$num_events=get_num_rows($con,$sql);
+$sql="select * from article_blog";
+$num_posts=get_num_rows($con,$sql);
 $sql="select * from project_team where status='0'";
 $pending_project=get_num_rows($con,$sql);
 $sql="select * from sme_apply,client_users where sme_apply.email=client_users.email_id and sme_apply.status='0' and client_users.account_status='1'";
@@ -86,13 +86,13 @@ $pending_expert=get_num_rows($con,$sql);
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-                                                <i class="fas fa-2x fa-calendar-alt"></i>
+                                                <i class="far fa-2x fa-newspaper"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Live Events</p>
-													<h4 class="card-title"><?php echo $num_events?></h4>
+													<p class="card-category">Articles</p>
+													<h4 class="card-title"><?php echo $num_posts?></h4>
 												</div>
 											</div>
 										</div>

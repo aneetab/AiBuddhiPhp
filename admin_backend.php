@@ -64,7 +64,6 @@
         }
         if(isset($_POST['deleteclient']))
         {
-            echo "Bye";
             $id=get_safe_value($con,$_POST['id']);
             $email=get_safe_value($con,$_POST['email']);
             $sqldelete="delete from client_users where client_id='$id'";
@@ -77,6 +76,21 @@
                 $sqldelete="delete from resume where client_id='$id'";
                 $res=modify($con,$sqldelete);
             }
+            if($res=='1')
+            {
+               echo "Success";
+            }
+            else
+            {
+                echo "Fail";
+            }
+        }
+        if(isset($_POST['deletepost']))
+        {
+            
+            $post_id=get_safe_value($con,$_POST['post_id']);
+            $sqldelete="delete from article_blog where post_id='$post_id'";
+            $res=modify($con,$sqldelete);
             if($res=='1')
             {
                echo "Success";

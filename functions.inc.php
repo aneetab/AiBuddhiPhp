@@ -25,6 +25,17 @@ function get_experts($con)
     }
     return $data;
 }
+function get_posts($con)
+{
+    $sql="select * from article_blog order by post_date desc";
+    $res=mysqli_query($con,$sql);
+    $data=array();
+    while($row=mysqli_fetch_assoc($res))
+    {
+        $data[]=$row;
+    }
+    return $data;
+}
 function get_data($con,$sql)
 {
     $res=mysqli_query($con,$sql);

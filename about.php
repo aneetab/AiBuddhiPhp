@@ -39,6 +39,19 @@ body{
     background:rgb(230, 218, 218);
     position:relative;
 }
+.emphasis{
+    font-size:20px;
+    font-weight:bold;
+    letter-spacing:1px;
+    font-family:'Poppins',sans-serrif;
+    font-style: italic;
+}
+.additional{
+    font-size:20px;
+    font-weight:bold;
+    letter-spacing:1px;
+    font-family:'Poppins',sans-serrif;
+}
 .about-left{
     width:60%;
     height:600px;
@@ -110,14 +123,44 @@ body{
           <div class="about-right">
               <div class="about-content">
                   <h1><span style="font-family:'Kaushan Script', cursive;letter-spacing:4px">About Us</span></h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                  <a href="#" class="btn">Read More</a>
+                  <p><span class="emphasis">AiBuddhi</span> is an amalgamation of experienced professionals from diverse streams that constitutes the building blocks and DNA of various micro universes that exists within this Universe. This amalgamation of Ai-Buddha’s aims to transcend in to a resource pool that could render seamless services by way of consultancy,
+                   mentorship, guidance to all segments from a single platform anywhere on earth with a localised intermediate associate known as <span class="emphasis">AiBodhan</span>.</p>
+                  
+                  <button class="btn btn-light" id="read">Read More</button>
+                  <div id="additional_content">
+                  <p>The services includes to impart, share, provide consultancies in the field of *Engineering, Technology, Space & Mars Science, Wars& 
+                     Economics Finances, Businesses & Education in this rapidly evolving Post Pandemic world.</p>
+                  <span class="additional"> Additional topics/subjects include:</span>
+                  <ol>
+                  <li><span class="emphasis">1.</span> Space and Mars Missions</li>
+                  <li><span class="emphasis">2.</span> Natural Calamities and Disasters Management</li>
+                  <li><span class="emphasis">3.</span> Green Buildings and irreversible renewable energy</li>
+                  <li><span class="emphasis">4.</span> Vaccines and Pandemics</li>
+                  <li><span class="emphasis">5.</span> AI (Artificial intelligence) AR (Augmented Reality) VR (Virtual Reality)</li>
+                  <li><span class="emphasis">6.</span> News feeds on Tech Innovations and Industry Movers and Leaders</li> 
+                  <li><span class="emphasis">7.</span> Tech Watch</li>
+                  <li><span class="emphasis">8.</span> Industry Radar</li>
+                  </ol>
+                  </p>
+                  </div>
               </div>
           </div>
         </div>
       </div>
   </section>
 <?php include "outerpagefooter.php"?>
-
+<script>
+$(document).ready(function(){
+    $("#additional_content").hide(); 
+  $("#read").click(function(){
+    $("#additional_content").toggle();
+    if ($('#read').text() == "Read More")
+                        $("#read").text("Hide");
+     else
+                        $("#read").text("Read More");
+    
+  });
+});
+</script>
 </body>
 </html>

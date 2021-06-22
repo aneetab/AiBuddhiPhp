@@ -119,7 +119,7 @@ require('outerpageheader.php');
 </section>
  
 <!--Various Benefits section-->
-<section class="benefits">
+<!--<section class="benefits">
  <h1 class="heading">Why use AiBuddhi</h1>
     <div class="row">
     <div class="image">
@@ -265,6 +265,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="500" viewBox="0 0
     
     </div>
     </section>
+    -->
 <!--Subject Matter Experts Section-->
     <section class="subject_experts">
         <h1 class="text-uppercase">Meet our top-notch industry experts</h1>    
@@ -315,6 +316,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="500" viewBox="0 0
         </section>
 
 <!--Customer Reviews Section-->
+<!--
 <section class="reviews">
 
     <h1 class="text-uppercase">But don't just take our word for it</h1>  
@@ -369,6 +371,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="500" viewBox="0 0
         </div>
     </div>
     </section>
+    -->
 
 <?php
 require('outerpagefooter.php');
